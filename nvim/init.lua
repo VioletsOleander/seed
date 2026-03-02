@@ -1,65 +1,73 @@
 require("config.lazy")
 
+local g = vim.g
+local fn = vim.fn
+local api = vim.api
+local cmd = vim.cmd
+local opt = vim.opt
+local map = vim.keymap.set
+
 -- tab use 4 spaces
 -- (auto)indent use 4 spaces
 -- backspace use 4 spaces
-vim.opt.expandtab = true
-vim.opt.tabstop = 4
-vim.opt.shiftwidth = 4
-vim.opt.softtabstop = 4
-vim.opt.smartcase = true
-vim.opt.ignorecase = true
+opt.expandtab = true
+opt.tabstop = 4
+opt.shiftwidth = 4
+opt.softtabstop = 4
+opt.smartcase = true
+opt.ignorecase = true
 
 -- jump to line start/end
-vim.keymap.set('n', 'H', '^')
-vim.keymap.set('n', 'L', '$')
+map('n', 'H', '^')
+map('n', 'L', '$')
 
 -- clear search highlight
-vim.keymap.set('n', '<Leader>h', '<Cmd>nohlsearch<CR>', { silent = true })
+map('n', '<Leader>h', '<Cmd>nohlsearch<CR>', { silent = true })
 
 -- copy/paste to system clipboard
-vim.keymap.set({ 'n', 'v' }, '<Leader>y', '"+y')
-vim.keymap.set({ 'n', 'v' }, '<Leader>p', '"+p')
+map({ 'n', 'v' }, '<Leader>y', '"+y')
+map({ 'n', 'v' }, '<Leader>p', '"+p')
 
-if vim.g.vscode then
+if g.vscode then
     -- vscode commands references: https://code.visualstudio.com/api/references/commands
     local vscode = require("vscode")
+    local action = vscode.action
 
     -- center screen and clear search highlight
     local function reveal_line(pos)
-        vscode.action('revealLine', {
-            args = { { lineNumber = vim.fn.line('.') - 1, at = pos } }
+        action('revealLine', {
+            args = { { lineNumber = fn.line('.') - 1, at = pos } }
         })
     end
-    vim.keymap.set('n', 'zz', function()
+    map('n', 'zz', function()
         reveal_line('center')
-        vim.cmd.nohlsearch()
+        cmd.nohlsearch()
     end)
-    vim.keymap.set('n', 'zt', function()
+    map('n', 'zt', function()
         reveal_line('top')
-        vim.cmd.nohlsearch()
+        cmd.nohlsearch()
     end)
-    vim.keymap.set('n', 'zb', function()
+    map('n', 'zb', function()
         reveal_line('bottom')
-        vim.cmd.nohlsearch()
+        cmd.nohlsearch()
     end)
 
     -- go to type definition
-    vim.keymap.set('n', 'gy', function()
-        vscode.action('editor.action.goToTypeDefinition')
+    map('n', 'gy', function()
+        action('editor.action.goToTypeDefinition')
     end)
 
     -- rename symbol
-    vim.keymap.set('n', '<Leader>r', function()
-        vscode.action('editor.action.rename')
+    map('n', '<Leader>r', function()
+        action('editor.action.rename')
     end)
 
     -- save
-    vim.keymap.set('n', '<Leader>w', function()
-        vscode.action('workbench.action.files.save')
+    map('n', '<Leader>w', function()
+        action('workbench.action.files.save')
     end)
-    vim.keymap.set('n', '<Leader><CR>', function()
-        vscode.action('workbench.action.files.save')
+    map('n', '<Leader><CR>', function()
+        action('workbench.action.files.save')
     end)
 else
     -- n-v: Normal, Visual use block
@@ -67,7 +75,7 @@ else
     -- r-cr: Replace, Command-line Replace mode use block
     -- o: Operator-pending mode use hor20 (horizontal bar)
     -- blinkon0: Disable blinking
-    vim.opt.guicursor = {
+    opt.guicursor = {
         "n-v:block-blinkon0",
         "i-c-ci-ve:ver25-blinkon0",
         "r-cr:block-blinkon0",
@@ -75,24 +83,24 @@ else
     }
 
     -- reset cursor when exit
-    vim.api.nvim_create_autocmd("VimLeave", {
+    api.nvim_create_autocmd("VimLeave", {
         pattern = "*",
         callback = function()
-            vim.opt.guicursor = ""
-            vim.fn.chansend(vim.v.stderr, "\x1b[0 q")
+            opt.guicursor = ""
+            fn.chansend(vim.v.stderr, "\x1b[0 q")
         end,
     })
 
     -- insert mode to normal mode
-    vim.keymap.set('i', 'jj', '<Esc>')
-    vim.keymap.set('i', 'jk', '<Esc>')
-    vim.keymap.set('i', 'kk', '<Esc>')
-    vim.keymap.set('i', '<M-n>', '<Esc>')
+    map('i', 'jj', '<Esc>')
+    map('i', 'jk', '<Esc>')
+    map('i', 'kk', '<Esc>')
+    map('i', '<M-n>', '<Esc>')
 
     -- center screen and clear search highlight
-    vim.keymap.set('n', 'zz', 'zz<Cmd>nohlsearch<CR>', { silent = true })
+    map('n', 'zz', 'zz<Cmd>nohlsearch<CR>', { silent = true })
 
     -- save
-    vim.keymap.set('n', '<Leader>w', '<Cmd>w<CR>')
-    vim.keymap.set('n', '<Leader><CR>', '<Cmd>w<CR>')
+    map('n', '<Leader>w', '<Cmd>w<CR>')
+    map('n', '<Leader><CR>', '<Cmd>w<CR>')
 end
