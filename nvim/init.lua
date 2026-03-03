@@ -1,11 +1,15 @@
 require("config.lazy")
 
+local o = vim.o
 local g = vim.g
 local fn = vim.fn
 local api = vim.api
 local cmd = vim.cmd
 local opt = vim.opt
 local map = vim.keymap.set
+
+-- timeout
+o.timeoutlen = 300
 
 -- tab use 4 spaces
 -- (auto)indent use 4 spaces
