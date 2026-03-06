@@ -2,33 +2,30 @@ return {
     "justinmk/vim-sneak",
     event = "VeryLazy",
     init = function()
-        local g = vim.g
-        local api = vim.api
-        local cmd = vim.cmd
-
         -- use smartcase and ignorecase
-        g["sneak#use_ic_scs"] = 1
+        vim.g["sneak#use_ic_scs"] = 1
+    end,
+    config = function()
+        local api = vim.api
 
         -- disable sneak-s and sneak-S
         vim.keymap.set({ 'n', 'x' }, '<Plug>(Disable-Sneak-s)', '<Plug>Sneak_s')
         vim.keymap.set({ 'n', 'x' }, '<Plug>(Disable-Sneak-S)', '<Plug>Sneak_S')
 
         -- disable highlight
-        api.nvim_set_hl(0, "Sneak", { link = "None" })
-        api.nvim_set_hl(0, "SneakScope", { link = "None" })
+        local function clear_sneak_highlight()
+            api.nvim_set_hl(0, "Sneak", { link = "None" })
+            api.nvim_set_hl(0, "SneakCurrent", { link = "None" })
+        end
+
+        clear_sneak_highlight()
+
         api.nvim_create_autocmd("ColorScheme", {
-            callback = function()
-                api.nvim_set_hl(0, 'Sneak', { link = 'None' })
-                api.nvim_set_hl(0, 'SneakScope', { link = 'None' })
-            end,
+            callback = clear_sneak_highlight,
         })
         api.nvim_create_autocmd("User", {
             pattern = "SneakLeave",
-            callback = function()
-                cmd("highlight clear Sneak")
-                cmd("highlight clear SneakCurrent")
-                cmd("highlight clear SneakScope")
-            end,
+            callback = clear_sneak_highlight,
         })
     end,
     keys = {
