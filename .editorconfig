@@ -5,3 +5,6 @@ indent_size = 4
 
 [variables.yaml]
 indent_size = 4
+
+[*.lua]
+trailing_table_separator = always
