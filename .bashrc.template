@@ -35,7 +35,7 @@ cl() {
     cd "$1" && ll
 }
 
-proxy_url = {{ proxy_url }}
+proxy_url="{{ proxy_url }}"
 
 proxy_on() {
     export http_proxy="http://$proxy_url"
@@ -80,7 +80,7 @@ PS1='[\u@\h \W]\$ '
 # homebrew
 if [[ -d /home/linuxbrew/.linuxbrew ]]; then
 	eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv bash)"
-f	i
+fi
 
 # yazi
 function y() {
