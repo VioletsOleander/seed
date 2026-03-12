@@ -89,9 +89,9 @@ return {
                         "@class.inner", "textobjects")
                 end,
             },
-            -- p for parameters
+            -- a for arguments (parameters)
             {
-                "ap",
+                "aa",
                 mode = { "x", "o", },
                 function()
                     require("nvim-treesitter-textobjects.select").select_textobject(
@@ -99,7 +99,7 @@ return {
                 end,
             },
             {
-                "ip",
+                "ia",
                 mode = { "x", "o", },
                 function()
                     require("nvim-treesitter-textobjects.select").select_textobject(
@@ -183,9 +183,8 @@ return {
                 end,
                 desc = "Prev conditional",
             },
-            -- parameter
             {
-                "]p",
+                "]a",
                 mode = { "n", "x", "o", },
                 function()
                     require("nvim-treesitter-textobjects.move").goto_next_start(
@@ -194,7 +193,7 @@ return {
                 desc = "Next parameter start",
             },
             {
-                "[p",
+                "[a",
                 mode = { "n", "x", "o", },
                 function()
                     require("nvim-treesitter-textobjects.move")
