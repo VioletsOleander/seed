@@ -5,8 +5,29 @@ return {
 		cond = not vim.g.vscode,
 		dependencies = {
 			"nvim-lua/plenary.nvim",
-			-- optional but recommended
 			{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
+		},
+		cmd = "Telescope",
+		opts = {
+			defaults = {
+				mappings = {
+					["i"] = {
+						["jj"] = { "<Esc>", type = "command" },
+						["<Leader>c"] = "close",
+						["<C-j>"] = "move_selection_next",
+						["<C-k>"] = "move_selection_previous",
+						["<Leader>h"] = "file_split",
+						["<Leader>v"] = "file_vsplit",
+					},
+					["n"] = {
+						["<Leader>c"] = "close",
+						["<C-j>"] = "move_selection_next",
+						["<C-k>"] = "move_selection_previous",
+						["<Leader>h"] = "file_split",
+						["<Leader>v"] = "file_vsplit",
+					},
+				},
+			},
 		},
 		keys = {
 			{
@@ -75,21 +96,51 @@ return {
 		},
 	},
 	{
-		"nvim-neo-tree/neo-tree.nvim",
-		branch = "v3.x",
+		"mikavilpas/yazi.nvim",
+		version = "*", -- use the latest stable version
 		cond = not vim.g.vscode,
+		event = "VeryLazy",
 		dependencies = {
-			"nvim-lua/plenary.nvim",
-			"MunifTanjim/nui.nvim",
-			"nvim-tree/nvim-web-devicons", -- optional, but recommended
+			{ "nvim-lua/plenary.nvim", lazy = true },
 		},
+		opts = {
+			-- if you want to open yazi instead of netrw, see below for more info
+			open_for_directories = true,
+			keymaps = {
+				show_help = "?",
+				-- open_file_in_vertical_split = "<Leader>v",
+				-- open_file_in_horizontal_split = "<Leader>h",
+			},
+		},
+		-- if you use `open_for_directories=true`, this is recommended
+		init = function()
+			-- mark netrw as loaded so it's not loaded at all.
+			vim.g.loaded_netrw = 1
+			vim.g.loaded_netrwPlugin = 1
+		end,
 		keys = {
+			{
+				"<Leader>-", -- <Leader> -
+				mode = { "n", "v" },
+				function()
+					vim.cmd("Yazi")
+				end,
+				desc = "Open yazi at the current file",
+			},
+			{
+				-- Open in the current working directory
+				"<Leader>=", -- <Leader> =
+				function()
+					vim.cmd("Yazi cwd")
+				end,
+				desc = "Open the file manager in nvim's working directory",
+			},
 			{
 				"<Leader>e",
 				function()
-					require("neo-tree.command").execute({ toggle = true })
+					vim.cmd("Yazi toggle")
 				end,
-				desc = "Toggle Explorer",
+				desc = "Resume the last yazi session",
 			},
 		},
 	},
