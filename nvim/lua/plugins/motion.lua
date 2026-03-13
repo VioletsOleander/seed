@@ -13,8 +13,8 @@ return {
 					keys = { "f", "F", "t", "T", ";", "," },
 					char_actions = function(motion)
 						return {
-							[";"] = "next",
-							[","] = "prev",
+							[";"] = "right",
+							[","] = "left",
 						}
 					end,
 					highlight = {
