@@ -3,12 +3,12 @@ local cmd = vim.cmd
 
 -- Keymaps for both vscode and Neovim
 -- jump to line start/end
-map({ "n", "x", "o" }, "<Leader>h", "^")
-map({ "n", "x", "o" }, "<Leader>l", "$")
+map({ "n", "x", "o" }, "<Leader>h", "^", { desc = "Jump to line start" })
+map({ "n", "x", "o" }, "<Leader>l", "$", { desc = "Jump to line end" })
 
 -- copy/paste to system clipboard
-map({ "n", "v" }, "<Leader>y", '"+y')
-map({ "n", "v" }, "<Leader>p", '"+p')
+map({ "n", "v" }, "<Leader>y", '"+y', { desc = "Yank to system clipboard" })
+map({ "n", "v" }, "<Leader>p", '"+p', { desc = "Paste from system clipboard" })
 
 if vim.g.vscode then
 	-- Keymaps for vscode
@@ -20,7 +20,7 @@ if vim.g.vscode then
 	map("n", "<Leader>c", function()
 		cmd.nohlsearch()
 		action("closeMarkersNavigation")
-	end)
+	end, { desc = "Clear Search Highlight and Close Markers Navigation" })
 
 	-- center screen and clear search highlight
 	local function reveal_line(pos)
@@ -31,32 +31,36 @@ if vim.g.vscode then
 	map("n", "zz", function()
 		reveal_line("center")
 		cmd.nohlsearch()
-	end)
+	end, { desc = "Center Screen and Clear Search Highlight" })
 	map("n", "zt", function()
 		reveal_line("top")
 		cmd.nohlsearch()
-	end)
+	end, { desc = "Top Screen and Clear Search Highlight" })
 	map("n", "zb", function()
 		reveal_line("bottom")
 		cmd.nohlsearch()
-	end)
+	end, { desc = "Bottom Screen and Clear Search Highlight" })
 
 	--- Helper function to map key to a vscode action
 	---@param key string
 	---@param action_name string
-	local function key_to_action(key, action_name)
+	---@param desc string
+	local function key_to_action(key, action_name, desc)
 		map("n", key, function()
 			action(action_name)
-		end)
+		end, { desc = desc })
 	end
 
+	key_to_action("<Leader>e", "workbench.view.explorer", "Open Explorer")
+	key_to_action("<Leader>f", "workbench.action.focusActiveEditorGroup", "Focus Editor")
+
 	-- go to type definition
-	key_to_action("gy", "editor.action.goToTypeDefinition")
+	key_to_action("gy", "editor.action.goToTypeDefinition", "Go to Type Definition")
 
 	-- go to previous problem/diagnostic
-	key_to_action("]d", "editor.action.marker.next")
+	key_to_action("]d", "editor.action.marker.next", "Go to Next Problem")
 	-- go to next problem/diagnostic
-	key_to_action("[d", "editor.action.marker.prev")
+	key_to_action("[d", "editor.action.marker.prev", "Go to Previous Problem")
 	-- somehow the nextInFiles/prevInFiles doesn't work well
 	-- go to next problem/diagnostic in all files
 	-- map('n', ']D', function()
@@ -67,34 +71,34 @@ if vim.g.vscode then
 	--     action('editor.action.marker.prevInFiles')
 	-- end)
 	-- code action
-	key_to_action("<Leader>a", "editor.action.quickFix")
+	key_to_action("<Leader>a", "editor.action.quickFix", "Quick Fix")
 
 	-- rename symbol
-	key_to_action("<Leader>r", "editor.action.rename")
+	key_to_action("<Leader>r", "editor.action.rename", "Rename Symbol")
 
 	-- save
-	key_to_action("<Leader>w", "workbench.action.files.save")
-	key_to_action("<Leader><CR>", "workbench.action.files.save")
+	key_to_action("<Leader>w", "workbench.action.files.save", "Save File")
+	key_to_action("<Leader><CR>", "workbench.action.files.save", "Save File")
 else
 	-- Keymaps for Neovim
 	-- clear search highlight
 	map("n", "<Leader>c", function()
 		cmd.nohlsearch()
-	end)
+	end, { desc = "Clear Search Highlight" })
 
 	-- center screen and clear search highlight
 	map("n", "zz", function()
 		cmd.normal({ args = { "zz" }, bang = true })
 		cmd.nohlsearch()
-	end)
+	end, { desc = "Center Screen and Clear Search Highlight" })
 
 	-- insert mode to normal mode
-	map("i", "jj", "<Esc>")
-	map("i", "jk", "<Esc>")
-	map("i", "kk", "<Esc>")
-	map("i", "<M-n>", "<Esc>")
+	map("i", "jj", "<Esc>", { desc = "Insert Mode to Normal Mode" })
+	map("i", "jk", "<Esc>", { desc = "Insert Mode to Normal Mode" })
+	map("i", "kk", "<Esc>", { desc = "Insert Mode to Normal Mode" })
+	map("i", "<M-n>", "<Esc>", { desc = "Insert Mode to Normal Mode" })
 
 	-- save
-	map("n", "<Leader>w", "<Cmd>w<CR>")
-	map("n", "<Leader><CR>", "<Cmd>w<CR>")
+	map("n", "<Leader>w", "<Cmd>w<CR>", { desc = "Save File" })
+	map("n", "<Leader><CR>", "<Cmd>w<CR>", { desc = "Save File" })
 end
