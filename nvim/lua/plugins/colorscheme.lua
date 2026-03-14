@@ -7,7 +7,7 @@ return {
 			require("onedark").setup({
 				style = "light",
 				highlights = {
-					MyCursor = { fg = "#526fff", bg = "#ffffff" },
+					Cursor = { fg = "#526fff", bg = "#ffffff" },
 				},
 			})
 			require("onedark").load()
