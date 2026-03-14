@@ -21,25 +21,6 @@ if not vim.g.vscode then
 			local buf = vim.lsp.buf
 			local diagnostic = vim.diagnostic
 
-			local has_telescope, builtin = pcall(require, "telescope.builtin")
-
-			if has_telescope then
-				map("n", "gd", builtin.lsp_definitions, "Go to Definition")
-				map("n", "gr", builtin.lsp_references, "Show References")
-				map("n", "gi", builtin.lsp_implementations, "Go to Implementation")
-				map("n", "gy", builtin.lsp_type_definitions, "Go to Type Definition")
-
-				map("n", "<Leader>ss", builtin.lsp_document_symbols, "Document Symbols")
-				map("n", "<Leader>sw", builtin.lsp_dynamic_workspace_symbols, "Workspace Symbols")
-				map("n", "<Leader>d", function()
-					builtin.diagnostics({ bufnr = 0 })
-				end, "Show Diagnostics in Current Buffer")
-				map("n", "<Leader>D", builtin.diagnostics, "Show Diagnostics in Workspace")
-			else
-				map("n", "gd", vim.lsp.buf.definition, "Go to Definition")
-				map("n", "gr", vim.lsp.buf.references, "References")
-			end
-
 			map("n", "gD", buf.declaration, "Go to Declaration")
 
 			map("n", "K", buf.hover, "Hover Documentation")
