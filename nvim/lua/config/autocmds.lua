@@ -1,5 +1,4 @@
-local api = vim.api
-local autocmd = api.nvim_create_autocmd
+local autocmd = vim.api.nvim_create_autocmd
 
 if not vim.g.vscode then
 	-- reset cursor when exit
@@ -10,16 +9,23 @@ if not vim.g.vscode then
 			vim.fn.chansend(vim.v.stderr, "\x1b[0 q")
 		end,
 	})
+	-- format on save
+	autocmd("BufWritePre", {
+		pattern = { "*.lua", "*.py" },
+		callback = function(event)
+			vim.lsp.buf.format({ bufnr = event.buf })
+		end,
+	})
 	-- set kemaps when lsp attaches to buffer
 	autocmd("LspAttach", {
-		group = api.nvim_create_augroup("UserLspConfig", { clear = true }),
+		pattern = "*",
 		callback = function(event)
+			local buf = vim.lsp.buf
+			local diagnostic = vim.diagnostic
+
 			local map = function(mode, lhs, rhs, desc)
 				vim.keymap.set(mode, lhs, rhs, { buffer = event.buf, desc = "LSP: " .. desc })
 			end
-
-			local buf = vim.lsp.buf
-			local diagnostic = vim.diagnostic
 
 			map("n", "gD", buf.declaration, "Go to Declaration")
 

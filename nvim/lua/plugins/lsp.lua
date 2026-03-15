@@ -3,27 +3,9 @@ return {
 		"neovim/nvim-lspconfig",
 		cond = not vim.g.vscode,
 		config = function()
-			vim.lsp.enable({ "lua_ls", "ty" })
+			vim.lsp.enable({ "lua_ls", "stylua", "ty", "ruff" })
 		end,
 		event = "VeryLazy",
-	},
-	{
-		"stevearc/conform.nvim",
-		cond = not vim.g.vscode,
-		opts = {
-			formatters_by_ft = {
-				lua = { "stylua" },
-				python = { "ruff_format" },
-				yaml = { "prettier" },
-				toml = { "taplo" },
-			},
-			format_on_save = {
-				-- These options will be passed to conform.format()
-				timeout_ms = 500,
-				lsp_format = "fallback",
-			},
-		},
-		event = { "BufReadPre", "BufNewFile" },
 	},
 	{
 		"saghen/blink.cmp",
