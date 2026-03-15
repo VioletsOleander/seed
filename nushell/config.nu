@@ -18,3 +18,5 @@ source $git_completions_path
 
 alias la = ls -a
 alias ll = ls -l
+alias g = git
+alias lg = lazygit
