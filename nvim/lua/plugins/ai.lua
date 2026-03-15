@@ -1,8 +1,9 @@
 return {
 	{
-		"github/copilot.vim",
+		"zbirenbaum/copilot.lua",
 		cond = not vim.g.vscode,
-		event = "InsertEnter",
+		opts = {},
+		cmd = "Copilot",
 	},
 	{
 		"ggml-org/llama.vim",
