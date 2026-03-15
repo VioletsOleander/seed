@@ -1,29 +1,11 @@
 return {
 	{
 		"neovim/nvim-lspconfig",
-		event = { "BufReadPost", "BufNewFile" },
+		cond = not vim.g.vscode,
 		config = function()
-			local mason_bin = vim.fn.stdpath("data") .. "/mason/bin"
-			local sep = vim.fn.has("win32") == 1 and ";" or ":"
-			if not string.find(vim.env.PATH, mason_bin, 1, true) then
-				vim.env.PATH = mason_bin .. sep .. vim.env.PATH
-			end
 			vim.lsp.enable({ "lua_ls", "ty" })
 		end,
-	},
-	{
-		"mason-org/mason.nvim",
-		cond = not vim.g.vscode,
-		opts = {
-			ui = {
-				icons = {
-					package_installed = "✓",
-					package_pending = "➜",
-					package_uninstalled = "✗",
-				},
-			},
-		},
-		cmd = "Mason",
+		event = "VeryLazy",
 	},
 	{
 		"stevearc/conform.nvim",
@@ -81,15 +63,7 @@ return {
 			-- Default list of enabled providers defined so that you can extend it
 			-- elsewhere in your config, without redefining it, due to `opts_extend`
 			sources = {
-				default = { "lazydev", "lsp", "path", "snippets", "buffer" },
-				providers = {
-					lazydev = {
-						name = "LazyDev",
-						module = "lazydev.integrations.blink",
-						-- make lazydev completions top priority (see `:h blink.cmp`)
-						score_offset = 100,
-					},
-				},
+				default = { "lsp", "path", "snippets", "buffer" },
 			},
 
 			-- (Default) Rust fuzzy matcher for typo resistance and significantly better performance
