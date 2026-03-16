@@ -1,4 +1,5 @@
 return {
+	-- Colorscheme
 	{
 		"navarasu/onedark.nvim",
 		cond = not vim.g.vscode,
@@ -25,5 +26,15 @@ return {
 		priority = 1000,
 		opts = {},
 		lazy = true,
+	},
+	-- Statusline
+	{
+		"nvim-treesitter/nvim-treesitter-context",
+		cond = not vim.g.vscode,
+		dependencies = {
+			"nvim-treesitter/nvim-treesitter",
+		},
+		opts = {},
+		event = { "BufReadPost", "BufNewFile" },
 	},
 }
