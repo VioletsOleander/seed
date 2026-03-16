@@ -3,8 +3,12 @@ local cmd = vim.cmd
 
 -- Keymaps for both vscode and Neovim
 -- jump to line start/end
-map({ "n", "x", "o" }, "<Leader>h", "^", { desc = "Jump to line start" })
-map({ "n", "x", "o" }, "<Leader>l", "$", { desc = "Jump to line end" })
+map({ "n", "x", "o" }, "H", "^", { desc = "Jump to line start" })
+map({ "n", "x", "o" }, "L", "$", { desc = "Jump to line end" })
+
+-- jump to top/bottom of screen
+map({ "n", "x", "o" }, "<Leader>H", "H", { desc = "Jump to top of screen" })
+map({ "n", "x", "o" }, "<Leader>L", "L", { desc = "Jump to bottom of screen" })
 
 -- copy/paste to system clipboard
 map({ "n", "v" }, "<Leader>y", '"+y', { desc = "Yank to system clipboard" })
