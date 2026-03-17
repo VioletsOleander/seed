@@ -3,46 +3,61 @@ return {
 		"folke/snacks.nvim",
 		cond = not vim.g.vscode,
 		priority = 1000,
-		lazy = false,
 		opts = {
+			-- make file load quicker
 			bigfile = { enabled = true },
-			dashboard = { enabled = true },
-			explorer = { enabled = true },
-			indent = { enabled = true },
-			input = { enabled = true },
-			notifier = {
-				enabled = true,
-				timeout = 3000,
-			},
-			picker = { enabled = true },
 			quickfile = { enabled = true },
-			scope = { enabled = true },
-			scroll = { enabled = true },
-			statuscolumn = { enabled = true },
-			words = { enabled = true },
+			-- make ui looks better
+			notifier = { enabled = true, timeout = 3000 },
+			input = { enabled = true },
+			indent = { enabled = true },
+			-- make explore easier
+			dashboard = { enabled = true },
+			explorer = { enabled = true, replace_netrw = true, trash = true },
+			picker = {
+				enabled = true,
+				win = {
+					input = {
+						keys = {
+							["<Leader>c"] = { "close", mode = { "n", "i" } },
+							["/"] = "toggle_focus",
+							["<C-j>"] = { "list_down", mode = { "i", "n" } },
+							["<C-k>"] = { "list_up", mode = { "i", "n" } },
+						},
+					},
+					list = {
+						keys = {
+							["<Leader>c"] = { "close", mode = { "n", "i" } },
+							["/"] = "toggle_focus",
+							["<C-j>"] = { "list_down", mode = { "i", "n" } },
+							["<C-k>"] = { "list_up", mode = { "i", "n" } },
+						},
+					},
+				},
+			},
 		},
+		lazy = false,
 		keys = {
-			-- Top Pickers & Explorer
 			{
-				"<Leader><Leader>",
+				"<Leader>e",
 				function()
-					Snacks.picker.smart()
+					Snacks.explorer()
 				end,
-				desc = "Smart Find Files",
+				desc = "Toggle File Explorer",
 			},
 			{
-				"<Leader>,",
+				"<Leader>R",
 				function()
-					Snacks.picker.buffers()
+					Snacks.rename.rename_file()
 				end,
-				desc = "Find Buffers",
+				desc = "Rename File",
 			},
 			{
-				"<Leader>/",
+				"<Leader>lg",
 				function()
-					Snacks.picker.grep()
+					Snacks.lazygit()
 				end,
-				desc = "Grep",
+				desc = "Toggle Lazygit",
 			},
 			{
 				"<Leader>:",
@@ -51,34 +66,28 @@ return {
 				end,
 				desc = "Command History",
 			},
+			-- buffer
 			{
-				"<Leader>n",
-				function()
-					Snacks.picker.notifications()
-				end,
-				desc = "Notification History",
-			},
-			{
-				"<Leader>e",
-				function()
-					Snacks.explorer()
-				end,
-				desc = "Toggle File Explorer",
-			},
-			-- find
-			{
-				"<Leader>fb",
+				"<Leader>/",
 				function()
 					Snacks.picker.buffers()
 				end,
 				desc = "Find Buffers",
 			},
 			{
-				"<Leader>fc",
+				"<Leader>bd",
 				function()
-					Snacks.picker.files({ cwd = vim.fn.stdpath("config") })
+					Snacks.bufdelete()
 				end,
-				desc = "Find Config File",
+				desc = "Delete Buffer without close its pane",
+			},
+			-- File (f)
+			{
+				"<Leader><Leader>",
+				function()
+					Snacks.picker.smart()
+				end,
+				desc = "Smart Find Files",
 			},
 			{
 				"<Leader>ff",
@@ -88,18 +97,11 @@ return {
 				desc = "Find Files",
 			},
 			{
-				"<Leader>fg",
+				"<Leader>fc",
 				function()
-					Snacks.picker.git_files()
+					Snacks.picker.files({ cwd = vim.fn.stdpath("config") })
 				end,
-				desc = "Find Git Files",
-			},
-			{
-				"<Leader>fp",
-				function()
-					Snacks.picker.projects()
-				end,
-				desc = "Find Projects",
+				desc = "Find Config File",
 			},
 			{
 				"<Leader>fr",
@@ -108,110 +110,38 @@ return {
 				end,
 				desc = "Find Recent Files",
 			},
-			-- git
 			{
-				"<Leader>gb",
+				"<Leader>fp",
 				function()
-					Snacks.picker.git_branches()
+					Snacks.picker.projects()
 				end,
-				desc = "Git Branches",
+				desc = "Find Projects",
 			},
+			-- Grep (g)
 			{
-				"<Leader>gl",
-				function()
-					Snacks.picker.git_log()
-				end,
-				desc = "Git Log",
-			},
-			{
-				"<Leader>gL",
-				function()
-					Snacks.picker.git_log_line()
-				end,
-				desc = "Git Log Line",
-			},
-			{
-				"<Leader>gs",
-				function()
-					Snacks.picker.git_status()
-				end,
-				desc = "Git Status",
-			},
-			{
-				"<Leader>gS",
-				function()
-					Snacks.picker.git_stash()
-				end,
-				desc = "Git Stash",
-			},
-			{
-				"<Leader>gd",
-				function()
-					Snacks.picker.git_diff()
-				end,
-				desc = "Git Diff (Hunks)",
-			},
-			{
-				"<Leader>gf",
-				function()
-					Snacks.picker.git_log_file()
-				end,
-				desc = "Git Log File",
-			},
-			-- gh
-			{
-				"<Leader>gi",
-				function()
-					Snacks.picker.gh_issue()
-				end,
-				desc = "GitHub Issues (open)",
-			},
-			{
-				"<Leader>gI",
-				function()
-					Snacks.picker.gh_issue({ state = "all" })
-				end,
-				desc = "GitHub Issues (all)",
-			},
-			{
-				"<Leader>gp",
-				function()
-					Snacks.picker.gh_pr()
-				end,
-				desc = "GitHub Pull Requests (open)",
-			},
-			{
-				"<Leader>gP",
-				function()
-					Snacks.picker.gh_pr({ state = "all" })
-				end,
-				desc = "GitHub Pull Requests (all)",
-			},
-			-- Grep
-			{
-				"<Leader>sg",
+				"<Leader>g",
 				function()
 					Snacks.picker.grep()
 				end,
-				desc = "Search by Grep",
+				desc = "Grep Search",
 			},
 			{
-				"<Leader>sB",
+				"<Leader>gb",
 				function()
 					Snacks.picker.grep_buffers()
 				end,
-				desc = "Search Open Buffers by Grep",
+				desc = "Grep Search Open Buffers",
 			},
 			{
-				"<Leader>sw",
+				"<Leader>gw",
 				function()
 					Snacks.picker.grep_word()
 				end,
-				desc = "Search Visual Selection or Word by Grep",
+				desc = "Grep Search Visual Selection or Word",
 				mode = { "n", "x" },
 			},
 			{
-				"<Leader>sd",
+				"<Leader>gh",
 				function()
 					local help_dirs = vim.api.nvim_get_runtime_file("doc/*.txt", true)
 
@@ -220,9 +150,9 @@ return {
 						live = true,
 					})
 				end,
-				desc = "Search Help by Grep",
+				desc = "Grep search Help",
 			},
-			-- search
+			-- Search (s)
 			{
 				'<Leader>s"',
 				function()
@@ -231,7 +161,7 @@ return {
 				desc = "Search Registers",
 			},
 			{
-				"<Leader>s/",
+				"<Leader>sh",
 				function()
 					Snacks.picker.search_history()
 				end,
@@ -254,26 +184,19 @@ return {
 			{
 				"<Leader>sc",
 				function()
-					Snacks.picker.command_history()
-				end,
-				desc = "Search Command History",
-			},
-			{
-				"<Leader>sC",
-				function()
 					Snacks.picker.commands()
 				end,
 				desc = "Search Commands",
 			},
 			{
-				"<Leader>sd",
+				"<Leader>sD",
 				function()
 					Snacks.picker.diagnostics()
 				end,
 				desc = "Search Diagnostics",
 			},
 			{
-				"<Leader>sD",
+				"<Leader>sd",
 				function()
 					Snacks.picker.diagnostics_buffer()
 				end,
@@ -294,13 +217,6 @@ return {
 				desc = "Search Highlights",
 			},
 			{
-				"<Leader>si",
-				function()
-					Snacks.picker.icons()
-				end,
-				desc = "Search Icons",
-			},
-			{
 				"<Leader>sj",
 				function()
 					Snacks.picker.jumps()
@@ -313,13 +229,6 @@ return {
 					Snacks.picker.keymaps()
 				end,
 				desc = "Search Keymaps",
-			},
-			{
-				"<Leader>sl",
-				function()
-					Snacks.picker.loclist()
-				end,
-				desc = "Search Location List",
 			},
 			{
 				"<Leader>sm",
@@ -363,13 +272,6 @@ return {
 				end,
 				desc = "Search Undo History",
 			},
-			{
-				"<Leader>uC",
-				function()
-					Snacks.picker.colorschemes()
-				end,
-				desc = "Colorschemes",
-			},
 			-- LSP
 			{
 				"gd",
@@ -394,7 +296,7 @@ return {
 				desc = "References",
 			},
 			{
-				"gI",
+				"gi",
 				function()
 					Snacks.picker.lsp_implementations()
 				end,
@@ -407,158 +309,13 @@ return {
 				end,
 				desc = "Goto T[y]pe Definition",
 			},
-			{
-				"gai",
-				function()
-					Snacks.picker.lsp_incoming_calls()
-				end,
-				desc = "C[a]lls Incoming",
-			},
-			{
-				"gao",
-				function()
-					Snacks.picker.lsp_outgoing_calls()
-				end,
-				desc = "C[a]lls Outgoing",
-			},
-			{
-				"<Leader>ss",
-				function()
-					Snacks.picker.lsp_symbols()
-				end,
-				desc = "LSP Symbols",
-			},
-			{
-				"<Leader>sS",
-				function()
-					Snacks.picker.lsp_workspace_symbols()
-				end,
-				desc = "LSP Workspace Symbols",
-			},
-			-- Other
-			{
-				"<Leader>z",
-				function()
-					Snacks.zen()
-				end,
-				desc = "Toggle Zen Mode",
-			},
-			{
-				"<Leader>Z",
-				function()
-					Snacks.zen.zoom()
-				end,
-				desc = "Toggle Zoom",
-			},
-			{
-				"<Leader>.",
-				function()
-					Snacks.scratch()
-				end,
-				desc = "Toggle Scratch Buffer",
-			},
-			{
-				"<Leader>S",
-				function()
-					Snacks.scratch.select()
-				end,
-				desc = "Select Scratch Buffer",
-			},
-			{
-				"<Leader>n",
-				function()
-					Snacks.notifier.show_history()
-				end,
-				desc = "Notification History",
-			},
-			{
-				"<Leader>bd",
-				function()
-					Snacks.bufdelete()
-				end,
-				desc = "Delete Buffer",
-			},
-			{
-				"<Leader>cR",
-				function()
-					Snacks.rename.rename_file()
-				end,
-				desc = "Rename File",
-			},
-			{
-				"<Leader>gB",
-				function()
-					Snacks.gitbrowse()
-				end,
-				desc = "Git Browse",
-				mode = { "n", "v" },
-			},
-			{
-				"<Leader>gg",
-				function()
-					Snacks.lazygit()
-				end,
-				desc = "Lazygit",
-			},
-			{
-				"<Leader>un",
-				function()
-					Snacks.notifier.hide()
-				end,
-				desc = "Dismiss All Notifications",
-			},
-			{
-				"<c-/>",
-				function()
-					Snacks.terminal()
-				end,
-				desc = "Toggle Terminal",
-			},
-			{
-				"<c-_>",
-				function()
-					Snacks.terminal()
-				end,
-				desc = "which_key_ignore",
-			},
-			{
-				"]]",
-				function()
-					Snacks.words.jump(vim.v.count1)
-				end,
-				desc = "Next Reference",
-				mode = { "n", "t" },
-			},
-			{
-				"[[",
-				function()
-					Snacks.words.jump(-vim.v.count1)
-				end,
-				desc = "Prev Reference",
-				mode = { "n", "t" },
-			},
 		},
 		init = function()
+			vim.g.snacks_animate = false
+
 			vim.api.nvim_create_autocmd("User", {
 				pattern = "VeryLazy",
 				callback = function()
-					-- Setup some globals for debugging (lazy-loaded)
-					_G.dd = function(...)
-						Snacks.debug.inspect(...)
-					end
-					_G.bt = function()
-						Snacks.debug.backtrace()
-					end
-
-					-- Override print to use snacks for `:=` command
-					if vim.fn.has("nvim-0.11") == 1 then
-						vim._print = function(_, ...)
-							dd(...)
-						end
-					else
-						vim.print = _G.dd
-					end
-
 					-- Create some toggle mappings
 					Snacks.toggle.option("spell", { name = "Spelling" }):map("<Leader>us")
 					Snacks.toggle.option("wrap", { name = "Wrap" }):map("<Leader>uw")

@@ -88,7 +88,8 @@ else
 	-- clear search highlight
 	map("n", "<Leader>c", function()
 		cmd.nohlsearch()
-	end, { desc = "Clear Search Highlight" })
+		Snacks.notifier.hide()
+	end, { desc = "Clear Screen (including search highlight, notifications)" })
 
 	-- center screen and clear search highlight
 	map("n", "zz", function()
