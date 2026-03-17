@@ -1,7 +1,13 @@
 return {
 	{
+		"windwp/nvim-autopairs",
+		cond = not vim.g.vscode,
+		opts = {},
+		event = "InsertEnter",
+	},
+	{
 		"kylechui/nvim-surround",
-		version = "^3.0.0", -- Use for stability; omit to use `main` branch for the latest features
+		version = "^3.0.0",
 		opts = {},
 		event = "VeryLazy",
 	},
@@ -30,8 +36,8 @@ return {
 					keys = { "f", "F", "t", "T", ";", "," },
 					char_actions = function(motion)
 						return {
-							[";"] = "right",
-							[","] = "left",
+							[";"] = "next",
+							[","] = "prev",
 						}
 					end,
 					highlight = {
