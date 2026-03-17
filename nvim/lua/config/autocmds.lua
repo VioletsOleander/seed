@@ -1,20 +1,21 @@
 local autocmd = vim.api.nvim_create_autocmd
 
 if not vim.g.vscode then
-	-- reset cursor when exit
-	autocmd("VimLeave", {
-		pattern = "*",
-		callback = function()
-			vim.opt.guicursor = ""
-			vim.fn.chansend(vim.v.stderr, "\x1b[0 q")
-		end,
-	})
 	-- format on save
 	autocmd("BufWritePre", {
 		pattern = { "*.lua", "*.py" },
 		callback = function(event)
 			vim.lsp.buf.format({ bufnr = event.buf })
 		end,
+		desc = "Format on save by lsp",
+	})
+	-- format on save (for those without lsp format support)
+	autocmd("BufWritePre", {
+		pattern = { "*.yaml", "*.yml" },
+		callback = function(event)
+			require("conform").format({ bufnr = event.buf })
+		end,
+		desc = "Format on save by conform.nvim",
 	})
 	-- set kemaps when lsp attaches to buffer
 	autocmd("LspAttach", {
