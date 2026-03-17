@@ -81,7 +81,7 @@ return {
 				end,
 				desc = "Delete Buffer without close its pane",
 			},
-			-- File (f)
+			-- File/Find (f)
 			{
 				"<Leader><Leader>",
 				function()
@@ -109,13 +109,6 @@ return {
 					Snacks.picker.recent()
 				end,
 				desc = "Find Recent Files",
-			},
-			{
-				"<Leader>fp",
-				function()
-					Snacks.picker.projects()
-				end,
-				desc = "Find Projects",
 			},
 			-- Grep (g)
 			{
@@ -151,6 +144,14 @@ return {
 					})
 				end,
 				desc = "Grep search Help",
+			},
+			-- Git
+			{
+				"<Leader>gl",
+				function()
+					Snacks.picker.git_log()
+				end,
+				desc = "Git Log",
 			},
 			-- Search (s)
 			{
@@ -250,6 +251,13 @@ return {
 					Snacks.picker.lazy()
 				end,
 				desc = "Search for Plugin Spec",
+			},
+			{
+				"<Leader>sP",
+				function()
+					Snacks.picker.projects()
+				end,
+				desc = "Search Projects",
 			},
 			{
 				"<Leader>sq",
