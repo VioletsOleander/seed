@@ -1,211 +1,582 @@
 return {
 	{
-		"nvim-telescope/telescope.nvim",
-		version = "*",
+		"folke/snacks.nvim",
 		cond = not vim.g.vscode,
-		dependencies = {
-			"nvim-lua/plenary.nvim",
-			{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
-		},
+		priority = 1000,
+		lazy = false,
 		opts = {
-			defaults = {
-				mappings = {
-					["i"] = {
-						["jj"] = { "<Esc>", type = "command" },
-						["<Leader>c"] = "close",
-						["<C-j>"] = "move_selection_next",
-						["<C-k>"] = "move_selection_previous",
-						["<Leader>h"] = "select_horizontal",
-						["<Leader>v"] = "select_vertical",
-					},
-					["n"] = {
-						["<Leader>c"] = "close",
-						["<C-j>"] = "move_selection_next",
-						["<C-k>"] = "move_selection_previous",
-						["<Leader>h"] = "select_horizontal",
-						["<Leader>v"] = "select_vertical",
-					},
-				},
+			bigfile = { enabled = true },
+			dashboard = { enabled = true },
+			explorer = { enabled = true },
+			indent = { enabled = true },
+			input = { enabled = true },
+			notifier = {
+				enabled = true,
+				timeout = 3000,
 			},
+			picker = { enabled = true },
+			quickfile = { enabled = true },
+			scope = { enabled = true },
+			scroll = { enabled = true },
+			statuscolumn = { enabled = true },
+			words = { enabled = true },
 		},
-		cmd = "Telescope",
 		keys = {
+			-- Top Pickers & Explorer
+			{
+				"<Leader><Leader>",
+				function()
+					Snacks.picker.smart()
+				end,
+				desc = "Smart Find Files",
+			},
+			{
+				"<Leader>,",
+				function()
+					Snacks.picker.buffers()
+				end,
+				desc = "Find Buffers",
+			},
+			{
+				"<Leader>/",
+				function()
+					Snacks.picker.grep()
+				end,
+				desc = "Grep",
+			},
+			{
+				"<Leader>:",
+				function()
+					Snacks.picker.command_history()
+				end,
+				desc = "Command History",
+			},
+			{
+				"<Leader>n",
+				function()
+					Snacks.picker.notifications()
+				end,
+				desc = "Notification History",
+			},
+			{
+				"<Leader>e",
+				function()
+					Snacks.explorer()
+				end,
+				desc = "Toggle File Explorer",
+			},
+			-- find
+			{
+				"<Leader>fb",
+				function()
+					Snacks.picker.buffers()
+				end,
+				desc = "Find Buffers",
+			},
+			{
+				"<Leader>fc",
+				function()
+					Snacks.picker.files({ cwd = vim.fn.stdpath("config") })
+				end,
+				desc = "Find Config File",
+			},
 			{
 				"<Leader>ff",
 				function()
-					require("telescope.builtin").find_files()
+					Snacks.picker.files()
 				end,
 				desc = "Find Files",
 			},
 			{
 				"<Leader>fg",
 				function()
-					require("telescope.builtin").live_grep()
+					Snacks.picker.git_files()
 				end,
-				desc = "Live Grep",
+				desc = "Find Git Files",
 			},
 			{
-				"<Leader>fb",
+				"<Leader>fp",
 				function()
-					require("telescope.builtin").buffers()
+					Snacks.picker.projects()
 				end,
-				desc = "Buffers",
+				desc = "Find Projects",
 			},
 			{
-				"<Leader>fo",
+				"<Leader>fr",
 				function()
-					require("telescope.builtin").oldfiles()
+					Snacks.picker.recent()
 				end,
-				desc = "Previously Opened Files",
+				desc = "Find Recent Files",
+			},
+			-- git
+			{
+				"<Leader>gb",
+				function()
+					Snacks.picker.git_branches()
+				end,
+				desc = "Git Branches",
 			},
 			{
-				"<Leader>fh",
+				"<Leader>gl",
 				function()
-					require("telescope.builtin").help_tags()
+					Snacks.picker.git_log()
 				end,
-				desc = "Help Tags",
+				desc = "Git Log",
 			},
 			{
-				"<Leader>fH",
+				"<Leader>gL",
 				function()
-					require("telescope.builtin").live_grep({
-						search_dirs = vim.api.nvim_get_runtime_file("doc/*.txt", true),
-					})
+					Snacks.picker.git_log_line()
 				end,
-				desc = "Live Grep Help",
+				desc = "Git Log Line",
 			},
 			{
-				"<Leader>fq",
+				"<Leader>gs",
 				function()
-					require("telescope.builtin").quickfix()
+					Snacks.picker.git_status()
 				end,
-				desc = "Quickfix List",
+				desc = "Git Status",
 			},
 			{
-				"<Leader>fj",
+				"<Leader>gS",
 				function()
-					require("telescope.builtin").jumplist()
+					Snacks.picker.git_stash()
 				end,
-				desc = "Jump Lists",
+				desc = "Git Stash",
 			},
 			{
-				"<Leader>fc",
+				"<Leader>gd",
 				function()
-					require("telescope.builtin").commands()
+					Snacks.picker.git_diff()
 				end,
-				desc = "Commands",
+				desc = "Git Diff (Hunks)",
 			},
 			{
-				"<Leader>fk",
+				"<Leader>gf",
 				function()
-					require("telescope.builtin").keymaps()
+					Snacks.picker.git_log_file()
 				end,
-				desc = "Keymaps",
+				desc = "Git Log File",
+			},
+			-- gh
+			{
+				"<Leader>gi",
+				function()
+					Snacks.picker.gh_issue()
+				end,
+				desc = "GitHub Issues (open)",
 			},
 			{
-				"<Leader>fd",
+				"<Leader>gI",
 				function()
-					require("telescope.builtin").diagnostics({ bufnr = 0 })
+					Snacks.picker.gh_issue({ state = "all" })
 				end,
-				desc = "Show Diagnostics in Current Buffer",
+				desc = "GitHub Issues (all)",
 			},
 			{
-				"<Leader>fD",
+				"<Leader>gp",
 				function()
-					require("telescope.builtin").diagnostics()
+					Snacks.picker.gh_pr()
 				end,
-				desc = "Show Diagnostics in Workspace",
+				desc = "GitHub Pull Requests (open)",
 			},
 			{
-				"<Leader>fs",
+				"<Leader>gP",
 				function()
-					require("telescope.builtin").spell_suggest()
+					Snacks.picker.gh_pr({ state = "all" })
 				end,
-				desc = "Spell Suggestions",
+				desc = "GitHub Pull Requests (all)",
+			},
+			-- Grep
+			{
+				"<Leader>sg",
+				function()
+					Snacks.picker.grep()
+				end,
+				desc = "Search by Grep",
 			},
 			{
-				"gd",
+				"<Leader>sB",
 				function()
-					require("telescope.builtin").lsp_definitions()
+					Snacks.picker.grep_buffers()
 				end,
-				desc = "Go to Definition",
-			},
-			{
-				"gr",
-				function()
-					require("telescope.builtin").lsp_references()
-				end,
-				desc = "Show References",
-			},
-			{
-				"gi",
-				function()
-					require("telescope.builtin").lsp_implementations()
-				end,
-				desc = "Go to Implementation",
-			},
-			{
-				"gy",
-				function()
-					require("telescope.builtin").lsp_type_definitions()
-				end,
-				desc = "Go to Type Definition",
-			},
-			{
-				"<Leader>ss",
-				function()
-					require("telescope.builtin").lsp_document_symbols()
-				end,
-				desc = "Document Symbols",
+				desc = "Search Open Buffers by Grep",
 			},
 			{
 				"<Leader>sw",
 				function()
-					require("telescope.builtin").lsp_dynamic_workspace_symbols()
+					Snacks.picker.grep_word()
 				end,
-				desc = "Workspace Symbols",
+				desc = "Search Visual Selection or Word by Grep",
+				mode = { "n", "x" },
 			},
-		},
-	},
-	{
-		"mikavilpas/yazi.nvim",
-		version = "*", -- use the latest stable version
-		cond = not vim.g.vscode,
-		dependencies = {
-			"nvim-lua/plenary.nvim",
-		},
-		opts = {
-			open_for_directories = true,
-			keymaps = {
-				show_help = "?",
-				-- open_file_in_vertical_split = "<Leader>v",
-				-- open_file_in_horizontal_split = "<Leader>h",
-			},
-		},
-		keys = {
 			{
-				"<Leader>-", -- <Leader> -
+				"<Leader>sd",
+				function()
+					local help_dirs = vim.api.nvim_get_runtime_file("doc/*.txt", true)
+
+					Snacks.picker.grep({
+						dirs = help_dirs,
+						live = true,
+					})
+				end,
+				desc = "Search Help by Grep",
+			},
+			-- search
+			{
+				'<Leader>s"',
+				function()
+					Snacks.picker.registers()
+				end,
+				desc = "Search Registers",
+			},
+			{
+				"<Leader>s/",
+				function()
+					Snacks.picker.search_history()
+				end,
+				desc = "Search History",
+			},
+			{
+				"<Leader>sa",
+				function()
+					Snacks.picker.autocmds()
+				end,
+				desc = "Search Autocmds",
+			},
+			{
+				"<Leader>sb",
+				function()
+					Snacks.picker.lines()
+				end,
+				desc = "Search Buffer Lines",
+			},
+			{
+				"<Leader>sc",
+				function()
+					Snacks.picker.command_history()
+				end,
+				desc = "Search Command History",
+			},
+			{
+				"<Leader>sC",
+				function()
+					Snacks.picker.commands()
+				end,
+				desc = "Search Commands",
+			},
+			{
+				"<Leader>sd",
+				function()
+					Snacks.picker.diagnostics()
+				end,
+				desc = "Search Diagnostics",
+			},
+			{
+				"<Leader>sD",
+				function()
+					Snacks.picker.diagnostics_buffer()
+				end,
+				desc = "Search Buffer Diagnostics",
+			},
+			{
+				"<Leader>sh",
+				function()
+					Snacks.picker.help()
+				end,
+				desc = "Search Help Pages",
+			},
+			{
+				"<Leader>sH",
+				function()
+					Snacks.picker.highlights()
+				end,
+				desc = "Search Highlights",
+			},
+			{
+				"<Leader>si",
+				function()
+					Snacks.picker.icons()
+				end,
+				desc = "Search Icons",
+			},
+			{
+				"<Leader>sj",
+				function()
+					Snacks.picker.jumps()
+				end,
+				desc = "Search Jumps",
+			},
+			{
+				"<Leader>sk",
+				function()
+					Snacks.picker.keymaps()
+				end,
+				desc = "Search Keymaps",
+			},
+			{
+				"<Leader>sl",
+				function()
+					Snacks.picker.loclist()
+				end,
+				desc = "Search Location List",
+			},
+			{
+				"<Leader>sm",
+				function()
+					Snacks.picker.marks()
+				end,
+				desc = "Search Marks",
+			},
+			{
+				"<Leader>sM",
+				function()
+					Snacks.picker.man()
+				end,
+				desc = "Search Man Pages",
+			},
+			{
+				"<Leader>sp",
+				function()
+					Snacks.picker.lazy()
+				end,
+				desc = "Search for Plugin Spec",
+			},
+			{
+				"<Leader>sq",
+				function()
+					Snacks.picker.qflist()
+				end,
+				desc = "SearchQuickfix List",
+			},
+			{
+				"<Leader>sR",
+				function()
+					Snacks.picker.resume()
+				end,
+				desc = "Search Resume",
+			},
+			{
+				"<Leader>su",
+				function()
+					Snacks.picker.undo()
+				end,
+				desc = "Search Undo History",
+			},
+			{
+				"<Leader>uC",
+				function()
+					Snacks.picker.colorschemes()
+				end,
+				desc = "Colorschemes",
+			},
+			-- LSP
+			{
+				"gd",
+				function()
+					Snacks.picker.lsp_definitions()
+				end,
+				desc = "Goto Definition",
+			},
+			{
+				"gD",
+				function()
+					Snacks.picker.lsp_declarations()
+				end,
+				desc = "Goto Declaration",
+			},
+			{
+				"gr",
+				function()
+					Snacks.picker.lsp_references()
+				end,
+				nowait = true,
+				desc = "References",
+			},
+			{
+				"gI",
+				function()
+					Snacks.picker.lsp_implementations()
+				end,
+				desc = "Goto Implementation",
+			},
+			{
+				"gy",
+				function()
+					Snacks.picker.lsp_type_definitions()
+				end,
+				desc = "Goto T[y]pe Definition",
+			},
+			{
+				"gai",
+				function()
+					Snacks.picker.lsp_incoming_calls()
+				end,
+				desc = "C[a]lls Incoming",
+			},
+			{
+				"gao",
+				function()
+					Snacks.picker.lsp_outgoing_calls()
+				end,
+				desc = "C[a]lls Outgoing",
+			},
+			{
+				"<Leader>ss",
+				function()
+					Snacks.picker.lsp_symbols()
+				end,
+				desc = "LSP Symbols",
+			},
+			{
+				"<Leader>sS",
+				function()
+					Snacks.picker.lsp_workspace_symbols()
+				end,
+				desc = "LSP Workspace Symbols",
+			},
+			-- Other
+			{
+				"<Leader>z",
+				function()
+					Snacks.zen()
+				end,
+				desc = "Toggle Zen Mode",
+			},
+			{
+				"<Leader>Z",
+				function()
+					Snacks.zen.zoom()
+				end,
+				desc = "Toggle Zoom",
+			},
+			{
+				"<Leader>.",
+				function()
+					Snacks.scratch()
+				end,
+				desc = "Toggle Scratch Buffer",
+			},
+			{
+				"<Leader>S",
+				function()
+					Snacks.scratch.select()
+				end,
+				desc = "Select Scratch Buffer",
+			},
+			{
+				"<Leader>n",
+				function()
+					Snacks.notifier.show_history()
+				end,
+				desc = "Notification History",
+			},
+			{
+				"<Leader>bd",
+				function()
+					Snacks.bufdelete()
+				end,
+				desc = "Delete Buffer",
+			},
+			{
+				"<Leader>cR",
+				function()
+					Snacks.rename.rename_file()
+				end,
+				desc = "Rename File",
+			},
+			{
+				"<Leader>gB",
+				function()
+					Snacks.gitbrowse()
+				end,
+				desc = "Git Browse",
 				mode = { "n", "v" },
-				function()
-					vim.cmd("Yazi")
-				end,
-				desc = "Open yazi at the current file",
 			},
 			{
-				-- Open in the current working directory
-				"<Leader>=", -- <Leader> =
+				"<Leader>gg",
 				function()
-					vim.cmd("Yazi cwd")
+					Snacks.lazygit()
 				end,
-				desc = "Open the file manager in nvim's working directory",
+				desc = "Lazygit",
 			},
 			{
-				"<Leader>e",
+				"<Leader>un",
 				function()
-					vim.cmd("Yazi toggle")
+					Snacks.notifier.hide()
 				end,
-				desc = "Toggle Yazi for exploration, last yazi session will be resumed if exists",
+				desc = "Dismiss All Notifications",
+			},
+			{
+				"<c-/>",
+				function()
+					Snacks.terminal()
+				end,
+				desc = "Toggle Terminal",
+			},
+			{
+				"<c-_>",
+				function()
+					Snacks.terminal()
+				end,
+				desc = "which_key_ignore",
+			},
+			{
+				"]]",
+				function()
+					Snacks.words.jump(vim.v.count1)
+				end,
+				desc = "Next Reference",
+				mode = { "n", "t" },
+			},
+			{
+				"[[",
+				function()
+					Snacks.words.jump(-vim.v.count1)
+				end,
+				desc = "Prev Reference",
+				mode = { "n", "t" },
 			},
 		},
+		init = function()
+			vim.api.nvim_create_autocmd("User", {
+				pattern = "VeryLazy",
+				callback = function()
+					-- Setup some globals for debugging (lazy-loaded)
+					_G.dd = function(...)
+						Snacks.debug.inspect(...)
+					end
+					_G.bt = function()
+						Snacks.debug.backtrace()
+					end
+
+					-- Override print to use snacks for `:=` command
+					if vim.fn.has("nvim-0.11") == 1 then
+						vim._print = function(_, ...)
+							dd(...)
+						end
+					else
+						vim.print = _G.dd
+					end
+
+					-- Create some toggle mappings
+					Snacks.toggle.option("spell", { name = "Spelling" }):map("<Leader>us")
+					Snacks.toggle.option("wrap", { name = "Wrap" }):map("<Leader>uw")
+					Snacks.toggle.option("relativenumber", { name = "Relative Number" }):map("<Leader>uL")
+					Snacks.toggle.diagnostics():map("<Leader>ud")
+					Snacks.toggle.line_number():map("<Leader>ul")
+					Snacks.toggle
+						.option("conceallevel", { off = 0, on = vim.o.conceallevel > 0 and vim.o.conceallevel or 2 })
+						:map("<Leader>uc")
+					Snacks.toggle.treesitter():map("<Leader>uT")
+					Snacks.toggle
+						.option("background", { off = "light", on = "dark", name = "Dark Background" })
+						:map("<Leader>ub")
+					Snacks.toggle.inlay_hints():map("<Leader>uh")
+					Snacks.toggle.indent():map("<Leader>ug")
+					Snacks.toggle.dim():map("<Leader>uD")
+				end,
+			})
+		end,
 	},
 }
