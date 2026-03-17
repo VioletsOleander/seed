@@ -3,9 +3,19 @@ return {
 		"neovim/nvim-lspconfig",
 		cond = not vim.g.vscode,
 		config = function()
-			vim.lsp.enable({ "lua_ls", "stylua", "ty", "ruff" })
+			vim.lsp.enable({ "lua_ls", "stylua", "ty", "ruff", "yamlls" })
 		end,
 		event = "VeryLazy",
+	},
+	{
+		"stevearc/conform.nvim",
+		cond = not vim.g.vscode,
+		opts = {
+			formatters_by_ft = {
+				yaml = { "prettier" },
+			},
+		},
+		ft = { "yaml", "yml" },
 	},
 	{
 		"saghen/blink.cmp",

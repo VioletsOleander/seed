@@ -31,7 +31,10 @@ opt.smartcase = true
 opt.ignorecase = true
 
 if not g.vscode then
-	opt.updatetime = 500
+	-- auto write
+	opt.autowrite = true
+
+	-- gui
 	opt.termguicolors = true
 	local cursor_config = {
 		"n-v-c:block",
