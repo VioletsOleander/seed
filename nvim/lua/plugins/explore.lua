@@ -19,18 +19,30 @@ return {
 					input = {
 						keys = {
 							["<Leader>c"] = { "close", mode = { "n", "i" } },
-							["/"] = "toggle_focus",
 							["<C-j>"] = { "list_down", mode = { "i", "n" } },
 							["<C-k>"] = { "list_up", mode = { "i", "n" } },
+							["<Leader>v"] = { "edit_vsplit", mode = { "i", "n" } },
+							["<Leader>s"] = { "edit_split", mode = { "i", "n" } },
 						},
 					},
 					list = {
 						keys = {
 							["<Leader>c"] = { "close", mode = { "n", "i" } },
-							["/"] = "toggle_focus",
 							["<C-j>"] = { "list_down", mode = { "i", "n" } },
 							["<C-k>"] = { "list_up", mode = { "i", "n" } },
+							["<Leader>v"] = { "edit_vsplit", mode = { "i", "n" } },
+							["<Leader>s"] = { "edit_split", mode = { "i", "n" } },
 						},
+					},
+				},
+				sources = {
+					explorer = { -- hidden and ignored seems undocumented, but works here
+						hidden = true,
+						ignored = true,
+					},
+					files = {
+						hidden = true,
+						ignored = true,
 					},
 				},
 			},
