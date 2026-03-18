@@ -36,7 +36,7 @@ return {
 					},
 				},
 				sources = {
-					explorer = { -- hidden and ignored seems undocumented, but works here
+					explorer = {
 						hidden = true,
 						ignored = true,
 					},
