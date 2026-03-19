@@ -459,6 +459,7 @@ return {
 	nvim_autopairs,
 	nvim_surround,
 	nvim_spider,
+	mini_ai,
 	flash_nvim,
 	flash_zh_nvim,
 	nvim_treesitter,
