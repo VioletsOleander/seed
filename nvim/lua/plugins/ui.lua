@@ -13,15 +13,16 @@ return {
 			})
 			require("onedark").load()
 		end,
-		lazy = true,
+		-- lazy = true,
 	},
 	{
 		"olimorris/onedarkpro.nvim",
 		cond = not vim.g.vscode,
+		priority = 1000,
 		config = function()
 			vim.cmd.colorscheme("onelight")
 		end,
-		priority = 1000,
+		lazy = true,
 	},
 	{
 		"folke/tokyonight.nvim",
