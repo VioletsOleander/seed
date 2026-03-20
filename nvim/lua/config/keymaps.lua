@@ -59,8 +59,9 @@ if vim.g.vscode then
 		end, { desc = desc })
 	end
 
-	key_to_action("<Leader>e", "workbench.view.explorer", "Open Explorer")
-	key_to_action("<Leader>f", "workbench.action.focusActiveEditorGroup", "Focus Editor")
+	key_to_action("<Leader>ss", "workbench.action.gotoSymbol", "Go to symbols in current file")
+
+	key_to_action("<Leader>e", "workbench.view.explorer", "Open and Focus on Explorer")
 
 	-- go to type definition
 	key_to_action("gy", "editor.action.goToTypeDefinition", "Go to Type Definition")
