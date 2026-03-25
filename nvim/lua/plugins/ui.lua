@@ -16,19 +16,20 @@ return {
 		-- lazy = true,
 	},
 	{
-		"olimorris/onedarkpro.nvim",
-		cond = not vim.g.vscode,
-		priority = 1000,
-		config = function()
-			vim.cmd.colorscheme("onelight")
-		end,
-		lazy = true,
-	},
-	{
 		"folke/tokyonight.nvim",
 		cond = not vim.g.vscode,
 		priority = 1000,
 		opts = {},
+		lazy = true,
+	},
+	{
+		"sainnhe/gruvbox-material",
+		cond = not vim.g.vscode,
+		priority = 1000,
+		config = function()
+			vim.g.gruvbox_material_better_performance = 1
+			vim.opt.background = "light"
+		end,
 		lazy = true,
 	},
 	-- Statusline
