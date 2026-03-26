@@ -10,15 +10,15 @@ return {
 				bg = "#fafafa",
 				black = "#2a2c33",
 				blue = "#2f5af3",
-				cyan = "#048a81",
-				green = "#3f953a",
+				cyan = "#078378",
+				green = "#378433",
 				purple = "#950095",
 				red = "#d04239",
 				white = "#fafafa",
-				yellow = "#a77301",
-				orange = "#986801",
-				highlight = "#ededed",
-				comment = "#a0a1a7",
+				yellow = "#867109",
+				orange = "#bc6b0b",
+				highlight = "#e8e9ed",
+				comment = "#747681",
 			}
 
 			require("onedarkpro").setup({ colors = custom_colors })
