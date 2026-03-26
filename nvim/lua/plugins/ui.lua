@@ -9,22 +9,24 @@ return {
 				onelight = {
 					fg = "#2a2c33",
 					bg = "#fafafa",
-					black = "#000000",
+					black = "#2a2c33",
 					blue = "#2f5af3",
 					cyan = "#078378",
 					green = "#378433",
 					purple = "#950095",
 					red = "#d04239",
-					white = "#ffffff",
+					white = "#fafafa",
 					yellow = "#867109",
 					orange = "#bc6b0b",
-					gray = "#747681",
+					gray = "#72747e",
 					highlight = "#e8e9ed",
-					comment = "#747681",
+					comment = "#72747e",
 				},
 			}
 			local custom_highlights = {
 				Cursor = { fg = "#ffffff", bg = "#4b73ec" },
+				StatusLine = { fg = "#2a2c33", bg = "#f0f0f0" },
+				NormalFloat = { bg = "" },
 			}
 
 			require("onedarkpro").setup({ colors = custom_colors, highlights = custom_highlights })
