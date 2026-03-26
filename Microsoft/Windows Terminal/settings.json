@@ -1,0 +1,245 @@
+{
+    "$help": "https://aka.ms/terminal-documentation",
+    "$schema": "https://aka.ms/terminal-profiles-schema",
+    "actions": [
+        {
+            "command": {
+                "action": "splitPane",
+                "split": "down"
+            },
+            "id": "User.splitPane.D5151347"
+        },
+        {
+            "command": {
+                "action": "splitPane",
+                "split": "right"
+            },
+            "id": "User.splitPane.864CD510"
+        },
+        {
+            "command": "closePane",
+            "id": "User.closePane"
+        }
+    ],
+    "alwaysShowTabs": true,
+    "centerOnLaunch": true,
+    "copyFormatting": "none",
+    "copyOnSelect": true,
+    "defaultProfile": "{e3adc4cf-b57f-4355-b235-0667b675d430}",
+    "disabledProfileSources": [
+        "Windows.Terminal.Azure",
+        "Windows.Terminal.PowershellCore",
+        "CanonicalGroupLimited.Ubuntu_79rhkp1fndgsc",
+        "Windows.Terminal.Wsl"
+    ],
+    "initialCols": 128,
+    "initialRows": 42,
+    "keybindings": [
+        {
+            "id": "Terminal.CopyToClipboard",
+            "keys": "ctrl+c"
+        },
+        {
+            "id": "User.splitPane.D5151347",
+            "keys": "alt+s"
+        },
+        {
+            "id": null,
+            "keys": "alt+up"
+        },
+        {
+            "id": null,
+            "keys": "alt+right"
+        },
+        {
+            "id": "Terminal.PasteFromClipboard",
+            "keys": "ctrl+v"
+        },
+        {
+            "id": "Terminal.DuplicatePaneAuto",
+            "keys": "alt+shift+d"
+        },
+        {
+            "id": null,
+            "keys": "alt+down"
+        },
+        {
+            "id": null,
+            "keys": "alt+left"
+        },
+        {
+            "id": "User.splitPane.864CD510",
+            "keys": "alt+v"
+        },
+        {
+            "id": "Terminal.MoveFocusUp",
+            "keys": "alt+shift+k"
+        },
+        {
+            "id": "Terminal.MoveFocusDown",
+            "keys": "alt+j"
+        },
+        {
+            "id": "Terminal.MoveFocusLeft",
+            "keys": "alt+h"
+        },
+        {
+            "id": "Terminal.MoveFocusRight",
+            "keys": "alt+l"
+        },
+        {
+            "id": "User.closePane",
+            "keys": "alt+c"
+        }
+    ],
+    "language": "en-US",
+    "launchMode": "maximized",
+    "newTabMenu": [
+        {
+            "type": "remainingProfiles"
+        }
+    ],
+    "profiles": {
+        "defaults": {
+            "colorScheme": "AtomOneLight",
+            "font": {
+                "face": "CaskaydiaCove Nerd Font"
+            }
+        },
+        "list": [
+            {
+                "commandline": "%SystemRoot%\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+                "guid": "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
+                "hidden": false,
+                "name": "Windows PowerShell"
+            },
+            {
+                "commandline": "%SystemRoot%\\System32\\cmd.exe",
+                "guid": "{0caa0dad-35be-5f56-a8ff-afceeeaa6101}",
+                "hidden": false,
+                "name": "\u547d\u4ee4\u63d0\u793a\u7b26"
+            },
+            {
+                "guid": "{eecd3973-2444-520e-9e20-5ea673f66fd7}",
+                "hidden": false,
+                "name": "Developer Command Prompt for VS 2022",
+                "source": "Windows.Terminal.VisualStudio"
+            },
+            {
+                "guid": "{0f798f64-dc37-5e88-b33a-fc5e36645fdf}",
+                "hidden": false,
+                "name": "Developer PowerShell for VS 2022",
+                "source": "Windows.Terminal.VisualStudio"
+            },
+            {
+                "adjustIndistinguishableColors": "automatic",
+                "colorScheme": "AtomOneLight-Refined",
+                "commandline": "C:\\Users\\Vios\\scoop\\apps\\nu\\current\\nu.exe",
+                "cursorShape": "bar",
+                "guid": "{e3adc4cf-b57f-4355-b235-0667b675d430}",
+                "hidden": false,
+                "name": "Nushell",
+                "startingDirectory": "%USERPROFILE%"
+            }
+        ]
+    },
+    "schemes": [
+        {
+            "background": "#F9F9F9",
+            "black": "#000000",
+            "blue": "#2F5AF3",
+            "brightBlack": "#000000",
+            "brightBlue": "#2F5AF3",
+            "brightCyan": "#3F953A",
+            "brightGreen": "#3F953A",
+            "brightPurple": "#A00095",
+            "brightRed": "#DE3E35",
+            "brightWhite": "#FFFFFF",
+            "brightYellow": "#D2B67C",
+            "cursorColor": "#BBBBBB",
+            "cyan": "#3F953A",
+            "foreground": "#2A2C33",
+            "green": "#3F953A",
+            "name": "AtomOneLight",
+            "purple": "#950095",
+            "red": "#DE3E35",
+            "selectionBackground": "#EDEDED",
+            "white": "#BBBBBB",
+            "yellow": "#D2B67C"
+        },
+        {
+            "background": "#FAFAFA",
+            "black": "#2A2C33",
+            "blue": "#2153E8",
+            "brightBlack": "#383A42",
+            "brightBlue": "#426CEB",
+            "brightCyan": "#397F7C",
+            "brightGreen": "#378532",
+            "brightPurple": "#A00095",
+            "brightRed": "#DD352C",
+            "brightWhite": "#FFFFFF",
+            "brightYellow": "#82743A",
+            "cursorColor": "#BBBBBB",
+            "cyan": "#2E7A78",
+            "foreground": "#2A2C33",
+            "green": "#327A2E",
+            "name": "AtomOneLight-Refined",
+            "purple": "#950095",
+            "red": "#BE342C",
+            "selectionBackground": "#EDEDED",
+            "white": "#FAFAFA",
+            "yellow": "#73732B"
+        },
+        {
+            "background": "#EFF1F5",
+            "black": "#5C5F77",
+            "blue": "#1E66F5",
+            "brightBlack": "#6C6F85",
+            "brightBlue": "#1E66F5",
+            "brightCyan": "#179299",
+            "brightGreen": "#40A02B",
+            "brightPurple": "#EA76CB",
+            "brightRed": "#D20F39",
+            "brightWhite": "#BCC0CC",
+            "brightYellow": "#DF8E1D",
+            "cursorColor": "#DC8A78",
+            "cyan": "#179299",
+            "foreground": "#4C4F69",
+            "green": "#40A02B",
+            "name": "Catppuccin Latte",
+            "purple": "#EA76CB",
+            "red": "#D20F39",
+            "selectionBackground": "#ACB0BE",
+            "white": "#ACB0BE",
+            "yellow": "#DF8E1D"
+        },
+        {
+            "background": "#FBF1C7",
+            "black": "#FBF1C7",
+            "blue": "#076678",
+            "brightBlack": "#9D8374",
+            "brightBlue": "#458588",
+            "brightCyan": "#689D69",
+            "brightGreen": "#98971A",
+            "brightPurple": "#B16186",
+            "brightRed": "#CC241D",
+            "brightWhite": "#7C6F64",
+            "brightYellow": "#D79921",
+            "cursorColor": "#282828",
+            "cyan": "#427B58",
+            "foreground": "#282828",
+            "green": "#79740E",
+            "name": "Gruvbox Light",
+            "purple": "#8F3F71",
+            "red": "#9D0006",
+            "selectionBackground": "#D5C4A1",
+            "white": "#3C3836",
+            "yellow": "#B57614"
+        },
+    ],
+    "showTabsFullscreen": false,
+    "showTabsInTitlebar": true,
+    "theme": "system",
+    "themes": [],
+    "useAcrylicInTabRow": false
+}
