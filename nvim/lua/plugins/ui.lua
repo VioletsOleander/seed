@@ -26,7 +26,6 @@ return {
 			local custom_highlights = {
 				Cursor = { fg = "#ffffff", bg = "#4b73ec" },
 				StatusLine = { fg = "#2a2c33", bg = "#f0f0f0" },
-				NormalFloat = { bg = "" },
 			}
 
 			require("onedarkpro").setup({ colors = custom_colors, highlights = custom_highlights })
