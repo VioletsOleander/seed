@@ -17,17 +17,23 @@ return {
 			local light_black = "#2a2c33"
 
 			local green = "#378433"
+			local blue = "#2f5af3"
+			local purple = "#950095"
+			local cyan = "#078378"
+
+			local fg = light_black
+			local bg = dark_white
 
 			local custom_colors = {
 				onelight = {
-					fg = light_black,
-					bg = dark_white,
+					fg = fg,
+					bg = bg,
 					black = black,
 					white = white,
-					blue = "#2f5af3",
-					cyan = "#078378",
+					blue = blue,
+					cyan = cyan,
 					green = green,
-					purple = "#950095",
+					purple = purple,
 					red = "#d04239",
 					yellow = "#867109",
 					orange = "#bc6b0b",
@@ -40,13 +46,19 @@ return {
 			vim.api.nvim_create_autocmd("ColorScheme", {
 				pattern = "onelight",
 				callback = function()
+					-- bg for float window and widgets on it
+					local float_bg = darker_white
+
 					local highlights = {
+						-- float window related
+						FloatTitle = { fg = green, bg = float_bg },
+						NonText = { bg = float_bg },
+						NormalFloat = { bg = float_bg },
+						SnacksPickerPreview = { fg = fg, bg = bg },
+						SnacksPickerPrompt = { fg = blue, bg = float_bg },
+						-- others
 						Cursor = { fg = white, bg = light_gray },
 						StatusLine = { bg = darker_white },
-						LineNr = { bg = darker_white },
-						NonText = { bg = darker_white },
-						FloatTitle = { fg = green, bg = darker_white },
-						NormalFloat = { bg = darker_white },
 					}
 
 					for name, val in pairs(highlights) do
