@@ -22,6 +22,7 @@ return {
 					input = {
 						keys = {
 							["<Leader>c"] = { "close", mode = { "n", "i" } },
+							["<C-q>"] = { "close", mode = { "n", "i" } },
 							["<C-j>"] = { "list_down", mode = { "i", "n" } },
 							["<C-k>"] = { "list_up", mode = { "i", "n" } },
 							["<Leader>v"] = { "edit_vsplit", mode = { "i", "n" } },
@@ -31,6 +32,7 @@ return {
 					list = {
 						keys = {
 							["<Leader>c"] = { "close", mode = { "n", "i" } },
+							["<C-q>"] = { "close", mode = { "n", "i" } },
 							["<C-j>"] = { "list_down", mode = { "i", "n" } },
 							["<C-k>"] = { "list_up", mode = { "i", "n" } },
 							["<Leader>v"] = { "edit_vsplit", mode = { "i", "n" } },
