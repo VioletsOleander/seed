@@ -110,6 +110,9 @@ else
 	map("i", "kk", "<Esc>", { desc = "Insert Mode to Normal Mode" })
 	map("i", "<M-n>", "<Esc>", { desc = "Insert Mode to Normal Mode" })
 
+	-- quit
+	map({ "i", "n" }, "<C-q>", "<Cmd>quit<CR>", { desc = "Quit Current Window" })
+
 	-- save
 	map("n", "<Leader>w", "<Cmd>w<CR>", { desc = "Save File" })
 	map("n", "<Leader><CR>", "<Cmd>w<CR>", { desc = "Save File" })
