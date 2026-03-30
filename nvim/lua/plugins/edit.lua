@@ -52,20 +52,7 @@ local flash_nvim = {
 	"folke/flash.nvim",
 	opts = {
 		modes = {
-			search = {
-				enabled = true,
-			},
-			-- flash does not support disable highlight for char mode
-			-- so use vim.sneak as alternative for char mode
 			char = {
-				enabled = true,
-				keys = { "f", "F", "t", "T", ";", "," },
-				char_actions = function(motion)
-					return {
-						[";"] = "next",
-						[","] = "prev",
-					}
-				end,
 				highlight = {
 					backdrop = false,
 				},
@@ -75,7 +62,7 @@ local flash_nvim = {
 	event = "VeryLazy",
 	keys = {
 		{
-			"<Leader>s",
+			"s",
 			function()
 				require("flash").jump()
 			end,
@@ -83,7 +70,7 @@ local flash_nvim = {
 			desc = "Flash Jump Mode (Jump to any visible position in current screen)",
 		},
 		{
-			"<Leader>S",
+			"<Leader>s",
 			function()
 				require("flash").treesitter()
 			end,
@@ -327,6 +314,71 @@ local nvim_treesitter_textobjects = {
 			mode = { "n", "x", "o" },
 			desc = "Go to previous parameter start",
 		},
+		{
+			"]A",
+			function()
+				require("nvim-treesitter-textobjects.move").goto_next_start("@parameter.outter", "textobjects")
+			end,
+			mode = { "n", "x", "o" },
+			desc = "Go to next parameter start",
+		},
+		{
+			"[A",
+			function()
+				require("nvim-treesitter-textobjects.move").goto_previous_start("@parameter.outer", "textobjects")
+			end,
+			mode = { "n", "x", "o" },
+			desc = "Go to previous parameter start",
+		},
+		-- v for call (invocation)
+		{
+			"av",
+			function()
+				require("nvim-treesitter-textobjects.select").select_textobject("@call.outer", "textobjects")
+			end,
+			mode = { "x", "o" },
+			desc = "Select around procedure call",
+		},
+		{
+			"iv",
+			function()
+				require("nvim-treesitter-textobjects.select").select_textobject("@call.inner", "textobjects")
+			end,
+			mode = { "x", "o" },
+			desc = "Select around procedure call",
+		},
+		{
+			"]v",
+			function()
+				require("nvim-treesitter-textobjects.move").goto_next_start("@call.inner", "textobjects")
+			end,
+			mode = { "n", "x", "o" },
+			desc = "Go to next parameter start",
+		},
+		{
+			"[v",
+			function()
+				require("nvim-treesitter-textobjects.move").goto_previous_start("@call.inner", "textobjects")
+			end,
+			mode = { "n", "x", "o" },
+			desc = "Go to previous parameter start",
+		},
+		{
+			"]V",
+			function()
+				require("nvim-treesitter-textobjects.move").goto_next_start("@call.outer", "textobjects")
+			end,
+			mode = { "n", "x", "o" },
+			desc = "Go to next procedure call start",
+		},
+		{
+			"[V",
+			function()
+				require("nvim-treesitter-textobjects.move").goto_previous_start("@call.outer", "textobjects")
+			end,
+			mode = { "n", "x", "o" },
+			desc = "Go to previous procedure call start",
+		},
 		-- swap next/previous parameter
 		{
 			"<leader>l", -- right
@@ -339,7 +391,7 @@ local nvim_treesitter_textobjects = {
 		{
 			"<leader>h", -- left
 			function()
-				require("nvim-treesitter-textobjects.swap").swap_previous("@parameter.outer")
+				require("nvim-treesitter-textobjects.swap").swap_previous("@parameter.inner")
 			end,
 			mode = "n",
 			desc = "Swap previous parameter",
