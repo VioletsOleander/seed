@@ -5,7 +5,7 @@ return {
 		config = function()
 			vim.lsp.enable({ "lua_ls", "stylua", "ty", "ruff", "yamlls", "jsonls" })
 		end,
-		event = "VeryLazy",
+		event = { "BufReadPre", "BufNewFile" },
 	},
 	{
 		"stevearc/conform.nvim",
