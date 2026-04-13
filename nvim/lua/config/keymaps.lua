@@ -18,6 +18,10 @@ map({ "n", "x", "o" }, "<C-k>", "5k", { desc = "Jump 5 lines up" })
 map({ "n", "v" }, "<Leader>y", '"+y', { desc = "Yank to system clipboard" })
 map({ "n", "v" }, "<Leader>p", '"+p', { desc = "Paste from system clipboard" })
 
+-- insert newline before/after the cursor line
+map({ "n" }, "[<Space>", "O<Esc>", { desc = "Insert a newline before current line" })
+map({ "n" }, "]<Space>", "o<Esc>", { desc = "Insert a newline after current line" })
+
 if vim.g.vscode then
 	-- Keymaps for vscode
 	-- vscode commands references: https://code.visualstudio.com/api/references/commands
