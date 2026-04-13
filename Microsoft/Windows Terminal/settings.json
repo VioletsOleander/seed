@@ -46,20 +46,20 @@
             "keys": "ctrl+c"
         },
         {
-            "id": "Terminal.PasteFromClipboard",
-            "keys": "ctrl+v"
-        },
-        {
-            "id": null,
-            "keys": "alt+right"
+            "id": "User.splitPane.D5151347",
+            "keys": "alt+s"
         },
         {
             "id": null,
             "keys": "alt+up"
         },
         {
-            "id": "User.splitPane.D5151347",
-            "keys": "alt+s"
+            "id": null,
+            "keys": "alt+right"
+        },
+        {
+            "id": "Terminal.PasteFromClipboard",
+            "keys": "ctrl+v"
         },
         {
             "id": "Terminal.DuplicatePaneAuto",
@@ -111,10 +111,9 @@
         "defaults": 
         {
             "adjustIndistinguishableColors": "never",
-            "colorScheme": "AtomOneLight",
-            "font": 
+            "colorScheme": 
             {
-                "face": "CaskaydiaCove Nerd Font"
+                "light": "Campbell"
             }
         },
         "list": 
@@ -144,9 +143,9 @@
                 "source": "Windows.Terminal.VisualStudio"
             },
             {
+                "adjustIndistinguishableColors": "never",
                 "colorScheme": "AtomOneLight-Refined",
                 "commandline": "C:\\Users\\Vios\\scoop\\apps\\nu\\current\\nu.exe",
-                "cursorShape": "bar",
                 "font": 
                 {
                     "face": "CaskaydiaCove Nerd Font"
