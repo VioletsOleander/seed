@@ -26,6 +26,7 @@
     ],
     "alwaysShowTabs": true,
     "centerOnLaunch": true,
+    "compatibility.enableUnfocusedAcrylic": false,
     "copyFormatting": "none",
     "copyOnSelect": true,
     "defaultProfile": "{e3adc4cf-b57f-4355-b235-0667b675d430}",
@@ -109,6 +110,7 @@
     {
         "defaults": 
         {
+            "adjustIndistinguishableColors": "never",
             "colorScheme": "AtomOneLight",
             "font": 
             {
@@ -142,10 +144,13 @@
                 "source": "Windows.Terminal.VisualStudio"
             },
             {
-                "adjustIndistinguishableColors": "always",
                 "colorScheme": "AtomOneLight-Refined",
                 "commandline": "C:\\Users\\Vios\\scoop\\apps\\nu\\current\\nu.exe",
                 "cursorShape": "bar",
+                "font": 
+                {
+                    "face": "CaskaydiaCove Nerd Font"
+                },
                 "guid": "{e3adc4cf-b57f-4355-b235-0667b675d430}",
                 "hidden": false,
                 "name": "Nushell",
