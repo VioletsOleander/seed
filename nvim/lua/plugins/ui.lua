@@ -89,12 +89,19 @@ return {
 		lazy = true,
 	},
 	{
+		"catppuccin/nvim",
+		cond = not vim.g.vscode,
+		name = "catppuccin",
+		priority = 1000,
+		lazy = true,
+	},
+	{
 		"sainnhe/gruvbox-material",
 		cond = not vim.g.vscode,
 		priority = 1000,
 		config = function()
 			vim.g.gruvbox_material_better_performance = 1
-			vim.opt.background = "light"
+			vim.g.gruvbox_material_background = "soft"
 		end,
 		lazy = true,
 	},
