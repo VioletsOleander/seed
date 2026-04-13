@@ -22,7 +22,7 @@ g.loaded_node_provider = 0
 
 -- Options
 -- timeout
-opt.timeoutlen = 300
+opt.timeoutlen = 400
 
 -- tab use 4 spaces
 -- (auto)indent use 4 spaces
@@ -59,4 +59,5 @@ if not g.vscode then
 		"a:blinkon0-Cursor",
 	}
 	opt.guicursor = table.concat(cursor_config, ",")
+	opt.background = "light"
 end
