@@ -4,14 +4,13 @@ return {
 		"olimorris/onedarkpro.nvim",
 		cond = not vim.g.vscode,
 		priority = 1000,
-		lazy = true,
 		config = function()
 			local gray = "#aaaaaa"
 			local light_gray = "#dddddd"
 			local lighter_gray = "#efefef"
 
 			local white = "#ffffff"
-			local dark_white = "#f9f9f9"
+			local dark_white = "#fafafa"
 			local darker_white = "#f0f0f0"
 
 			local black = "#1a1a1a"
@@ -27,6 +26,7 @@ return {
 
 			local orange = "#bc6b0b"
 			local red = "#ce403a"
+			local light_red = "#dd4a42"
 			local yellow = "#926e15"
 
 			local fg = light_black
@@ -38,7 +38,7 @@ return {
 					bg = bg,
 					black = black,
 					white = white,
-					blue = blue,
+					blue = light_blue,
 					cyan = cyan,
 					green = green,
 					purple = purple,
@@ -67,9 +67,10 @@ return {
 						-- flash
 						FlashMatch = { fg = darker_white, bg = light_blue },
 						FlashCurrent = { fg = darker_white, bg = orange },
-						FlashLabel = { fg = darker_white, bg = red },
+						FlashLabel = { fg = darker_white, bg = purple },
 						-- others
 						StatusLine = { bg = darker_white },
+						Cursor = { fg = black, bg = gray },
 					}
 
 					for name, val in pairs(highlights) do
@@ -85,6 +86,7 @@ return {
 	{
 		"sainnhe/gruvbox-material",
 		cond = not vim.g.vscode,
+		lazy = true,
 		priority = 1000,
 		config = function()
 			vim.g.gruvbox_material_better_performance = 1
