@@ -2,54 +2,21 @@
 local nvim_autopairs = {
 	"windwp/nvim-autopairs",
 	cond = not vim.g.vscode,
-	opts = {},
 	event = "InsertEnter",
+	opts = {},
 }
 
 local nvim_surround = {
 	"kylechui/nvim-surround",
 	version = "^3.0.0",
+	event = { "BufReadPre", "BufNewFile" },
 	opts = {},
-	event = "VeryLazy",
 }
 
 -- motion
-local nvim_spider = {
-	"chrisgrieser/nvim-spider",
-	keys = {
-		{
-			"zw",
-			function()
-				require("spider").motion("w")
-			end,
-			mode = { "n", "o", "x" },
-		},
-		{
-			"ze",
-			function()
-				require("spider").motion("e")
-			end,
-			mode = { "n", "o", "x" },
-		},
-		{
-			"zb",
-			function()
-				require("spider").motion("b")
-			end,
-			mode = { "n", "o", "x" },
-		},
-		{
-			"zge",
-			function()
-				require("spider").motion("ge")
-			end,
-			mode = { "n", "o", "x" },
-		},
-	},
-}
-
 local flash_nvim = {
 	"folke/flash.nvim",
+	event = "VeryLazy",
 	opts = {
 		modes = {
 			char = {
@@ -59,7 +26,6 @@ local flash_nvim = {
 			},
 		},
 	},
-	event = "VeryLazy",
 	keys = {
 		{
 			"s",
@@ -99,36 +65,39 @@ local flash_nvim = {
 	},
 }
 
-local flash_zh_nvim = {
-	"rainzm/flash-zh.nvim",
-	dependencies = { "folke/flash.nvim" },
-	keys = {
-		{
-			"gz",
-			function()
-				require("flash-zh").jump({ chinese_only = true })
-			end,
-			mode = { "n", "x", "o" },
-			desc = "Flash Jump Mode for Chinese",
-		},
-	},
-}
-
 -- textobject
 local mini_ai = {
 	"nvim-mini/mini.ai",
 	version = "*",
-	opts = {
-		-- disable mini.ai built-in textobjects
-		custom_textobjects = {
-			f = false,
-			c = false,
-			a = false,
-			t = false,
-		},
-		search_method = "cover",
-	},
-	event = "VeryLazy",
+	event = { "BufReadPre", "BufNewFile" },
+	config = function()
+		local spec_treesitter = require("mini.ai").gen_spec.treesitter
+
+		local custom_textobjects = {
+			-- conditional (if)
+			i = spec_treesitter({ a = "@conditional.outer", i = "@conditional.inner" }),
+			-- scope
+			s = spec_treesitter({ a = "@scope.outer", i = "@scope.inner" }),
+			-- loop
+			l = spec_treesitter({ a = "@loop.outer", i = "@loop.inner" }),
+			-- block
+			k = spec_treesitter({ a = "@block.outer", i = "@block.inner" }),
+			-- function
+			f = spec_treesitter({ a = "@function.outer", i = "@function.inner" }),
+			-- class
+			c = spec_treesitter({ a = "@class.outer", i = "@class.inner" }),
+			-- parameter/argument
+			a = spec_treesitter({ a = "@parameter.outer", i = "@parameter.inner" }),
+			-- call/invocation
+			v = spec_treesitter({ a = "@call.outer", i = "@call.inner" }),
+		}
+
+		require("mini.ai").setup({
+			n_lines = 500,
+			search_method = "cover_or_next",
+			custom_textobjects = custom_textobjects,
+		})
+	end,
 }
 
 local nvim_treesitter = {
@@ -139,6 +108,7 @@ local nvim_treesitter = {
 local nvim_treesitter_textobjects = {
 	"nvim-treesitter/nvim-treesitter-textobjects",
 	branch = "main",
+	event = { "BufReadPre", "BufNewFile" },
 	init = function()
 		-- Disable entire built-in ftplugin mappings to avoid conflicts.
 		-- See https://github.com/neovim/neovim/tree/master/runtime/ftplugin for built-in ftplugins.
@@ -185,22 +155,6 @@ local nvim_treesitter_textobjects = {
 	keys = {
 		-- f for functions
 		{
-			"af",
-			function()
-				require("nvim-treesitter-textobjects.select").select_textobject("@function.outer", "textobjects")
-			end,
-			mode = { "x", "o" },
-			desc = "Select around function",
-		},
-		{
-			"if",
-			function()
-				require("nvim-treesitter-textobjects.select").select_textobject("@function.inner", "textobjects")
-			end,
-			mode = { "x", "o" },
-			desc = "Select inner function",
-		},
-		{
 			"]f",
 			function()
 				require("nvim-treesitter-textobjects.move").goto_next_start("@function.outer", "textobjects")
@@ -233,22 +187,6 @@ local nvim_treesitter_textobjects = {
 			desc = "Go to previous function end",
 		},
 		-- c for classes
-		{
-			"ac",
-			function()
-				require("nvim-treesitter-textobjects.select").select_textobject("@class.outer", "textobjects")
-			end,
-			mode = { "x", "o" },
-			desc = "Select around class",
-		},
-		{
-			"ic",
-			function()
-				require("nvim-treesitter-textobjects.select").select_textobject("@class.inner", "textobjects")
-			end,
-			mode = { "x", "o" },
-			desc = "Select inner class",
-		},
 		{
 			"]c",
 			function()
@@ -283,22 +221,6 @@ local nvim_treesitter_textobjects = {
 		},
 		-- a for arguments (parameters)
 		{
-			"aa",
-			function()
-				require("nvim-treesitter-textobjects.select").select_textobject("@parameter.outer", "textobjects")
-			end,
-			mode = { "x", "o" },
-			desc = "Select around parameter",
-		},
-		{
-			"ia",
-			function()
-				require("nvim-treesitter-textobjects.select").select_textobject("@parameter.inner", "textobjects")
-			end,
-			mode = { "x", "o" },
-			desc = "Select inner parameter",
-		},
-		{
 			"]a",
 			function()
 				require("nvim-treesitter-textobjects.move").goto_next_start("@parameter.inner", "textobjects")
@@ -331,22 +253,6 @@ local nvim_treesitter_textobjects = {
 			desc = "Go to previous parameter start",
 		},
 		-- v for call (invocation)
-		{
-			"av",
-			function()
-				require("nvim-treesitter-textobjects.select").select_textobject("@call.outer", "textobjects")
-			end,
-			mode = { "x", "o" },
-			desc = "Select around procedure call",
-		},
-		{
-			"iv",
-			function()
-				require("nvim-treesitter-textobjects.select").select_textobject("@call.inner", "textobjects")
-			end,
-			mode = { "x", "o" },
-			desc = "Select around procedure call",
-		},
 		{
 			"]v",
 			function()
@@ -398,22 +304,6 @@ local nvim_treesitter_textobjects = {
 		},
 		-- k for block
 		{
-			"ak",
-			function()
-				require("nvim-treesitter-textobjects.select").select_textobject("@block.outer", "textobjects")
-			end,
-			mode = { "x", "o" },
-			desc = "Select around block",
-		},
-		{
-			"ik",
-			function()
-				require("nvim-treesitter-textobjects.select").select_textobject("@block.inner", "textobjects")
-			end,
-			mode = { "x", "o" },
-			desc = "Select inner block",
-		},
-		{
 			"]k",
 			function()
 				require("nvim-treesitter-textobjects.move").goto_next_end("@block.outer", "textobjects")
@@ -447,22 +337,6 @@ local nvim_treesitter_textobjects = {
 		},
 		-- loop
 		{
-			"]l",
-			function()
-				require("nvim-treesitter-textobjects.move").goto_next_start("@loop.outer", "textobjects")
-			end,
-			mode = { "n", "x", "o" },
-			desc = "Go to next loop start",
-		},
-		{
-			"[l",
-			function()
-				require("nvim-treesitter-textobjects.move").goto_previous_start("@loop.outer", "textobjects")
-			end,
-			mode = { "n", "x", "o" },
-			desc = "Go to previous loop start",
-		},
-		{
 			"]L",
 			function()
 				require("nvim-treesitter-textobjects.move").goto_next_end("@loop.outer", "textobjects")
@@ -478,50 +352,14 @@ local nvim_treesitter_textobjects = {
 			mode = { "n", "x", "o" },
 			desc = "Go to previous loop end",
 		},
-		-- conditional
-		{
-			"]i", -- i for if
-			function()
-				require("nvim-treesitter-textobjects.move").goto_next("@conditional.outer", "textobjects")
-			end,
-			mode = { "n", "x", "o" },
-			desc = "Go to next conditional",
-		},
-		{
-			"[i", -- i for if
-			function()
-				require("nvim-treesitter-textobjects.move").goto_previous("@conditional.outer", "textobjects")
-			end,
-			mode = { "n", "x", "o" },
-			desc = "Go to previous conditional",
-		},
-		-- s for scope (function, class, loop, etc.)
-		{
-			"as",
-			function()
-				require("nvim-treesitter-textobjects.select").select_textobject("@local.scope", "locals")
-			end,
-			mode = { "x", "o" },
-			desc = "Select around scope",
-		},
-		{
-			"is",
-			function()
-				require("nvim-treesitter-textobjects.select").select_textobject("@local.scope", "locals")
-			end,
-			mode = { "x", "o" },
-			desc = "Select inner scope",
-		},
 	},
 }
 
 return {
 	nvim_autopairs,
 	nvim_surround,
-	nvim_spider,
 	mini_ai,
 	flash_nvim,
-	flash_zh_nvim,
 	nvim_treesitter,
 	nvim_treesitter_textobjects,
 }
