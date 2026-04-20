@@ -5,7 +5,6 @@
     ".tmux.conf": { dest: { Windows: "", Linux: ".tmux.conf" } },
     ".gitconfig": { dest: { Windows: ".gitconfig", Linux: ".gitconfig" } },
     "nvim/": { dest: { Windows: "AppData/Local/nvim" } },
-    "lazyvim/": { dest: { Windows: "AppData/Local/lazyvim" } },
     "yazi/",
     "lazygit/",
     "Microsoft/Windows Terminal/":

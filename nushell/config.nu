@@ -61,13 +61,6 @@ alias ,uv = ^uv
 alias ,pytest = ^pytest
 alias ,cargo = ^cargo
 
-def lvim [...args] {
-    with-env { NVIM_APPNAME: "lazyvim" } {
-        nvim ...$args
-    }
-}
-alias lv = lvim
-
 # Plugin
 # const NU_PLUGIN_DIRS = [
 #   ($nu.current-exe | path dirname)
