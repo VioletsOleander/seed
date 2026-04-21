@@ -115,12 +115,6 @@ else
 	map("i", "<C-F>", "<C-X><C-F>", { desc = "Completion with file names" })
 	map("i", "<C-D>", "<C-X><C-D>", { desc = "Completion with definition or marcros" })
 	map("i", "<C-L>", "<C-X><C-L>", { desc = "Completion with seen whole lines" })
-	map("i", "<Tab>", function()
-		return vim.fn.pumvisible() ~= 0 and "<C-n>" or "<Tab>"
-	end, { expr = true, silent = true, desc = "Select next completion by pressing tab when popup meun is visible" })
-	map("i", "<S-Tab>", function()
-		return vim.fn.pumvisible() ~= 0 and "<C-p>" or "<S-Tab>"
-	end, { expr = true, silent = true, desc = "Select previous completion by pressing tab when popup meun is visible" })
 
 	-- quit
 	map({ "i", "n" }, "<C-q>", "<Cmd>quit<CR>", { desc = "Quit Current Window" })
@@ -128,4 +122,33 @@ else
 	-- save
 	map("n", "<Leader>w", "<Cmd>w<CR>", { desc = "Save File" })
 	map("n", "<Leader><CR>", "<Cmd>w<CR>", { desc = "Save File" })
+
+	local function is_closer()
+		local line = vim.api.nvim_get_current_line()
+		local col = vim.api.nvim_win_get_cursor(0)[2]
+		local char_after = line:sub(col + 1, col + 1)
+		local closers = { ")", "]", "}", '"', "'", "`", ">" }
+
+		for _, closer in ipairs(closers) do
+			if char_after == closer then
+				return true
+			end
+		end
+
+		return false
+	end
+
+	-- tab for completion or jump out
+	map("i", "<Tab>", function()
+		if vim.fn.pumvisible() ~= 0 then
+			return "<C-n>"
+		elseif is_closer() then
+			return "<Right>"
+		else
+			return "<Tab>"
+		end
+	end, { expr = true, silent = true, desc = "Jump out of brackets or select next completion" })
+	map("i", "<S-Tab>", function()
+		return vim.fn.pumvisible() ~= 0 and "<C-p>" or "<S-Tab>"
+	end, { expr = true, silent = true, desc = "Select previous completion" })
 end

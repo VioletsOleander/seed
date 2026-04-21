@@ -8,9 +8,7 @@ local nvim_autopairs = {
 
 local nvim_surround = {
 	"kylechui/nvim-surround",
-	version = "^3.0.0",
 	event = { "BufReadPre", "BufNewFile" },
-	opts = {},
 }
 
 -- motion

@@ -52,7 +52,7 @@ if not g.vscode then
 	-- insert completion
 	opt.autocomplete = true
 	opt.completeopt = "menu,popup,noselect"
-	opt.complete:prepend("o")
+	opt.complete = "o,.,w,b,u,t"
 
 	-- gui
 	opt.termguicolors = true
