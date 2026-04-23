@@ -1,5 +1,6 @@
 vim9script
 
+# Cursor shape
 # when start insert mode, set cursor to steady bar
 &t_SI = "\<Esc>[6 q"
 # when start replace mode, set cursor to steady block
@@ -44,15 +45,45 @@ set noswapfile
 set noerrorbells
 set vb t_vb=
 
-# no recursive map in normal mode
-# map ctrl-v to alt-v
-noremap <C-v> <A-v>
+# autocomplete (insert and cmdline)
+set autocomplete
+set completeopt=menu,popup,noselect
+set complete=o,.,w,b,u,t
 
-# no recursive map in insert mode
+set wildmenu
+set wildmode=noselect:lastused,full
+set wildoptions=pum,fuzzy,tagfile
+
+# guicursor
+set guicursor=n-v-c:block,i-c-ci-ve:ver25,r-cr:block,o:hor20,a:blinkon0-Cursor
+
+# color
+set termguicolors
+colorscheme shine
+
+g:mapleader = " "
+
+# Insert mode keymap
 # map jj, jk, kk to Esc
 inoremap jj <Esc>
 inoremap jk <Esc>
 inoremap kk <Esc>
 
-# map Alt-n to Esc
-inoremap <A-n> <Esc>
+# Normal, visual, operator mode keymap
+# goto line start, end
+noremap H ^
+noremap L $
+
+# save file
+noremap <Leader>w <Cmd>w<CR>
+
+# up/down 5 lines
+noremap <C-j> 5j
+noremap <C-k> 5k
+
+# clear highlight
+noremap <Leader>c <Cmd>nohlsearch<CR>
+
+# copy/paste
+noremap <Leader>y "+y
+noremap <Leader>p "+p
