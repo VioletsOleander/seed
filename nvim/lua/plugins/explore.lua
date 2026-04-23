@@ -70,7 +70,7 @@ local snacks = {
 			Snacks.picker.notifications()
 		end, { desc = "Notification History" })
 		-- buffer
-		keymap("n", "<Leader>/", function()
+		keymap("n", "<Leader>,", function()
 			Snacks.picker.buffers()
 		end, { desc = "Find Buffers" })
 		keymap("n", "<Leader>bd", function()
@@ -203,4 +203,16 @@ local snacks = {
 	end,
 }
 
-return { snacks }
+local mini_icons = {
+	"nvim-mini/mini.icons",
+	cond = not vim.g.vscode,
+	opts = {},
+}
+
+local oil = {
+	"stevearc/oil.nvim",
+	cond = not vim.g.vscode,
+	opts = {},
+}
+
+return { snacks, oil, mini_icons }
