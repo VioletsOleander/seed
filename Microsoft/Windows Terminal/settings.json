@@ -46,20 +46,20 @@
             "keys": "ctrl+c"
         },
         {
-            "id": "User.splitPane.D5151347",
-            "keys": "alt+s"
-        },
-        {
-            "id": null,
-            "keys": "alt+up"
+            "id": "Terminal.PasteFromClipboard",
+            "keys": "ctrl+v"
         },
         {
             "id": null,
             "keys": "alt+right"
         },
         {
-            "id": "Terminal.PasteFromClipboard",
-            "keys": "ctrl+v"
+            "id": null,
+            "keys": "alt+up"
+        },
+        {
+            "id": "User.splitPane.D5151347",
+            "keys": "alt+s"
         },
         {
             "id": "Terminal.DuplicatePaneAuto",
@@ -111,15 +111,21 @@
         "defaults": 
         {
             "adjustIndistinguishableColors": "never",
-            "colorScheme": 
+            "colorScheme": "AtomOneLight-Refined",
+            "font": 
             {
-                "light": "Campbell"
+                "face": "CaskaydiaCove Nerd Font"
             }
         },
         "list": 
         [
             {
+                "colorScheme": "AtomOneLight-Refined",
                 "commandline": "%SystemRoot%\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
+                "font": 
+                {
+                    "face": "CaskaydiaCove Nerd Font Mono"
+                },
                 "guid": "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
                 "hidden": false,
                 "name": "Windows PowerShell"
@@ -143,12 +149,13 @@
                 "source": "Windows.Terminal.VisualStudio"
             },
             {
-                "adjustIndistinguishableColors": "never",
                 "colorScheme": "AtomOneLight-Refined",
                 "commandline": "C:\\Users\\Vios\\scoop\\apps\\nu\\current\\nu.exe",
                 "font": 
                 {
-                    "face": "CaskaydiaCove Nerd Font"
+                    "face": "CaskaydiaCove Nerd Font",
+                    "size": 12,
+                    "weight": "normal"
                 },
                 "guid": "{e3adc4cf-b57f-4355-b235-0667b675d430}",
                 "hidden": false,
@@ -160,38 +167,15 @@
     "schemes": 
     [
         {
-            "background": "#F9F9F9",
-            "black": "#000000",
-            "blue": "#2F5AF3",
-            "brightBlack": "#000000",
-            "brightBlue": "#2F5AF3",
-            "brightCyan": "#3F953A",
-            "brightGreen": "#3F953A",
-            "brightPurple": "#A00095",
-            "brightRed": "#DE3E35",
-            "brightWhite": "#FFFFFF",
-            "brightYellow": "#D2B67C",
-            "cursorColor": "#BBBBBB",
-            "cyan": "#3F953A",
-            "foreground": "#2A2C33",
-            "green": "#3F953A",
-            "name": "AtomOneLight",
-            "purple": "#950095",
-            "red": "#DE3E35",
-            "selectionBackground": "#EDEDED",
-            "white": "#BBBBBB",
-            "yellow": "#D2B67C"
-        },
-        {
             "background": "#FAFAFA",
             "black": "#2A2C33",
             "blue": "#2153E8",
             "brightBlack": "#383A42",
             "brightBlue": "#426CEB",
             "brightCyan": "#397F7C",
-            "brightGreen": "#378532",
+            "brightGreen": "#378232",
             "brightPurple": "#A00095",
-            "brightRed": "#DD352C",
+            "brightRed": "#D7332C",
             "brightWhite": "#FFFFFF",
             "brightYellow": "#82743A",
             "cursorColor": "#BBBBBB",
