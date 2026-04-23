@@ -79,7 +79,6 @@
   "editor.inlayHints.enabled": "off",
   "editor.fontSize": 15,
   "editor.fontFamily": "Fira Code Retina, Consolas, monospace",
-  "editor.fontLigatures": "'cv01', 'cv02'",
   "editor.rulers": [
     110
   ],
@@ -138,6 +137,9 @@
   },
   "[lua]": {
     "editor.defaultFormatter": "JohnnyMorganz.stylua",
+  },
+  "[rust]": {
+    "editor.defaultFormatter": "rust-lang.rust-analyzer"
   },
   "files.autoSave": "afterDelay",
   "files.readonlyInclude": {
