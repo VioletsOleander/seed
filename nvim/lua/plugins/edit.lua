@@ -1,11 +1,4 @@
 -- edit
-local nvim_autopairs = {
-	"windwp/nvim-autopairs",
-	cond = not vim.g.vscode,
-	event = "InsertEnter",
-	opts = {},
-}
-
 local nvim_surround = {
 	"kylechui/nvim-surround",
 	event = { "BufReadPre", "BufNewFile" },
@@ -197,11 +190,18 @@ local nvim_treesitter_textobjects = {
 	end,
 }
 
+-- completion
+local copilot = {
+	"github/copilot.vim",
+	cond = not vim.g.vscode,
+	cmd = "Copilot",
+}
+
 return {
-	nvim_autopairs,
 	nvim_surround,
 	mini_ai,
 	flash_nvim,
 	nvim_treesitter,
 	nvim_treesitter_textobjects,
+	copilot,
 }

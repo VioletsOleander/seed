@@ -151,4 +151,64 @@ else
 	map("i", "<S-Tab>", function()
 		return vim.fn.pumvisible() ~= 0 and "<C-p>" or "<S-Tab>"
 	end, { expr = true, silent = true, desc = "Select previous completion" })
+
+	-- autopairs
+	local the_pairs = {
+		["("] = "()",
+		["["] = "[]",
+		["{"] = "{}",
+		["'"] = "''",
+		['"'] = '""',
+	}
+
+	for open, close in pairs(the_pairs) do
+		map("i", open, function()
+			local col = vim.api.nvim_win_get_cursor(0)[2]
+			local line = vim.api.nvim_get_current_line()
+			local char_after = line:sub(col + 1, col + 1)
+
+			if char_after:match("%w") then
+				return open
+			else
+				return close .. "<Left>"
+			end
+		end, { expr = true })
+	end
+
+	map("i", "<CR>", function()
+		if vim.fn.pumvisible() ~= 0 then
+			-- accept completion if menu is visible
+			return "<C-y>"
+		else
+			-- autopairs if menu is not visible
+			local col = vim.api.nvim_win_get_cursor(0)[2]
+			local line = vim.api.nvim_get_current_line()
+			local before = line:sub(col, col)
+			local after = line:sub(col + 1, col + 1)
+
+			if (before == "{" and after == "}") or (before == "(" and after == ")") then
+				return " <CR><Up><End><CR>"
+			end
+
+			-- otherwise just insert a newline
+			return "<CR>"
+		end
+	end, { expr = true })
+
+	-- Lsp keymaps
+	map("n", "gD", vim.lsp.buf.declaration, { desc = "Go to Declaration" })
+
+	map("n", "K", vim.lsp.buf.hover, { desc = "Hover Documentation" })
+	map("i", "<C-k>", vim.lsp.buf.signature_help, { desc = "Signature Help" })
+
+	map("n", "<Leader>r", vim.lsp.buf.rename, { desc = "Rename Symbol" })
+	map({ "n", "v" }, "<Leader>a", vim.lsp.buf.code_action, { desc = "Code Action" })
+
+	map("n", "<Leader>cd", vim.diagnostic.open_float, { desc = "Show Line Diagnostics" })
+	map("n", "[d", function()
+		vim.diagnostic.jump({ count = 1, float = true })
+	end, { desc = "Prev Diagnostic" })
+	map("n", "]d", function()
+		vim.diagnostic.jump({ count = -1, float = true })
+	end, { desc = "Next Diagnostic" })
 end
