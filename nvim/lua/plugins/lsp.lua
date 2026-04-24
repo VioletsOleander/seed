@@ -3,7 +3,7 @@ local lsp_config = {
 	cond = not vim.g.vscode,
 	event = { "BufReadPre", "BufNewFile" },
 	config = function()
-		vim.lsp.enable({ "lua_ls", "ty", "ruff", "yamlls", "jsonls", "rust_analyzer" })
+		vim.lsp.enable({ "lua_ls", "stylua", "ty", "ruff", "yamlls", "jsonls", "rust_analyzer" })
 	end,
 }
 
@@ -22,8 +22,8 @@ local conform = {
 			rust = { "rustfmt" },
 		},
 		format_on_save = {
-			lsp_format = "never",
-			timeout_ms = 500,
+			lsp_format = "fallback",
+			timeout_ms = 3000,
 		},
 	},
 }
