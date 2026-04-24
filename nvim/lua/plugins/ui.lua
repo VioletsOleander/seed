@@ -96,6 +96,7 @@ local gruvbox_material = {
 		vim.cmd("colorscheme gruvbox-material")
 	end,
 }
+
 local ever_forest = {
 	"sainnhe/everforest",
 	cond = not vim.g.vscode,
