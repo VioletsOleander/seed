@@ -101,6 +101,7 @@ end
 
 -- Keymaps for Neovim only
 
+---@module "snacks"
 -- Clear screen
 map("n", "<Leader>c", function()
 	vim.cmd("nohlsearch")

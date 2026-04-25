@@ -18,22 +18,25 @@ local flash_nvim = {
 		local flash = require("flash")
 		local map = vim.keymap.set
 
-		map({ "n", "o", "x" }, "s", flash.jump, { desc = "jump to any visible position in current screen" })
+		map({ "n", "o", "x" }, "s", function()
+			flash.jump()
+		end, { desc = "jump to any visible position in current screen" })
 
-		map({ "n", "o", "x" }, "<leader>s", flash.treesitter, { desc = "jump to any syntax node in current screen" })
+		map({ "n", "o", "x" }, "<leader>s", function()
+			flash.treesitter()
+		end, { desc = "jump to any syntax node in current screen" })
 
-		map({ "o" }, "r", flash.remote, {
+		map({ "o" }, "r", function()
+			flash.remote()
+		end, {
 			desc = "perform any motion like jump, treesitter etc. "
 				.. "the operator will be executed to the target position, "
 				.. "and original position will be jumped back.",
 		})
 
-		map(
-			{ "o", "x" },
-			"r",
-			flash.treesitter_search,
-			{ desc = "jump to the syntax node containing searched pattern in current screen" }
-		)
+		map({ "o", "x" }, "r", function()
+			flash.treesitter_search()
+		end, { desc = "jump to the syntax node containing searched pattern in current screen" })
 
 		local opts = {
 			modes = {
@@ -103,10 +106,9 @@ local nvim_treesitter_textobjects = {
 	end,
 	config = function()
 		local map = vim.keymap.set
-		local treesitter_textobjects = require("nvim-treesitter-textobjects")
 
 		-- Move
-		local move = treesitter_textobjects.move
+		local move = require("nvim-treesitter-textobjects.move")
 
 		--- Helper functions to set motion keymaps
 		---
@@ -170,7 +172,7 @@ local nvim_treesitter_textobjects = {
 			move = { set_jumps = true },
 		}
 
-		treesitter_textobjects.setup(opts)
+		require("nvim-treesitter-textobjects").setup(opts)
 	end,
 }
 
@@ -194,12 +196,7 @@ local blink_cmp = {
 			["<C-k>"] = { "select_prev", "fallback" },
 			["<C-j>"] = { "select_next", "fallback" },
 		},
-		cmdline = {
-			keymap = {
-				["<C-k>"] = { "select_prev", "fallback" },
-				["<C-j>"] = { "select_next", "fallback" },
-			},
-		},
+		cmdline = { enabled = false },
 		appearance = { nerd_font_variant = "mono" },
 		completion = { documentation = { auto_show = false } },
 		sources = {
