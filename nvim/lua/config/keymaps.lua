@@ -158,17 +158,6 @@ local function next_is_closer()
 	return false
 end
 
-if not vim.g.user_use_builtin_completion then
-	-- Tab for jumping out of brackets
-	map("i", "<Tab>", function()
-		return next_is_closer() and "<Right>" or "<Tab>"
-	end, { expr = true, desc = "Jump out of brackets" })
-
-	return
-end
-
--- Builtin completion specific
-
 --- Return true if the completion menu is visible
 ---
 ---@return boolean
