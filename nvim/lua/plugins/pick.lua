@@ -2,14 +2,14 @@
 
 ---@type snacks.Config
 local snacks_opts = {
-	-- make file load quicker
+	-- File load
 	bigfile = { enabled = true },
 	quickfile = { enabled = true },
-	-- make ui looks better
+	-- UI
 	notifier = { enabled = true, timeout = 3000 },
 	input = { enabled = true },
 	indent = { enabled = true },
-	-- make explore easier
+	-- Picker
 	explorer = { enabled = true, replace_netrw = true, trash = true },
 	picker = {
 		enabled = true,
@@ -60,23 +60,22 @@ local snacks = {
 		map("n", "<Leader>R", function()
 			Snacks.rename.rename_file()
 		end, { desc = "Rename File" })
-		map("n", "<Leader>lg", function()
-			Snacks.lazygit()
-		end, { desc = "Toggle Lazygit" })
 		map("n", "<Leader>:", function()
 			Snacks.picker.command_history()
 		end, { desc = "Command History" })
 		map("n", "<Leader>n", function()
 			Snacks.picker.notifications()
 		end, { desc = "Notification History" })
-		-- buffer
+
+		-- Buffer (b)
 		map("n", "<Leader>,", function()
 			Snacks.picker.buffers()
 		end, { desc = "Find Buffers" })
 		map("n", "<Leader>bd", function()
 			Snacks.bufdelete()
 		end, { desc = "Delete Buffer without close its pane" })
-		-- File/Find (f)
+
+		-- File (f)
 		map("n", "<Leader><Leader>", function()
 			Snacks.picker.smart()
 		end, { desc = "Smart Find Files" })
@@ -89,6 +88,7 @@ local snacks = {
 		map("n", "<Leader>fr", function()
 			Snacks.picker.recent()
 		end, { desc = "Find Recent Files" })
+
 		-- Grep (g)
 		map("n", "<Leader>g", function()
 			Snacks.picker.grep()
@@ -103,15 +103,20 @@ local snacks = {
 			local help_dirs = vim.api.nvim_get_runtime_file("doc/*.txt", true)
 			Snacks.picker.grep({ dirs = help_dirs, live = true })
 		end, { desc = "Grep search Help" })
-		-- Git
+
+		-- Git (g)
 		map("n", "<Leader>gl", function()
 			Snacks.picker.git_log()
 		end, { desc = "Git Log" })
+		map("n", "<Leader>lg", function()
+			Snacks.lazygit()
+		end, { desc = "Toggle Lazygit" })
+
 		-- Search (s)
 		map("n", '<Leader>s"', function()
 			Snacks.picker.registers()
 		end, { desc = "Search Registers" })
-		map("n", "<Leader>sh", function()
+		map("n", "<Leader>s/", function()
 			Snacks.picker.search_history()
 		end, { desc = "Search History" })
 		map("n", "<Leader>sa", function()
@@ -156,49 +161,30 @@ local snacks = {
 		map("n", "<Leader>sq", function()
 			Snacks.picker.qflist()
 		end, { desc = "SearchQuickfix List" })
-		map("n", "<Leader>sR", function()
+		map("n", "<Leader>sr", function()
 			Snacks.picker.resume()
 		end, { desc = "Search Resume" })
 		map("n", "<Leader>su", function()
 			Snacks.picker.undo()
 		end, { desc = "Search Undo History" })
+
+		-- LSP(s)
 		map("n", "<Leader>ss", function()
 			Snacks.picker.lsp_symbols()
 		end, { desc = "Search LSP Symbols" })
 		map("n", "<Leader>sS", function()
 			Snacks.picker.lsp_workspace_symbols()
 		end, { desc = "Search LSP Workspace Symbols" })
-		-- LSP
-		map("n", "gd", function()
-			Snacks.picker.lsp_definitions()
-		end, { desc = "Goto Definition" })
-		map("n", "gs", function()
-			Snacks.picker.lsp_definitions({ confirm = { "edit_vsplit" } })
-		end, { desc = "Goto Definition in Vertically Splited Window" })
-		map("n", "gD", function()
-			Snacks.picker.lsp_declarations()
-		end, { desc = "Goto Declaration" })
-		map("n", "gr", function()
-			Snacks.picker.lsp_references()
-		end, {
-			nowait = true,
-			desc = "References",
-		})
-		map("n", "gi", function()
-			Snacks.picker.lsp_implementations()
-		end, { desc = "Goto Implementation" })
-		map("n", "gy", function()
-			Snacks.picker.lsp_type_definitions()
-		end, { desc = "Goto T[y]pe Definition" })
 
-		local group = vim.api.nvim_create_augroup("user.snacks", { clear = true })
+		local snacks_group = vim.api.nvim_create_augroup("user.snacks", { clear = true })
 		vim.api.nvim_create_autocmd("FileType", {
-			group = group,
+			group = snacks_group,
 			pattern = { "snacks_picker_input", "snacks_input" },
 			callback = function()
 				vim.opt_local.autocomplete = false
 			end,
 		})
+
 		Snacks.setup(snacks_opts)
 	end,
 }

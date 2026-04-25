@@ -59,17 +59,32 @@ local atom_one_light = {
 				local float_bg = darker_white
 
 				local highlights = {
-					-- float window related
+					-- Float window
 					FloatTitle = { fg = green, bg = float_bg },
 					NonText = { bg = float_bg },
 					NormalFloat = { bg = float_bg },
+
 					SnacksPickerPreview = { fg = fg, bg = bg },
 					SnacksPickerPrompt = { fg = blue, bg = float_bg },
-					-- flash
+					SnacksPickerIconFile = { fg = fg, bg = float_bg },
+					SnacksPickerTree = { fg = "#CCCCCC", bg = float_bg },
+
+					SnacksNormal = { fg = fg, bg = float_bg },
+					SnacksInputNormal = { fg = fg, bg = float_bg },
+
+					-- SnacksNotifierWarn = { fg = fg, bg = float_bg },
+					-- SnacksNotifierInfo = { fg = fg, bg = float_bg },
+					-- SnacksNotifierDebug = { fg = fg, bg = float_bg },
+					-- SnacksNotifierTrace = { fg = fg, bg = float_bg },
+					-- SnacksNotifierError = { fg = fg, bg = float_bg },
+					-- SnacksNotifierHistory = { fg = fg, bg = float_bg },
+
+					-- Flash
 					FlashMatch = { fg = dark_white, bg = light_blue },
 					FlashCurrent = { fg = dark_white, bg = orange },
 					FlashLabel = { fg = white, bg = darker_pink },
-					-- others
+
+					-- Others
 					StatusLine = { bg = darker_white },
 					Cursor = { fg = black, bg = gray },
 				}

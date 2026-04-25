@@ -1,7 +1,7 @@
 local opt = vim.opt
 
 -- Wait time of mapped sequence
-opt.timeoutlen = 500
+opt.timeoutlen = 800
 
 -- Enable undo/redo changes even after closing and reopening a file
 -- opt.undofile = true
@@ -36,21 +36,18 @@ opt.confirm = true
 opt.autowrite = true
 
 if vim.g.user_use_builtin_completion then
-	-- Insert completion
-
-	-- Preset for autocomplete
+	-- Insert autocomplete
 	-- The popup menu will flash quickly as typing, so disable now
 	-- opt.autocomplete = true
 	-- opt.infercase = true
 	-- opt.autocompletedelay = 500 -- does not control ominifunc
 	-- opt.completeopt = "menuone,popup,preinsert"
-
-	-- Preset for manualcomplete
+else
+	-- Insert manualcomplete
 	opt.autocomplete = false
 	opt.completeopt = "menuone,popup,noinsert"
-else
-	-- Cmdline completion
-	-- Cmdline completion of blink.cmp is weird, so use default method
+
+	-- Cmdline completion (Cmdline completion of blink.cmp is weird, so use default method)
 	opt.wildmenu = true
 	opt.wildmode = "noselect:lastused,full"
 	opt.wildoptions = "pum,fuzzy,tagfile"

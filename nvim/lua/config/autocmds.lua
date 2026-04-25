@@ -23,8 +23,7 @@ if vim.g.user_use_builtin_completion then
 		end,
 	})
 else
-	-- Cmdline autocompletion
-	-- Cmdline completion of blink.cmp is weird, so resort to default method
+	-- Cmdline autocompletion (Cmdline completion of blink.cmp is weird, so resort to default method)
 	au("CmdlineChanged", {
 		group = native_group,
 		pattern = { ":", "/", "?" },

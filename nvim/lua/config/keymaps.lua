@@ -19,8 +19,8 @@ map({ "n", "v" }, "<Leader>y", '"+y', { desc = "Yank to system clipboard" })
 map({ "n", "v" }, "<Leader>p", '"+p', { desc = "Paste from system clipboard" })
 
 -- Insert newline above/below (the default mapping will not move the cursor)
-map("n", "]<Space>", "o<Esc>", { silent = true, desc = "Insert a newline below" })
-map("n", "[<Space>", "O<Esc>", { silent = true, desc = "Insert a newline above" })
+map("n", "]<Space>", "o<Esc>", { desc = "Insert a newline below", silent = true })
+map("n", "[<Space>", "O<Esc>", { desc = "Insert a newline above", silent = true })
 
 -- Keymaps for VSCode only
 -- VSCode commands references: https://code.visualstudio.com/api/references/commands
@@ -124,8 +124,8 @@ map("i", "<M-n>", "<Esc>", { desc = "Insert Mode to Normal Mode" })
 map({ "i", "n" }, "<C-q>", "<Cmd>quit<CR>", { desc = "Quit Current Window" })
 
 -- Save
-map("n", "<Leader>w", "<Cmd>w<CR>", { desc = "Save File" })
-map("n", "<Leader><CR>", "<Cmd>w<CR>", { desc = "Save File" })
+map("n", "<Leader>w", "<Cmd>w<CR>", { desc = "Save File", silent = true })
+map("n", "<Leader><CR>", "<Cmd>w<CR>", { desc = "Save File", silent = true })
 
 -- Completion
 map("i", "<C-]>", "<C-X><C-]>", { desc = "Completion with tags" })
