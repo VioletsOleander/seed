@@ -1,11 +1,10 @@
--- [ Options ]
 local opt = vim.opt
 
 -- Wait time of mapped sequence
 opt.timeoutlen = 500
 
 -- Enable undo/redo changes even after closing and reopening a file
-opt.undofile = true
+-- opt.undofile = true
 
 -- Case-insensitive searching unless \C or one or more capital letters in the search term
 opt.smartcase = true
@@ -36,18 +35,20 @@ opt.confirm = true
 -- Write file on buffer change
 opt.autowrite = true
 
--- Cmdline completion
-opt.wildmenu = true
-opt.wildmode = "noselect:lastused,full"
-opt.wildoptions = "pum,fuzzy,tagfile"
+if vim.g.use_bulitin_completion then
+	-- Cmdline completion
+	opt.wildmenu = true
+	opt.wildmode = "noselect:lastused,full"
+	opt.wildoptions = "pum,fuzzy,tagfile"
 
--- Insert completion
-opt.autocomplete = false
-opt.completeopt = "menuone,popup,noselect"
-opt.complete = "o,.,w,b,u,t"
+	-- Insert completion
+	opt.autocomplete = true
+	opt.infercase = true
+	opt.completeopt = "menuone,popup,preinsert"
 
--- Popup meun height
-opt.pumheight = 12
+	-- Popup meun height
+	opt.pumheight = 12
+end
 
 -- Gui color
 opt.termguicolors = true
@@ -65,3 +66,6 @@ opt.guicursor = table.concat(cursor_config, ",")
 
 -- Not display tabline
 opt.showtabline = 0
+
+-- Misc
+vim.diagnostic.config({ virtual_text = true, severity_sort = true })

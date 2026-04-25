@@ -1,4 +1,3 @@
--- [ Keymaps ]
 local map = vim.keymap.set
 
 -- Keymaps shared by VSCode and Neovim
@@ -120,6 +119,13 @@ map("i", "jk", "<Esc>", { desc = "Insert Mode to Normal Mode" })
 map("i", "kk", "<Esc>", { desc = "Insert Mode to Normal Mode" })
 map("i", "<M-n>", "<Esc>", { desc = "Insert Mode to Normal Mode" })
 
+-- Quit
+map({ "i", "n" }, "<C-q>", "<Cmd>quit<CR>", { desc = "Quit Current Window" })
+
+-- Save
+map("n", "<Leader>w", "<Cmd>w<CR>", { desc = "Save File" })
+map("n", "<Leader><CR>", "<Cmd>w<CR>", { desc = "Save File" })
+
 -- Completion
 map("i", "<C-]>", "<C-X><C-]>", { desc = "Completion with tags" })
 map("i", "<C-F>", "<C-X><C-F>", { desc = "Completion with file names" })
@@ -151,6 +157,17 @@ local function next_is_closer()
 	return false
 end
 
+if not vim.g.use_bulitin_completion then
+	-- Tab for jumping out of brackets
+	map("i", "<Tab>", function()
+		return next_is_closer() and "<Right>" or "<Tab>"
+	end, { expr = true, desc = "Jump out of brackets" })
+
+	return
+end
+
+-- Builtin completion specific
+
 --- Return true if the completion menu is visible
 ---
 ---@return boolean
@@ -158,42 +175,27 @@ local function pum_is_visible()
 	return vim.fn.pumvisible() ~= 0
 end
 
--- Tab/Shift-Tab for iterating completion items
--- Tab also for jump out of brackets
+-- Tab for accepting completion or jump out of brackets
 map("i", "<Tab>", function()
 	if pum_is_visible() then
-		return "<C-n>"
+		return "<C-y>"
 	elseif next_is_closer() then
 		return "<Right>"
 	else
 		return "<Tab>"
 	end
-end, { expr = true, desc = "Jump out of brackets or select next completion" })
+end, { expr = true, desc = "Confirm completion or jump out of brackets" })
 
-map("i", "<S-Tab>", function()
+-- Tab/S-Tab for iterating completion items
+map("c", "<Tab>", function()
+	return pum_is_visible() and "<C-n>" or "<Tab>"
+end, { expr = true, desc = "Select next completion item" })
+map("c", "<S-Tab>", function()
 	return pum_is_visible() and "<C-p>" or "<S-Tab>"
-end, { expr = true, desc = "Select previous completion" })
-
--- CR for completion or insert newline with auto-closing pairs
-map("i", "<CR>", function()
-	if vim.fn.pumvisible() ~= 0 then
-		return "<C-y>"
-	else
-		local line = vim.api.nvim_get_current_line()
-		local col = vim.api.nvim_win_get_cursor(0)[2]
-
-		local before = line:sub(col, col)
-		local after = line:sub(col + 1, col + 1)
-		if (before == "{" and after == "}") or (before == "(" and after == ")") then
-			return " <CR><Up><End><CR>"
-		end
-
-		return "<CR>"
-	end
-end, { expr = true, desc = "Confirm completion or insert newline with auto-closing pairs" })
+end, { expr = true, desc = "Select previous completion item" })
 
 -- Ctrl-j/k for selecting completion items
-map("i", "<C-j>", function()
+map({ "i", "c" }, "<C-j>", function()
 	if pum_is_visible() then
 		return "<C-n>"
 	else
@@ -201,39 +203,10 @@ map("i", "<C-j>", function()
 	end
 end, { expr = true, desc = "Select next completion" })
 
-map("i", "<C-k>", function()
+map({ "i", "c" }, "<C-k>", function()
 	if pum_is_visible() then
 		return "<C-p>"
 	else
 		return "<C-k>"
 	end
 end, { expr = true, desc = "Select previous completion" })
-
--- Lsp gotos
-map("n", "gd", vim.lsp.buf.definition, { desc = "Go to definition" })
-map("n", "gD", vim.lsp.buf.declaration, { desc = "Go to declaration" })
-map("n", "gy", vim.lsp.buf.type_definition, { desc = "Go to type definition" })
-map("n", "gi", vim.lsp.buf.implementation, { desc = "Go to implementation" })
-
--- LSP shows
-map("n", "gr", vim.lsp.buf.references, { desc = "Show references" })
-map("i", "<C-k>", vim.lsp.buf.signature_help, { desc = "Show signature help" })
-
--- LSP actions
-map("n", "<Leader>r", vim.lsp.buf.rename, { desc = "Rename symbol" })
-map("n", "<Leader>a", vim.lsp.buf.code_action, { desc = "Code action" })
-
--- LSP diagnostics
-map("n", "[d", function()
-	vim.diagnostic.jump({ count = 1, float = true })
-end, { desc = "Prev diagnostic" })
-map("n", "]d", function()
-	vim.diagnostic.jump({ count = -1, float = true })
-end, { desc = "Next diagnostic" })
-
--- Quit
-map({ "i", "n" }, "<C-q>", "<Cmd>quit<CR>", { desc = "Quit Current Window" })
-
--- Save
-map("n", "<Leader>w", "<Cmd>w<CR>", { desc = "Save File" })
-map("n", "<Leader><CR>", "<Cmd>w<CR>", { desc = "Save File" })
