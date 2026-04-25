@@ -6,10 +6,9 @@ local nvim_surround = {
 
 local nvim_autopair = {
 	"windwp/nvim-autopairs",
+	cond = not vim.g.vscode,
 	event = "InsertEnter",
-	opts = {
-		map_cr = false,
-	},
+	opts = {},
 }
 -- motion
 local flash_nvim = {
@@ -122,7 +121,7 @@ local nvim_treesitter_textobjects = {
 
 			-- [lower to previous start
 			vim.keymap.set({ "n", "x", "o" }, "[" .. args.lower, function()
-				move.goto_next_start(args.query, "textobjects")
+				move.goto_previous_start(args.query, "textobjects")
 			end, { desc = "Go to previous " .. args.name .. " start" })
 
 			-- ]upper to next end
@@ -131,8 +130,8 @@ local nvim_treesitter_textobjects = {
 			end, { desc = "Go to next " .. args.name .. " end" })
 
 			-- [upper to previous end
-			vim.keymap.set({ "n", "x", "o" }, "]" .. args.upper, function()
-				move.goto_next_start(args.query, "textobjects")
+			vim.keymap.set({ "n", "x", "o" }, "[" .. args.upper, function()
+				move.goto_previous_start(args.query, "textobjects")
 			end, { desc = "Go to previous " .. args.name .. " end" })
 		end
 
