@@ -11,16 +11,6 @@ local native_group = aug("user.native", { clear = true })
 local lsp_group = aug("user.lsp", { clear = true })
 
 if vim.g.user_use_builtin_completion then
-	-- Cmdline autocompletion
-	au("CmdlineChanged", {
-		group = native_group,
-		pattern = { ":", "/", "?" },
-		callback = function()
-			vim.fn.wildtrigger()
-		end,
-		desc = "Automatically show popup menu when typing in cmd line",
-	})
-
 	-- Lsp autocompletion
 	au("LspAttach", {
 		group = lsp_group,
@@ -31,6 +21,17 @@ if vim.g.user_use_builtin_completion then
 				vim.lsp.completion.enable(true, client.id, ev.buf, { autotrigger = true })
 			end
 		end,
+	})
+else
+	-- Cmdline autocompletion
+	-- Cmdline completion of blink.cmp is weird, so resort to default method
+	au("CmdlineChanged", {
+		group = native_group,
+		pattern = { ":", "/", "?" },
+		callback = function()
+			vim.fn.wildtrigger()
+		end,
+		desc = "Automatically show popup menu when typing in cmd line",
 	})
 end
 
