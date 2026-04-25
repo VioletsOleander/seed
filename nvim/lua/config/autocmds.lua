@@ -34,6 +34,15 @@ else
 	})
 end
 
+-- Help
+au("FileType", {
+	group = native_group,
+	pattern = "help",
+	callback = function()
+		vim.cmd("wincmd L")
+	end,
+})
+
 -- Highlight
 au("TextYankPost", {
 	group = native_group,
