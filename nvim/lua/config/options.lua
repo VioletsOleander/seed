@@ -35,16 +35,24 @@ opt.confirm = true
 -- Write file on buffer change
 opt.autowrite = true
 
-if vim.g.use_bulitin_completion then
+if vim.g.user_use_builtin_completion then
 	-- Cmdline completion
 	opt.wildmenu = true
 	opt.wildmode = "noselect:lastused,full"
 	opt.wildoptions = "pum,fuzzy,tagfile"
 
 	-- Insert completion
-	opt.autocomplete = true
-	opt.infercase = true
-	opt.completeopt = "menuone,popup,preinsert"
+
+	-- Preset for autocomplete
+	-- The popup menu will flash quickly as typing, so disable now
+	-- opt.autocomplete = true
+	-- opt.infercase = true
+	-- opt.autocompletedelay = 500 -- does not control ominifunc
+	-- opt.completeopt = "menuone,popup,preinsert"
+
+	-- Preset for manualcomplete
+	opt.autocomplete = false
+	opt.completeopt = "menuone,popup,noinsert"
 
 	-- Popup meun height
 	opt.pumheight = 12

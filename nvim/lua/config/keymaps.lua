@@ -128,9 +128,9 @@ map("n", "<Leader><CR>", "<Cmd>w<CR>", { desc = "Save File" })
 
 -- Completion
 map("i", "<C-]>", "<C-X><C-]>", { desc = "Completion with tags" })
-map("i", "<C-F>", "<C-X><C-F>", { desc = "Completion with file names" })
-map("i", "<C-D>", "<C-X><C-D>", { desc = "Completion with definition or marcros" })
-map("i", "<C-L>", "<C-X><C-L>", { desc = "Completion with seen whole lines" })
+map("i", "<C-f>", "<C-X><C-F>", { desc = "Completion with file names" })
+map("i", "<C-d>", "<C-X><C-D>", { desc = "Completion with definition or marcros" })
+map("i", "<C-l>", "<C-X><C-L>", { desc = "Completion with seen whole lines" })
 
 --- Return the character after cursor
 ---
@@ -157,7 +157,7 @@ local function next_is_closer()
 	return false
 end
 
-if not vim.g.use_bulitin_completion then
+if not vim.g.user_use_builtin_completion then
 	-- Tab for jumping out of brackets
 	map("i", "<Tab>", function()
 		return next_is_closer() and "<Right>" or "<Tab>"
@@ -199,9 +199,9 @@ map({ "i", "c" }, "<C-j>", function()
 	if pum_is_visible() then
 		return "<C-n>"
 	else
-		return "<C-j>"
+		return "<C-x><C-o>"
 	end
-end, { expr = true, desc = "Select next completion" })
+end, { expr = true, desc = "Select next completion or start omini function completion" })
 
 map({ "i", "c" }, "<C-k>", function()
 	if pum_is_visible() then
