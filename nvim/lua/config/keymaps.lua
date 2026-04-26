@@ -122,6 +122,9 @@ map("i", "jk", "<C-o>", { desc = "Execute a normal mode command and return to in
 map("n", "<C-h>", "<C-w>h", { desc = "Move to the left pane" })
 map("n", "<C-l>", "<C-w>l", { desc = "Move to the right pane" })
 
+-- Switch between buffers
+map("n", "<BS>", "<C-^>", { desc = "Switch to alternate file" })
+
 -- Quit
 map({ "i", "n" }, "<C-q>", "<Cmd>quit<CR>", { desc = "Quit Current Window" })
 
