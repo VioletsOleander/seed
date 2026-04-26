@@ -35,22 +35,15 @@ else
 end
 
 -- Help
-au("FileType", {
-	group = native_group,
-	pattern = "help",
-	callback = function()
-		vim.cmd("wincmd L")
-	end,
-})
-
--- Highlight
-au("TextYankPost", {
+au("BufWinEnter", {
 	group = native_group,
 	pattern = "*",
 	callback = function()
-		vim.hl.on_yank()
+		if vim.bo.filetype == "help" then
+			vim.cmd("wincmd L")
+		end
 	end,
-	desc = "Hilight on yank",
+	desc = "Show help in vertical split window",
 })
 
 -- Lsp keymaps
