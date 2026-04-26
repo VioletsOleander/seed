@@ -95,7 +95,7 @@
                 {
                     "face": "FiraCode Nerd Font",
                     "size": 11.5,
-                    "weight": 451
+                    "weight": "medium"
                 },
                 "guid": "{e3adc4cf-b57f-4355-b235-0667b675d430}",
                 "hidden": false,
