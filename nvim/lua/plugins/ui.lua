@@ -13,4 +13,28 @@ local mini_icons = {
 	opts = {},
 }
 
-return { treesitter_context, mini_icons }
+local gitsigns = {
+	"lewis6991/gitsigns.nvim",
+	cond = not vim.g.vscode,
+	event = { "BufReadPost", "BufNewFile" },
+	opts = {
+		signs = {
+			add = { text = "┃" },
+			change = { text = "┃" },
+			delete = { text = "_" },
+			topdelete = { text = "‾" },
+			changedelete = { text = "~" },
+			untracked = { text = "┆" },
+		},
+		signs_staged = {
+			add = { text = "┃" },
+			change = { text = "┃" },
+			delete = { text = "_" },
+			topdelete = { text = "‾" },
+			changedelete = { text = "~" },
+			untracked = { text = "┆" },
+		},
+	},
+}
+
+return { treesitter_context, mini_icons, gitsigns }
