@@ -14,6 +14,7 @@ local nvim_autopair = {
 -- Motion
 local flash_nvim = {
 	"folke/flash.nvim",
+	event = "VeryLazy",
 	config = function()
 		local flash = require("flash")
 		local map = vim.keymap.set
@@ -186,7 +187,7 @@ local copilot = {
 local blink_cmp = {
 	"saghen/blink.cmp",
 	cond = not vim.g.vscode,
-	event = { "InsertEnter", "CmdlineEnter" },
+	event = { "InsertEnter" },
 	dependencies = { "rafamadriz/friendly-snippets" },
 	version = "1.*",
 	opts = {
@@ -195,6 +196,8 @@ local blink_cmp = {
 			["<Tab>"] = { "select_and_accept", "fallback" },
 			["<C-k>"] = { "select_prev", "fallback" },
 			["<C-j>"] = { "select_next", "fallback" },
+			["<C-p>"] = { "select_prev", "fallback" },
+			["<C-n>"] = { "select_next", "fallback" },
 		},
 		cmdline = { enabled = false },
 		appearance = { nerd_font_variant = "mono" },
