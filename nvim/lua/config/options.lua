@@ -72,6 +72,3 @@ opt.guicursor = table.concat(cursor_config, ",")
 
 -- Not display tabline
 opt.showtabline = 0
-
--- Misc
-vim.diagnostic.config({ virtual_text = true, severity_sort = true })

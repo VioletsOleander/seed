@@ -115,10 +115,12 @@ map("n", "zz", function()
 end, { desc = "Center Screen and Clear Search Highlight" })
 
 -- Insert mode to normal mode
-map("i", "jj", "<Esc>", { desc = "Insert Mode to Normal Mode" })
-map("i", "jk", "<Esc>", { desc = "Insert Mode to Normal Mode" })
-map("i", "kk", "<Esc>", { desc = "Insert Mode to Normal Mode" })
-map("i", "<M-n>", "<Esc>", { desc = "Insert Mode to Normal Mode" })
+map("i", "jj", "<Esc>", { desc = "Switch to normal mode" })
+map("i", "jk", "<C-o>", { desc = "Execute a normal mode command and return to insert mode" })
+
+-- Move between panes
+map("n", "<C-h>", "<C-w>h", { desc = "Move to the left pane" })
+map("n", "<C-l>", "<C-w>l", { desc = "Move to the right pane" })
 
 -- Quit
 map({ "i", "n" }, "<C-q>", "<Cmd>quit<CR>", { desc = "Quit Current Window" })
