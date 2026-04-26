@@ -40,6 +40,7 @@ source ($custom_completions | path join "scoop/scoop-completions.nu")
 source ($custom_completions | path join "uv/uv-completions.nu")
 source ($custom_completions | path join "pytest/pytest-completions.nu")
 source ($custom_completions | path join "cargo/cargo-completions.nu")
+source ($custom_completions | path join "rustup/rustup-completions.nu")
 
 # color theme
 const nu_themes = ($nu_scripts | path join "themes/nu-themes")
