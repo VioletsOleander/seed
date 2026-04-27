@@ -10,6 +10,23 @@
   "workspace": {
     "checkThirdParty": false,
     "library": ["${workspaceFolder}/.lua_modules"],
-    "ignoreDir": [".vscode", ".git", "doc", "tests", ".github", "scripts"]
+    "ignoreDir": [
+      ".vscode",
+      ".git",
+      ".github",
+      ".cargo",
+      "doc",
+      "docs",
+      "test",
+      "tests",
+      "examples",
+      "extras",
+      "scripts",
+      "target",
+      "after",
+      "colors",
+      "autoload",
+      "quries"
+    ]
   }
 }
