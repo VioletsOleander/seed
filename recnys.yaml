@@ -1,18 +1,20 @@
 {
-    ".vimrc": { dest: { Windows: "_vimrc", Linux: ".vimrc" } },
     ".bashrc.template": { dest: { Windows: "", Linux: "my_bashrc" } },
     ".inputrc": { dest: { Windows: "", Linux: ".inputrc" } },
     ".tmux.conf": { dest: { Windows: "", Linux: ".tmux.conf" } },
     ".gitconfig": { dest: { Windows: ".gitconfig", Linux: ".gitconfig" } },
+    ".tridactylrc":
+        { dest: { Windows: ".tridactylrc", Linux: ".tridactylrc" } },
     "nvim/": { dest: { Windows: "AppData/Local/nvim" } },
+    "vim/": { dest: { Windows: "vimfiles/" } },
     "yazi/",
     "lazygit/",
     "Microsoft/Windows Terminal/":
         {
             dest:
                 {
-                    Linux: "",
                     Windows: "AppData/Local/Microsoft/Windows Terminal/",
+                    Linux: "",
                 },
         },
     "Code/User/settings.json",
