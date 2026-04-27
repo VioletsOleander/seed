@@ -43,6 +43,7 @@ set noswapfile
 
 # no beep and flash when error
 set noerrorbells
+set novisualbell
 set vb t_vb=
 
 # autocomplete (insert and cmdline)
@@ -63,13 +64,10 @@ colorscheme shine
 
 g:mapleader = " "
 
-# Insert mode keymap
-# map jj, jk, kk to Esc
+# insert to normal mode
 inoremap jj <Esc>
-inoremap jk <Esc>
-inoremap kk <Esc>
+inoremap jk <C-o>
 
-# Normal, visual, operator mode keymap
 # goto line start, end
 noremap H ^
 noremap L $
@@ -87,3 +85,6 @@ noremap <Leader>c <Cmd>nohlsearch<CR>
 # copy/paste
 noremap <Leader>y "+y
 noremap <Leader>p "+p
+
+# quit
+noremap <C-q> <Cmd>quit<CR>
