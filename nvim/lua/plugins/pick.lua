@@ -206,7 +206,11 @@ local snacks = {
 local oil = {
 	"stevearc/oil.nvim",
 	cond = not vim.g.vscode,
-	opts = {},
+	opts = {
+		view_options = {
+			show_hidden = true,
+		},
+	},
 }
 
 return { snacks, oil }
