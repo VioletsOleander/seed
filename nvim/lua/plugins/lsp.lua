@@ -28,21 +28,4 @@ local conform = {
 	},
 }
 
-local lazydev = {
-	"folke/lazydev.nvim",
-	cond = not vim.g.vscode,
-	ft = "lua",
-	opts = {
-		library = {
-			-- See the configuration section for more details
-			-- Load luvit types when the `vim.uv` word is found
-			{ path = "${3rd}/luv/library", words = { "vim%.uv" } },
-		},
-	},
-}
-
-return {
-	lsp_config,
-	conform,
-	lazydev,
-}
+return { lsp_config, conform }

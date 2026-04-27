@@ -1,3 +1,15 @@
 {
-    "completion.autoRequire": false
+  "$schema": "https://raw.githubusercontent.com/LuaLS/vscode-lua/master/setting/schema.json",
+  "completion": {
+    "autoRequire": false
+  },
+  "runtime": {
+    "version": "LuaJIT",
+    "path": ["lua/?.lua", "lua/?/init.lua"]
+  },
+  "workspace": {
+    "checkThirdParty": false,
+    "library": ["${workspaceFolder}/.lua_modules"],
+    "ignoreDir": [".vscode", ".git", "doc", "tests", ".github", "scripts"]
+  }
 }
