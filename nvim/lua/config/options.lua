@@ -1,10 +1,6 @@
 local opt = vim.opt
 
--- Wait time of mapped sequence
-opt.timeoutlen = 500
-
--- Enable undo/redo changes even after closing and reopening a file
--- opt.undofile = true
+-- Shared configurations between neovim and vscode
 
 -- Case-insensitive searching unless \C or one or more capital letters in the search term
 opt.smartcase = true
@@ -16,15 +12,24 @@ opt.tabstop = 4
 opt.shiftwidth = 4
 opt.softtabstop = 4
 
+-- Insert indent after a line ending with { and before a line starting with }
+opt.smartindent = true
+
 -- Preview substitutions as we typing
 -- if necessary, show previews in a split preview window
 opt.inccommand = "split"
 
--- Above are shared configurations between neovim and vscode
 if vim.g.vscode then
 	return
 end
--- Below are neovim-specific configurations
+
+-- Neovim-specific configurations
+
+-- Wait time of mapped sequence
+opt.timeoutlen = 500
+
+-- Enable undo/redo changes even after closing and reopening a file
+-- opt.undofile = true
 
 -- Vertically split to right
 opt.splitright = true

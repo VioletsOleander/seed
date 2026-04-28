@@ -18,10 +18,6 @@ map({ "n", "x", "o" }, "<C-k>", "5k", { desc = "Jump 5 lines up" })
 map({ "n", "v" }, "<Leader>y", '"+y', { desc = "Yank to system clipboard" })
 map({ "n", "v" }, "<Leader>p", '"+p', { desc = "Paste from system clipboard" })
 
--- Insert newline above/below (the default mapping will not move the cursor)
-map("n", "]<Space>", "o<Esc>", { desc = "Insert a newline below", silent = true })
-map("n", "[<Space>", "O<Esc>", { desc = "Insert a newline above", silent = true })
-
 -- Keymaps for VSCode only
 -- VSCode commands references: https://code.visualstudio.com/api/references/commands
 if vim.g.vscode then
