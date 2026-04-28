@@ -35,7 +35,29 @@ local tokyo_night_day = {
 	end,
 }
 
-local atom_one_light = {
+local day_fox = {
+	"EdenEast/nightfox.nvim",
+	cond = not vim.g.vscode,
+	lazy = (current_theme ~= "day_fox"),
+	priority = 1000,
+	config = function()
+		require("nightfox").setup()
+		vim.cmd("colorscheme dayfox")
+	end,
+}
+
+local one_light = {
+	"navarasu/onedark.nvim",
+	cond = not vim.g.vscode,
+	lazy = (current_theme ~= "one_light"),
+	priority = 1000,
+	config = function()
+		require("onedark").setup({ style = "light" })
+		require("onedark").load()
+	end,
+}
+
+local one_light_refined = {
 	"olimorris/onedarkpro.nvim",
 	cond = not vim.g.vscode,
 	lazy = (current_theme ~= "atom_one_light"),
@@ -110,13 +132,6 @@ local atom_one_light = {
 					SnacksNormal = { fg = fg, bg = float_bg },
 					SnacksInputNormal = { fg = fg, bg = float_bg },
 
-					-- SnacksNotifierWarn = { fg = fg, bg = float_bg },
-					-- SnacksNotifierInfo = { fg = fg, bg = float_bg },
-					-- SnacksNotifierDebug = { fg = fg, bg = float_bg },
-					-- SnacksNotifierTrace = { fg = fg, bg = float_bg },
-					-- SnacksNotifierError = { fg = fg, bg = float_bg },
-					-- SnacksNotifierHistory = { fg = fg, bg = float_bg },
-
 					-- Flash
 					FlashMatch = { fg = dark_white, bg = light_blue },
 					FlashCurrent = { fg = dark_white, bg = orange },
@@ -142,5 +157,7 @@ return {
 	gruvbox_material,
 	ever_forest,
 	tokyo_night_day,
-	atom_one_light,
+	day_fox,
+	one_light,
+	one_light_refined,
 }
