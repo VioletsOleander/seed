@@ -35,11 +35,13 @@ export def update-remotes [] {
 export def merge-pull-request [] {
     let checks_result = (^gh pr checks --json 'bucket' | from json)
 
+    print 'Checking CI status'
     if 'fail' in $checks_result.bucket {
         print 'Failed to merge pull request: there exits failed CI'
         return
     }
 
+    print 'Composing pull request message'
     let view_result = (^gh pr view --json 'title,body,url' | from json)
 
     let title = $view_result.title
