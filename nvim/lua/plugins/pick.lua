@@ -39,6 +39,8 @@ local snacks_opts = {
         vim.cmd("nohlsearch")
       end,
     },
+    -- This makes sure that picker's jump in terminal window is correct.
+    main = { current = true },
     win = {
       input = {
         keys = {
