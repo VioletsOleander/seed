@@ -40,6 +40,8 @@ local snacks_opts = {
       end,
     },
     -- This makes sure that picker's jump in terminal window is correct.
+    -- Othewise snacks will search for a file buffer to open the picked one, instead of open the
+    -- picked one in current pane
     main = { current = true },
     win = {
       input = {
