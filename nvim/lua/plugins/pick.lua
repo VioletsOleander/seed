@@ -7,12 +7,10 @@ local snacks_opts = {
   bigfile = { enabled = true },
   quickfile = { enabled = true },
   -- UI
-  input = { enabled = true },
   indent = { enabled = true },
   notifier = { enabled = true, timeout = 3000 },
   bufdelete = { enabled = true },
   -- Picker
-  explorer = { enabled = false },
   picker = {
     enabled = true,
     actions = {
@@ -81,14 +79,6 @@ local function set_snacks_keymap()
   map("n", "<Leader>:", function()
     Snacks.picker.command_history()
   end, { desc = "Show command history" })
-
-  -- Explore (e)
-  -- map("n", "<Leader>ee", function()
-  --   Snacks.explorer()
-  -- end, { desc = "Toggle file explorer based on current working directory" })
-  -- map("n", "<Leader>ef", function()
-  --   Snacks.explorer({ cwd = vim.fn.expand("%:p:h") })
-  -- end, { desc = "Toggle file explorer based on current file" })
 
   -- Buffer (b)
   map("n", "<Leader>l", function()
@@ -233,4 +223,13 @@ local snacks = {
   end,
 }
 
-return { snacks }
+---@type LazyPluginSpec
+local nvim_tree = {
+  "nvim-tree/nvim-tree.lua",
+  opts = {},
+  dependencies = {
+    "nvim-tree/nvim-web-devicons",
+  },
+}
+
+return { snacks, nvim_tree }

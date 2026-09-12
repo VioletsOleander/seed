@@ -6,6 +6,7 @@ g.maplocalleader = [[\]]
 
 -- Avoid loading some builtin plugins
 g.loaded_netrw = 1
+g.loaded_netrwPlugin = 1
 g.loaded_gzip = 1
 g.loaded_tarPlugin = 1
 g.loaded_zipPlugin = 1
