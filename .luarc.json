@@ -13,16 +13,7 @@
     "library": [
       "${workspaceFolder}/.lua_modules/vim",
       "${workspaceFolder}/.lua_modules/uv",
-      "${workspaceFolder}/.lua_modules/lazy/snacks.nvim/lua/snacks/init.lua",
-      "${workspaceFolder}/.lua_modules/lazy/snacks.nvim/lua/snacks/meta",
-      "${workspaceFolder}/.lua_modules/lazy/snacks.nvim/lua/snacks/picker/config",
-      "${workspaceFolder}/.lua_modules/lazy/snacks.nvim/lua/snacks/picker/types.lua",
-      "${workspaceFolder}/.lua_modules/lazy/snacks.nvim/lua/snacks/notifier.lua",
-      "${workspaceFolder}/.lua_modules/lazy/lazy.nvim/lua/lazy/types.lua",
-      "${workspaceFolder}/.lua_modules/lazy/blink.cmp/lua/blink/cmp/config",
-      "${workspaceFolder}/.lua_modules/lazy/blink.cmp/lua/blink/cmp/types.lua",
-      "${workspaceFolder}/.lua_modules/lazy/conform.nvim/lua/conform/types.lua",
-      "${workspaceFolder}/.lua_modules/lazy/flash.nvim/lua/flash/config.lua"
+      "${workspaceFolder}/.lua_modules/lazy/"
     ],
     "ignoreDir": [
       ".vscode",
