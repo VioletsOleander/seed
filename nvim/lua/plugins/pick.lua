@@ -1,5 +1,8 @@
 ---@module "lazy"
+---@module "neo-tree"
 ---@module "snacks"
+
+local map = vim.keymap.set
 
 ---@type snacks.Config
 local snacks_opts = {
@@ -74,8 +77,6 @@ local snacks_opts = {
 }
 
 local function set_snacks_keymap()
-  local map = vim.keymap.set
-
   map("n", "<Leader>:", function()
     Snacks.picker.command_history()
   end, { desc = "Show command history" })
@@ -196,40 +197,71 @@ local function set_snacks_keymap()
   end, { desc = "Search lsp workspace symbols" })
 end
 
-local function set_snacks_autocmd()
-  local snacks_group = vim.api.nvim_create_augroup("user.snacks", { clear = true })
-  local au = vim.api.nvim_create_autocmd
-
-  au("FileType", {
-    group = snacks_group,
-    pattern = { "snacks_picker_input", "snacks_input" },
-    callback = function()
-      vim.opt_local.autocomplete = false
-    end,
-  })
-end
-
 ---@type LazyPluginSpec
 local snacks = {
   "folke/snacks.nvim",
   priority = 1000,
   config = function()
     vim.g.snacks_animate = false
-
     set_snacks_keymap()
-    set_snacks_autocmd()
-
     Snacks.setup(snacks_opts)
   end,
 }
 
+---@type neotree.Config.Base
+local neotree_opts = {
+  close_if_last_window = true,
+  window = {
+    mappings = {
+      -- Jump up to parent directory on file or closed directory, or close on open directory
+      ["h"] = function(state)
+        local node = state.tree:get_node()
+        if (node.type == "directory" or node:has_children()) and node:is_expanded() then
+          state.commands.toggle_node(state)
+        else
+          require("neo-tree.ui.renderer").focus_node(state, node:get_parent_id())
+        end
+      end,
+      -- Open on file or closed directory, or jump down to top subdirectory on open directory
+      ["l"] = function(state)
+        local node = state.tree:get_node()
+        if node.type == "directory" or node:has_children() then
+          state.commands.toggle_node(state)
+          -- if not node:is_expanded() then
+          --   state.commands.toggle_node(state)
+          -- else
+          --   require("neo-tree.ui.renderer").focus_node(state, node:get_child_ids()[1])
+          -- end
+        else
+          require("neo-tree.sources.filesystem.commands").open(state)
+        end
+      end,
+      ["<space>"] = "none",
+    },
+  },
+  filesystem = {
+    window = {
+      fuzzy_finder_mappings = {
+        ["<C-j>"] = "move_cursor_down",
+        ["<C-k>"] = "move_cursor_up",
+      },
+    },
+  },
+}
+
 ---@type LazyPluginSpec
-local nvim_tree = {
-  "nvim-tree/nvim-tree.lua",
-  opts = {},
+local neotree = {
+  "nvim-neo-tree/neo-tree.nvim",
+  config = function()
+    map("n", "<Leader>e", "<Cmd>Neotree toggle<CR>")
+
+    require("neo-tree").setup(neotree_opts)
+  end,
   dependencies = {
+    "nvim-lua/plenary.nvim",
+    "MunifTanjim/nui.nvim",
     "nvim-tree/nvim-web-devicons",
   },
 }
 
-return { snacks, nvim_tree }
+return { snacks, neotree }
