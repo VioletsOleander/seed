@@ -208,14 +208,19 @@ local snacks = {
   end,
 }
 
----@type neotree.Config.Base
+---@type neotree.Config
 local neotree_opts = {
   close_if_last_window = true,
   window = {
+    -- Refers to https://github.com/nvim-neo-tree/neo-tree.nvim/discussions/163
     mappings = {
       -- Jump up to parent directory on file or closed directory, or close on open directory
       ["h"] = function(state)
         local node = state.tree:get_node()
+        if node == nil then
+          return
+        end
+
         if (node.type == "directory" or node:has_children()) and node:is_expanded() then
           state.commands.toggle_node(state)
         else
@@ -225,6 +230,10 @@ local neotree_opts = {
       -- Open on file or closed directory, or jump down to top subdirectory on open directory
       ["l"] = function(state)
         local node = state.tree:get_node()
+        if node == nil then
+          return
+        end
+
         if node.type == "directory" or node:has_children() then
           state.commands.toggle_node(state)
           -- if not node:is_expanded() then
