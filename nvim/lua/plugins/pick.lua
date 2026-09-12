@@ -1,6 +1,5 @@
 ---@module "lazy"
 ---@module "snacks"
----@module "oil"
 
 ---@type snacks.Config
 local snacks_opts = {
@@ -13,7 +12,7 @@ local snacks_opts = {
   notifier = { enabled = true, timeout = 3000 },
   bufdelete = { enabled = true },
   -- Picker
-  explorer = { enabled = true, replace_netrw = true, trash = true },
+  explorer = { enabled = false },
   picker = {
     enabled = true,
     actions = {
@@ -68,26 +67,6 @@ local snacks_opts = {
       },
     },
     sources = {
-      explorer = {
-        hidden = true,
-        ignored = true,
-        follow_file = false,
-        layout = { preview = "main", hidden = { "preview" } },
-        win = {
-          -- The toggle of explorer is controlled by leader+e, so
-          -- let esc works like esc
-          input = {
-            keys = {
-              ["<Esc>"] = "emit_esc",
-            },
-          },
-          list = {
-            keys = {
-              ["<Esc>"] = "emit_esc",
-            },
-          },
-        },
-      },
       files = {
         hidden = true,
         ignored = true,
@@ -104,12 +83,12 @@ local function set_snacks_keymap()
   end, { desc = "Show command history" })
 
   -- Explore (e)
-  map("n", "<Leader>ee", function()
-    Snacks.explorer()
-  end, { desc = "Toggle file explorer based on current working directory" })
-  map("n", "<Leader>ef", function()
-    Snacks.explorer({ cwd = vim.fn.expand("%:p:h") })
-  end, { desc = "Toggle file explorer based on current file" })
+  -- map("n", "<Leader>ee", function()
+  --   Snacks.explorer()
+  -- end, { desc = "Toggle file explorer based on current working directory" })
+  -- map("n", "<Leader>ef", function()
+  --   Snacks.explorer({ cwd = vim.fn.expand("%:p:h") })
+  -- end, { desc = "Toggle file explorer based on current file" })
 
   -- Buffer (b)
   map("n", "<Leader>l", function()
@@ -254,23 +233,4 @@ local snacks = {
   end,
 }
 
----@type LazyPluginSpec
-local oil = {
-  "stevearc/oil.nvim",
-  cmd = "Oil",
-  ---@type oil.SetupOpts
-  opts = {
-    default_file_explorer = false,
-    view_options = {
-      show_hidden = true,
-    },
-    keymaps = {
-      ["gj"] = { "actions.select", mode = "n" },
-      ["gk"] = { "actions.parent", mode = "n" },
-      ["<C-q>"] = { "actions.close", mode = "n" },
-    },
-    delete_to_trash = true,
-  },
-}
-
-return { snacks, oil }
+return { snacks }
