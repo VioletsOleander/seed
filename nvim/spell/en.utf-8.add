@@ -36,7 +36,9 @@ json
 learnable
 linux
 logits
+lua
 mutex
+neovim
 nushell
 overfit
 overfitting
@@ -46,4 +48,5 @@ rollout
 sharding
 stdin
 struct
+vimscript
 whitespace
