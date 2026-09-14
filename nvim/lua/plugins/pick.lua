@@ -14,6 +14,7 @@ local snacks_opts = {
   notifier = { enabled = true, timeout = 3000 },
   bufdelete = { enabled = true },
   -- Picker
+  explorer = { enabled = true },
   picker = {
     enabled = true,
     actions = {
@@ -68,6 +69,26 @@ local snacks_opts = {
       },
     },
     sources = {
+      explorer = {
+        hidden = true,
+        ignored = true,
+        follow_file = false,
+        layout = { preview = "main", hidden = { "preview" } },
+        win = {
+          -- The toggle of explorer is controlled by leader+e, so
+          -- let esc works like esc
+          input = {
+            keys = {
+              ["<Esc>"] = "emit_esc",
+            },
+          },
+          list = {
+            keys = {
+              ["<Esc>"] = "emit_esc",
+            },
+          },
+        },
+      },
       files = {
         hidden = true,
         ignored = true,
@@ -80,6 +101,10 @@ local function set_snacks_keymap()
   map("n", "<Leader>:", function()
     Snacks.picker.command_history()
   end, { desc = "Show command history" })
+
+  map("n", "<Leader>e", function()
+    Snacks.explorer()
+  end, { desc = "Toggle file explorer based on current working directory" })
 
   -- Buffer (b)
   map("n", "<Leader>l", function()
@@ -209,79 +234,5 @@ local snacks = {
 }
 
 ---@type neotree.Config
-local neotree_opts = {
-  close_if_last_window = true,
-  window = {
-    -- Refers to https://github.com/nvim-neo-tree/neo-tree.nvim/discussions/163
-    mappings = {
-      -- Jump up to parent directory on file or closed directory, or close on open directory
-      ["h"] = function(state)
-        local node = state.tree:get_node()
-        if node == nil then
-          return
-        end
 
-        if (node.type == "directory" or node:has_children()) and node:is_expanded() then
-          state.commands.toggle_node(state)
-        else
-          require("neo-tree.ui.renderer").focus_node(state, node:get_parent_id())
-        end
-      end,
-      -- Open on file or closed directory, or jump down to top subdirectory on open directory
-      ["l"] = function(state)
-        local node = state.tree:get_node()
-        if node == nil then
-          return
-        end
-
-        if node.type == "directory" or node:has_children() then
-          state.commands.toggle_node(state)
-          -- if not node:is_expanded() then
-          --   state.commands.toggle_node(state)
-          -- else
-          --   require("neo-tree.ui.renderer").focus_node(state, node:get_child_ids()[1])
-          -- end
-        else
-          require("neo-tree.sources.filesystem.commands").open(state)
-        end
-      end,
-      ["<space>"] = "none",
-    },
-  },
-  filesystem = {
-    window = {
-      fuzzy_finder_mappings = {
-        ["<C-j>"] = "move_cursor_down",
-        ["<C-k>"] = "move_cursor_up",
-      },
-    },
-    filtered_items = {
-      visible = true,
-    },
-  },
-  source_selector = {
-    statusline = true,
-    tabs_layout = "active",
-    separator = "",
-    highlight_tab = "NeoTreeTabActive",
-    highlight_tab_active = "NeoTreeTabActive",
-    highlight_background = "NeoTreeTabActive",
-  },
-}
-
----@type LazyPluginSpec
-local neotree = {
-  "nvim-neo-tree/neo-tree.nvim",
-  config = function()
-    map("n", "<Leader>e", "<Cmd>Neotree toggle<CR>")
-
-    require("neo-tree").setup(neotree_opts)
-  end,
-  dependencies = {
-    "nvim-lua/plenary.nvim",
-    "MunifTanjim/nui.nvim",
-    "nvim-tree/nvim-web-devicons",
-  },
-}
-
-return { snacks, neotree }
+return { snacks }

@@ -1,6 +1,13 @@
 ---@module "lazy"
 
 ---@type LazyPluginSpec
+local mini_icons = {
+  "nvim-mini/mini.icons",
+  event = "VeryLazy",
+  opts = {},
+}
+
+---@type LazyPluginSpec
 local gitsigns = {
   "lewis6991/gitsigns.nvim",
   cmd = "Gitsigns",
@@ -51,4 +58,4 @@ local lualine = {
   dependencies = { "nvim-tree/nvim-web-devicons" },
 }
 
-return { gitsigns, markview, typst_preview, lualine }
+return { mini_icons, gitsigns, markview, typst_preview, lualine }
