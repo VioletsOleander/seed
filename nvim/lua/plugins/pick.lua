@@ -259,6 +259,14 @@ local neotree_opts = {
       visible = true,
     },
   },
+  source_selector = {
+    statusline = true,
+    tabs_layout = "active",
+    separator = "",
+    highlight_tab = "NeoTreeTabActive",
+    highlight_tab_active = "NeoTreeTabActive",
+    highlight_background = "NeoTreeTabActive",
+  },
 }
 
 ---@type LazyPluginSpec
