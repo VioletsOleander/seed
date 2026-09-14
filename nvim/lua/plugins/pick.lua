@@ -255,6 +255,9 @@ local neotree_opts = {
         ["<C-k>"] = "move_cursor_up",
       },
     },
+    filtered_items = {
+      visible = true,
+    },
   },
 }
 
