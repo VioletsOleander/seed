@@ -48,6 +48,9 @@ local blink_opts = {
       },
     },
   },
+  snippets = {
+    preset = "luasnip",
+  },
 }
 
 ---@type LazyPluginSpec
@@ -55,8 +58,29 @@ local blink_cmp = {
   "saghen/blink.cmp",
   version = "*",
   event = { "InsertEnter" },
-  dependencies = { "rafamadriz/friendly-snippets" },
+  dependencies = { "L3MON4D3/LuaSnip", "rafamadriz/friendly-snippets" },
   opts = blink_opts,
 }
 
-return { blink_cmp }
+---@type LazyPluginSpec
+local luasnip = {
+  "L3MON4D3/LuaSnip",
+  lazy = true,
+  submodules = false,
+  config = function()
+    require("luasnip.config").setup({ enable_autosnippets = true })
+  end,
+}
+
+---@type LazyPluginSpec
+local luasnip_latex_snippets = {
+  "iurimateus/luasnip-latex-snippets.nvim",
+  lazy = true,
+  requires = { "L3MON4D3/LuaSnip" },
+  opts = {
+    use_treesitter = true,
+    allow_on_markdown = true,
+  },
+}
+
+return { blink_cmp, luasnip, luasnip_latex_snippets }
