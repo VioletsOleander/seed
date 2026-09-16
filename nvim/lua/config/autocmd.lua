@@ -17,7 +17,7 @@ au("BufRead", {
 })
 
 -- Autosave, more versatile than opt.autowrite
-au("BufLeave", {
+au({ "BufLeave", "FocusLost" }, {
   group = buf_group,
   callback = function()
     -- Invalid buffer.
