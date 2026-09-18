@@ -63,9 +63,6 @@ local blink_opts = {
       },
     },
   },
-  snippets = {
-    preset = "luasnip",
-  },
 }
 
 ---@type LazyPluginSpec
@@ -73,7 +70,7 @@ local blink_cmp = {
   "saghen/blink.cmp",
   version = "*",
   event = { "InsertEnter" },
-  dependencies = { "L3MON4D3/LuaSnip", "rafamadriz/friendly-snippets" },
+  dependencies = { "rafamadriz/friendly-snippets" },
   opts = blink_opts,
 }
 
