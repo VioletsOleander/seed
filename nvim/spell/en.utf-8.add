@@ -49,6 +49,7 @@ rollout
 rollouts
 sharding
 stdin
+stdout
 struct
 vimscript
 whitespace
