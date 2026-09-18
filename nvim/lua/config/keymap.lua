@@ -193,3 +193,6 @@ end, { desc = "Prompt user for a relative jump down." })
 map("n", "MH", "H", { desc = "Jump to the line on top of current window." })
 map("n", "MM", "M", { desc = "Jump to the middle line of current window." })
 map("n", "ML", "L", { desc = "Jump to the line in the bottom of current window." })
+
+-- Disable middle mouse paste
+map({ "n", "i" }, "<MiddleMouse>", "<Nop>", { desc = "Do nothing." })
