@@ -10,6 +10,8 @@ local blink_opts = {
     ["<C-k>"] = { "select_prev", "fallback" },
     ["<C-j>"] = { "select_next", "fallback" },
     ["<C-f>"] = { "show", "show_documentation", "hide_documentation", "fallback" },
+    ["<C-u>"] = { "scroll_documentation_up", "fallback" },
+    ["<C-d>"] = { "scroll_documentation_down", "fallback" },
   },
   signature = { enabled = false, window = { show_documentation = true } },
   completion = {
@@ -25,6 +27,19 @@ local blink_opts = {
       },
     },
     documentation = { auto_show = false },
+    menu = {
+      draw = {
+        columns = { { "kind_icon" }, { "label", "label_description", gap = 1 }, { "kind" } },
+        components = {
+          kind_icon = {
+            text = function(ctx)
+              local kind_icon, _, _ = require("mini.icons").get("lsp", ctx.kind)
+              return kind_icon
+            end,
+          },
+        },
+      },
+    },
   },
   sources = { default = { "lsp", "snippets", "buffer" } },
   fuzzy = { implementation = "rust" },
