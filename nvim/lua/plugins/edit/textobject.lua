@@ -95,9 +95,9 @@ local nvim_treesitter_textobjects = {
 
     -- f for function
     map_motion({ query = "@function.outer", name = "function", lower = "f", upper = "F" })
-    -- c for function
+    -- c for class
     map_motion({ query = "@class.outer", name = "class", lower = "c", upper = "C" })
-    -- a for function
+    -- a for argument/parameter
     map_motion({ query = "@parameter.outer", name = "parameter", lower = "a", upper = "A" })
     -- v for call/invocation
     map_motion({ query = "@call.outer", name = "call", lower = "v", upper = "V" })
@@ -121,16 +121,22 @@ local nvim_treesitter_textobjects = {
       swap.swap_previous("@parameter.inner")
     end, { desc = "Swap previous parameter" })
 
+    local ts_repeat_move = require("nvim-treesitter-textobjects.repeatable_move")
+    -- Repeat movement with g; and g,
+    vim.keymap.set({ "n", "x", "o" }, "g;", ts_repeat_move.repeat_last_move_next)
+    vim.keymap.set({ "n", "x", "o" }, "g,", ts_repeat_move.repeat_last_move_previous)
+
     local opts = {
-      select = {
-        lookahead = false,
-        selection_modes = {
-          ["@parameter.outer"] = "v", -- charwise
-          ["@function.outer"] = "V", -- linewise
-          -- ["@class.outer"] = "<c-v>", -- blockwise
-        },
-        include_surrounding_whitespace = false,
-      },
+      -- select is done using Flash.treesitter
+      -- select = {
+      --   lookahead = false,
+      --   selection_modes = {
+      --     ["@parameter.outer"] = "v", -- charwise
+      --     ["@function.outer"] = "V", -- linewise
+      --     -- ["@class.outer"] = "<c-v>", -- blockwise
+      --   },
+      --   include_surrounding_whitespace = true,
+      -- },
       move = { set_jumps = true },
     }
 
