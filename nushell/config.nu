@@ -161,4 +161,4 @@ alias gbdr = git branch -D --remotes
 
 # Only used in vault-vanilla
 alias gcd = git cd
-alias gci = git ci
+alias gcn = git cn
