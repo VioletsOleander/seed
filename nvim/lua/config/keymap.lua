@@ -6,13 +6,13 @@ local map = vim.keymap.set
 map({ "n", "x", "o" }, "H", "^", { desc = "Jump to line start" })
 map({ "n", "x", "o" }, "L", "$", { desc = "Jump to line end" })
 
--- Jump 5 lines up/down
-map({ "n", "x", "o" }, "<C-k>", "5k", { desc = "Jump 5 lines up" })
-map({ "n", "x", "o" }, "<C-j>", "5j", { desc = "Jump 5 lines down" })
+-- Jump 4 lines up/down
+map({ "n", "x", "o" }, "<C-k>", "4k", { desc = "Jump 4 lines up" })
+map({ "n", "x", "o" }, "<C-j>", "4j", { desc = "Jump 4 lines down" })
 
--- Scroll 5 lines up/down
-map({ "n", "x", "o" }, "<C-y>", "5<C-y>", { desc = "Jump 5 lines up" })
-map({ "n", "x", "o" }, "<C-e>", "5<C-e>", { desc = "Jump 5 lines down" })
+-- Scroll 4 lines up/down
+map({ "n", "x", "o" }, "<C-y>", "4<C-y>", { desc = "Jump 4 lines up" })
+map({ "n", "x", "o" }, "<C-e>", "4<C-e>", { desc = "Jump 4 lines down" })
 
 -- Copy/paste to system clipboard
 map({ "n", "v" }, "<Leader>y", '"+y', { desc = "Yank to system clipboard" })
