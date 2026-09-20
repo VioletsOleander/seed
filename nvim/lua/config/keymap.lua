@@ -196,3 +196,7 @@ map("n", "ML", "L", { desc = "Jump to the line in the bottom of current window."
 
 -- Disable middle mouse paste
 map({ "n", "i" }, "<MiddleMouse>", "<Nop>", { desc = "Do nothing." })
+
+-- Always forward/backward
+map("n", "n", "/<CR>", { silent = true, desc = "Use last searched pattern to search forward" })
+map("n", "N", "?<CR>", { silent = true, desc = "Use last searched pattern to search backward" })
