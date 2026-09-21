@@ -32,25 +32,34 @@ export def update-remotes [] {
 }
 
 # Squash merge pull request on current branch.
-export def merge-pull-request [] {
-    let checks_result = (^gh pr checks --json 'bucket' | from json)
+export def merge-pull-request [--message-style(-s): string@[old new]] {
+    if $message_style not-in ['old', 'new'] {
+        print 'Error: unrecognized message style'
+        return
+    }
 
     print 'Checking CI status'
+
+    let checks_result = (^gh pr checks --json 'bucket' | from json)
     if 'fail' in $checks_result.bucket {
         print 'Failed to merge pull request: there exits failed CI'
         return
     }
 
     print 'Composing pull request message'
-    let view_result = (^gh pr view --json 'title,body,url' | from json)
 
+    let view_result = (^gh pr view --json 'title,body,url' | from json)
     let title = $view_result.title
     let body = $view_result.body
     let url = $view_result.url
 
-    let message_body = $"($body)\nPR: ($url)"
+    let message_body = match $message_style {
+        old => body
+        new => $"($body)\nPR: ($url)"
+    }
 
     print $'Merging pull request ($url)'
+
     ^gh pr merge --squash --subject $title --body $message_body
 }
 
