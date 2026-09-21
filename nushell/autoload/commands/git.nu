@@ -55,7 +55,10 @@ export def merge-pull-request [--message-style(-s): string@[old new]] {
 
     let message_body = match $message_style {
         old => body
-        new => $"($body)\nPR: ($url)"
+        new => {
+            let trimmed_body = $body | str trim --right
+            $"($trimmed_body)\n\nPR: ($url)"
+        }
     }
 
     print $'Merging pull request ($url)'
