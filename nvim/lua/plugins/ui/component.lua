@@ -1,5 +1,7 @@
 ---@module "lazy"
 
+local map = vim.keymap.set
+
 ---@type LazyPluginSpec
 local mini_icons = {
   "nvim-mini/mini.icons",
@@ -12,22 +14,45 @@ local gitsigns = {
   "lewis6991/gitsigns.nvim",
   cmd = "Gitsigns",
   opts = {
-    signs = {
-      add = { text = "┃" },
-      change = { text = "┃" },
-      delete = { text = "_" },
-      topdelete = { text = "‾" },
-      changedelete = { text = "~" },
-      untracked = { text = "┆" },
-    },
-    signs_staged = {
-      add = { text = "┃" },
-      change = { text = "┃" },
-      delete = { text = "_" },
-      topdelete = { text = "‾" },
-      changedelete = { text = "~" },
-      untracked = { text = "┆" },
-    },
+    on_attach = function()
+      local gitsigns = require("gitsigns")
+
+      map("n", "]h", function()
+        gitsigns.nav_hunk("next")
+      end, { desc = "Got to next hunk." })
+      map("n", "[h", function()
+        gitsigns.nav_hunk("prev")
+      end, { desc = "Got to prev hunk." })
+
+      map("v", "<Leader>hr", function()
+        gitsigns.reset_hunk({ vim.fn.line("."), vim.fn.line("v") })
+      end, { desc = "Reset the selected hunk." })
+
+      map(
+        "n",
+        "<Leader>hp",
+        gitsigns.preview_hunk,
+        { desc = "Preview current hunk at a floating window." }
+      )
+      map(
+        "n",
+        "<Leader>hi",
+        gitsigns.preview_hunk_inline,
+        { desc = "Preview current hunk inline." }
+      )
+
+      map(
+        "n",
+        "<Leader>hd",
+        gitsigns.diffthis,
+        { desc = "Perform vimdiff on current buffer against the index." }
+      )
+      map("n", "<Leader>hD", function()
+        gitsigns.diffthis("~1")
+      end, { desc = "Perform vimdiff on current buffer against the last commit." })
+
+      map({ "o", "x" }, "ih", gitsigns.select_hunk, { desc = "Select current hunk." })
+    end,
   },
 }
 
