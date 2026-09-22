@@ -33,9 +33,8 @@ export def update-remotes [] {
 
 # Squash merge pull request on current branch.
 export def merge-pull-request [--message-style(-s): string@[platform-independent github-specific]] {
-    if $message_style not-in ['old', 'new'] {
-        print 'Error: unrecognized message style'
-        return
+    if $message_style not-in ['platform-independent', 'github-specific'] {
+        error make 'Error: unrecognized message style'
     }
 
     print 'Checking CI status'
