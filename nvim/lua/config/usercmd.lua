@@ -25,17 +25,10 @@ local show_diagnostic = false
 
 local function toggle_diagnostic()
   if show_diagnostic == false then
-    vim.diagnostic.config({ signs = true, underline = true, virtual_lines = true })
     vim.diagnostic.show()
     show_diagnostic = true
   else
     vim.diagnostic.hide()
-    vim.diagnostic.config({
-      signs = false,
-      underline = false,
-      virtual_lines = false,
-      virtual_text = false,
-    })
     show_diagnostic = false
   end
 end
@@ -52,6 +45,38 @@ vim.keymap.set(
   toggle_diagnostic,
   { desc = "Toggle showing attention attracting diagnostics" }
 )
+
+-- Set diagnostic level.
+
+---@param opts table
+local function set_diagnostic_level(opts)
+  local level = tonumber(opts.args)
+  if level == 1 then
+    vim.diagnostic.config({
+      signs = true,
+      underline = true,
+      virtual_text = true,
+      virtual_lines = false,
+    })
+  elseif level == 2 then
+    vim.diagnostic.config({
+      signs = true,
+      underline = true,
+      virtual_text = false,
+      virtual_lines = true,
+    })
+  else
+    vim.notify("Invalid diagnostic level, expecting 1 or 2")
+  end
+end
+
+com("SetDiagnosticLevel", set_diagnostic_level, {
+  nargs = 1,
+  complete = function()
+    return { "1", "2" }
+  end,
+  desc = "Set diagnostic level.",
+})
 
 -- Toggle color column.
 com("ToggleColorColumn", function()
