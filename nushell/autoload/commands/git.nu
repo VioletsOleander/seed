@@ -53,7 +53,7 @@ export def merge-pull-request [--message-style(-s): string@[platform-independent
     let url = $view_result.url
 
     let message_body = match $message_style {
-        'github-specific' => body
+        'github-specific' => $body
         'platform-independent' => {
             let trimmed_body = $body | str trim --right
             $"($trimmed_body)\n\nPR: ($url)"
