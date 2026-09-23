@@ -32,8 +32,8 @@ export def update-remotes [] {
 }
 
 # Squash merge pull request on current branch.
-export def merge-pull-request [--message-style(-s): string@[platform-independent github-specific]] {
-    if $message_style not-in ['platform-independent', 'github-specific'] {
+export def merge-pull-request [--message-style(-s): string@[with-pr-footnote plain]] {
+    if $message_style not-in ['with-pr-footnote', 'plain'] {
         error make 'Error: unrecognized message style'
     }
 
@@ -53,8 +53,8 @@ export def merge-pull-request [--message-style(-s): string@[platform-independent
     let url = $view_result.url
 
     let message_body = match $message_style {
-        'github-specific' => $body
-        'platform-independent' => {
+        'plain' => $body
+        'with-pr-footnote' => {
             let trimmed_body = $body | str trim --right
             $"($trimmed_body)\n\nPR: ($url)"
         }
