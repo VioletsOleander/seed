@@ -24,9 +24,7 @@ local gitsigns = {
         gitsigns.nav_hunk("prev")
       end, { desc = "Got to prev hunk." })
 
-      map("v", "<Leader>hr", function()
-        gitsigns.reset_hunk({ vim.fn.line("."), vim.fn.line("v") })
-      end, { desc = "Reset the selected hunk." })
+      map("n", "<Leader>hr", gitsigns.reset_hunk, { desc = "Reset hunk." })
 
       map(
         "n",
