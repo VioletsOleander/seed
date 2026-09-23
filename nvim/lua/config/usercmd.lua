@@ -10,21 +10,76 @@ com(
   { nargs = "*", complete = "help", desc = "Show help in vertical split window" }
 )
 
--- Toggle diagnostic display.
-
 -- Displayed diagnostic makes screen flicker when saving and formatting the file, therefore it
 -- should be turned off in the most of the time.
 vim.diagnostic.config({
   signs = false,
   underline = false,
-  virtual_lines = false,
   virtual_text = false,
+  virtual_lines = false,
 })
 
 local show_diagnostic = false
+local diagnostic_level_set = false
+
+-- Set diagnostic level.
+
+---@param opts table
+local function set_diagnostic_level(opts)
+  local level = tonumber(opts.args)
+  if level == 1 then
+    vim.diagnostic.config({
+      signs = true,
+      underline = true,
+      virtual_text = false,
+      virtual_lines = false,
+    })
+    show_diagnostic = true
+  elseif level == 2 then
+    vim.diagnostic.config({
+      signs = true,
+      underline = true,
+      virtual_text = true,
+      virtual_lines = false,
+    })
+    show_diagnostic = true
+  elseif level == 3 then
+    vim.diagnostic.config({
+      signs = true,
+      underline = true,
+      virtual_text = false,
+      virtual_lines = true,
+    })
+    show_diagnostic = true
+  else
+    vim.notify("Invalid diagnostic level, expecting 1 or 2 or 3")
+  end
+end
+
+com("SetDiagnosticLevel", set_diagnostic_level, {
+  nargs = 1,
+  complete = function()
+    return { "1", "2", "3" }
+  end,
+  desc = "Set diagnostic level.",
+})
+
+-- Toggle diagnostic display.
 
 local function toggle_diagnostic()
   if show_diagnostic == false then
+    -- If user has not set the level explicitly, use default level 2.
+    if not diagnostic_level_set then
+      vim.diagnostic.config({
+        signs = true,
+        underline = true,
+        virtual_text = true,
+        virtual_lines = false,
+      })
+      diagnostic_level_set = true
+    end
+
+    -- Else just recover the last set level.
     vim.diagnostic.show()
     show_diagnostic = true
   else
@@ -45,38 +100,6 @@ vim.keymap.set(
   toggle_diagnostic,
   { desc = "Toggle showing attention attracting diagnostics" }
 )
-
--- Set diagnostic level.
-
----@param opts table
-local function set_diagnostic_level(opts)
-  local level = tonumber(opts.args)
-  if level == 1 then
-    vim.diagnostic.config({
-      signs = true,
-      underline = true,
-      virtual_text = true,
-      virtual_lines = false,
-    })
-  elseif level == 2 then
-    vim.diagnostic.config({
-      signs = true,
-      underline = true,
-      virtual_text = false,
-      virtual_lines = true,
-    })
-  else
-    vim.notify("Invalid diagnostic level, expecting 1 or 2")
-  end
-end
-
-com("SetDiagnosticLevel", set_diagnostic_level, {
-  nargs = 1,
-  complete = function()
-    return { "1", "2" }
-  end,
-  desc = "Set diagnostic level.",
-})
 
 -- Toggle color column.
 com("ToggleColorColumn", function()
