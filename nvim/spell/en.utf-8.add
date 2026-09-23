@@ -2,6 +2,7 @@ Async
 Config
 DeepSeek
 Euphonic
+FFN
 JSON
 LLM
 Langevin
@@ -52,5 +53,7 @@ stderr
 stdin
 stdout
 struct
+tokenization
+tokenizer
 vimscript
 whitespace
