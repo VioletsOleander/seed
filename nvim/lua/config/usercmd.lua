@@ -19,10 +19,8 @@ vim.diagnostic.config({
   virtual_lines = false,
 })
 
-local show_diagnostic = false
-local diagnostic_level_set = false
-
 -- Set diagnostic level.
+local diagnostic_level_set = false
 
 ---@param opts table
 local function set_diagnostic_level(opts)
@@ -34,7 +32,7 @@ local function set_diagnostic_level(opts)
       virtual_text = false,
       virtual_lines = false,
     })
-    show_diagnostic = true
+    diagnostic_level_set = true
   elseif level == 2 then
     vim.diagnostic.config({
       signs = true,
@@ -42,7 +40,7 @@ local function set_diagnostic_level(opts)
       virtual_text = true,
       virtual_lines = false,
     })
-    show_diagnostic = true
+    diagnostic_level_set = true
   elseif level == 3 then
     vim.diagnostic.config({
       signs = true,
@@ -50,7 +48,7 @@ local function set_diagnostic_level(opts)
       virtual_text = false,
       virtual_lines = true,
     })
-    show_diagnostic = true
+    diagnostic_level_set = true
   else
     vim.notify("Invalid diagnostic level, expecting 1 or 2 or 3")
   end
@@ -65,6 +63,7 @@ com("SetDiagnosticLevel", set_diagnostic_level, {
 })
 
 -- Toggle diagnostic display.
+local show_diagnostic = false
 
 local function toggle_diagnostic()
   if show_diagnostic == false then
