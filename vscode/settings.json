@@ -28,26 +28,8 @@
   "workbench.editor.showTabs": "single",
   "workbench.editor.useModal": "off",
   "workbench.iconTheme": null,
-  "workbench.colorTheme": "Gruvbox Light Medium",
-  "workbench.colorCustomizations": {
-    "[Atom One Light]": {
-      "editorCursor.foreground": "#526fffcc",
-      "editorCursor.background": "#ffffff",
-      "terminalCursor.foreground": "#526fffcc",
-      "terminalCursor.background": "#ffffff"
-    },
-    "[Tokyo Night Light]": {
-      // "editor.foreground":"#343b59",
-      // "editor.background": "#e6e7ed",
-      // let the editor ground header looks like is merged with the editor background,
-      "editorGroupHeader.noTabsBackground": "#e6e7ed",
-      "editorGroupHeader.border": "#e6e7ed"
-    }
-  },
-  "workbench.activityBar.location": "hidden",
-  "window.menuBarVisibility": "hidden",
+  "workbench.colorTheme": "Dayfox",
   "search.quickOpen.history.filterSortOrder": "recency",
-  "zenMode.showTabs": "none",
   "explorer.confirmDelete": false,
   "explorer.compactFolders": false,
   "editor.cursorBlinking": "solid",
@@ -158,9 +140,6 @@
   "terminal.integrated.hideOnStartup": "whenEmpty",
   "terminal.integrated.allowChords": false,
   "security.workspace.trust.untrustedFiles": "open",
-  "remote.extensionKind": {
-    "GitHub.copilot-chat": ["ui"]
-  },
   "git.openRepositoryInParentFolders": "never",
   "extensions.experimental.affinity": {
     "vscodevim.vim": 1,
@@ -195,16 +174,8 @@
     "https://raw.githubusercontent.com/streetsidesoftware/cspell/main/": true,
     "https://biomejs.dev": true
   },
-  "github.copilot.nextEditSuggestions.enabled": true,
-  "github.copilot.selectedCompletionModel": "",
   "chat.viewSessions.orientation": "stacked",
   "chat.viewSessions.enabled": false,
-  "github.copilot.enable": {
-    "*": false,
-    "plaintext": false,
-    "markdown": true,
-    "scminput": false
-  },
   "cSpell.enabled": false,
   "editor.inlineSuggest.edits.showCollapsed": true,
   "svelte.enable-ts-plugin": true,
