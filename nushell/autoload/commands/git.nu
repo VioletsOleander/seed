@@ -1,19 +1,78 @@
-# Create a new pull request with HEAD.
-#
-# The pull request title will be the the commit message title of HEAD, and description will be the commit message body
-# of HEAD.
-export def new-pull-request [] {
-    ^gh pr new --title (^git log -1 --format=%s) --body (^git log -1 --format=%b)
-}
-
 # Create a new branch on HEAD.
 #
 # The branch name will be <name> appended with unique timestamp.
-export def new-branch [name: string] {
+# The branch name will be the return value of this command.
+export def create-branch [name: string] {
     let timestamp = date now | format date "%Y%m%d-%H%M%S"
     let branch = $name + "/" + $timestamp
 
     ^git switch --create $branch
+
+    $branch
+}
+
+# Create a new pull request with HEAD.
+#
+# The pull request title will be the the commit message title of HEAD, and description will be the
+# commit message body of HEAD.
+export def create-pull-request [] {
+    let subject = ^git log -1 --format=%s
+    let body = ^git log -1 --format=%b
+
+    ^gh pr new --title $subject --body $body
+}
+
+# Squash merge the pull request on current branch.
+#
+# The commit message will has a footnote indicating the pull request URL.
+export def merge-pull-request [] {
+    let info = (^gh pr view --json 'title,body,url,statusCheckRollup' | from json)
+
+    # If has CI, do CI checks.
+    if not ($info.statusCheckRollup | is-empty) {
+        print 'Checking CI status'
+        ^gh pr checks --watch --fail-fast
+    }
+
+    print 'Composing pull request message'
+
+    let subject = $info.title
+    let body = $'($info.body | str trim --right)\n\nPR: ($info.url)'
+
+    print $'Merging pull request ($info.url)'
+    print $"The commit message is\n: ($subject)($body)"
+
+    ^gh pr merge --squash --subject $subject --body $body
+}
+
+# Create a commit on the main branch throught a pull request based process.
+#
+# This command will:
+#
+# 1. Create a new branch whose name is prefixed with <branch_name> and postfixed with a unique timestamp.
+# 2. Switch to that branch and initiate git commit to commit the staged area.
+# 3. After commit, create a new pull request with that commit.
+# 4. Check pull request CI status and squash that pull request if CI is ok.
+# 5. Switch to the main branch, pull the newly merged commit.
+# 6. Delete the previouly created branch.
+export def create-commit [
+    --branch-name(-n): string # Base name of the temporary branch to create
+] {
+    if ($branch_name | is-empty) {
+        error make '--branch-name is required'
+    }
+
+    let branch_name = create-branch $branch_name
+
+    ^git commit
+    ^git push
+
+    create-pull-request
+    merge-pull-request
+
+    ^git switch main
+    ^git pull --prune
+    ^git branch -D $branch_name
 }
 
 # Push main branch to GitHub and/or Codeberg.
@@ -31,41 +90,7 @@ export def update-remotes [] {
     }
 }
 
-# Squash merge pull request on current branch.
-export def merge-pull-request [--message-style(-s): string@[with-pr-footnote plain]] {
-    if $message_style not-in ['with-pr-footnote', 'plain'] {
-        error make 'Error: unrecognized message style'
-    }
-
-    print 'Checking CI status'
-
-    let checks_result = (^gh pr checks --json 'bucket' | from json)
-    if 'fail' in $checks_result.bucket {
-        print 'Failed to merge pull request: there exits failed CI'
-        return
-    }
-
-    print 'Composing pull request message'
-
-    let view_result = (^gh pr view --json 'title,body,url' | from json)
-    let title = $view_result.title
-    let body = $view_result.body
-    let url = $view_result.url
-
-    let message_body = match $message_style {
-        'plain' => $body
-        'with-pr-footnote' => {
-            let trimmed_body = $body | str trim --right
-            $"($trimmed_body)\n\nPR: ($url)"
-        }
-    }
-
-    print $'Merging pull request ($url)'
-
-    ^gh pr merge --squash --subject $title --body $message_body
-}
-
-export alias new-pr = new-pull-request
-export alias new-b = new-branch
-export alias up-r = update-remotes
+export alias cr-pr = create-pull-request
+export alias cr-br = create-branch
 export alias mr-pr = merge-pull-request
+export alias cr-cm = create-commit
