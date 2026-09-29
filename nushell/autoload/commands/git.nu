@@ -37,7 +37,7 @@ export def merge-pull-request [] {
     print 'Composing pull request message'
 
     let subject = $info.title
-    let body = $'($info.body | str trim --right)\n\nPR: ($info.url)'
+    let body = $"($info.body | str trim --right)\n\nPR: ($info.url)"
 
     print $'Merging pull request ($info.url)'
     print $"The commit message is\n: ($subject)($body)"
