@@ -40,7 +40,7 @@ export def merge-pull-request [] {
     let body = $"($info.body | str trim --right)\n\nPR: ($info.url)"
 
     print $'Merging pull request ($info.url)'
-    print $"The commit message is\n: ($subject)($body)"
+    print $"The commit message is:\n($subject)($body)"
 
     ^gh pr merge --squash --subject $subject --body $body
 }
