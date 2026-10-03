@@ -78,11 +78,11 @@ local function get_next_char()
 end
 
 --- Return true if the char after cursor is jumpable
---- Jumpable chars including: ] } " ' ` > ) ,
+--- Jumpable chars including: ] } " ' ` > ) , ; | $
 ---
 ---@return boolean
 local function next_is_jumpable()
-  local chars = { ")", "]", "}", '"', "'", "`", ">", "," }
+  local chars = { ")", "]", "}", '"', "'", "`", ">", ",", ";", "|", "$" }
   local next_char = get_next_char()
 
   for _, char in ipairs(chars) do
