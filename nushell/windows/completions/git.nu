@@ -59,9 +59,8 @@ def diff-files [context: string] {
 }
 
 # Files changed
-def restore-files [context: string] {
-    let segments = $context | split row ' '
-    let entries = if ('--staged' in $segments) or ('-S' in $segments) {
+def restore-files [place: record] {
+    let entries = if ('--staged' in $place.command) or ('-S' in $place.command) {
         # The R100 entires is hard to parse, so turn off rename detection
         ^git diff --cached --name-status --no-renames
     } else {
@@ -76,9 +75,8 @@ def restore-files [context: string] {
 }
 
 # Branches in current repository
-def branches [context: string] {
-    let segments = $context | split row ' '
-    let branches = if ('-r' in $segments) or ('--remotes' in $segments) {
+def branches [place: record] {
+    let branches = if ('-r' in $place.command) or ('--remotes' in $place.command) {
         ^git branch --list --remotes --format='%(refname:lstrip=2)'
     } else {
         ^git branch --list --format='%(refname:lstrip=2)'
