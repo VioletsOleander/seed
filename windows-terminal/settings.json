@@ -1,10 +1,10 @@
 {
     "$help": "https://aka.ms/terminal-documentation",
     "$schema": "https://aka.ms/terminal-profiles-schema",
-    "actions": 
+    "actions":
     [
         {
-            "command": 
+            "command":
             {
                 "action": "splitPane",
                 "split": "right"
@@ -18,7 +18,7 @@
     "copyFormatting": "none",
     "copyOnSelect": true,
     "defaultProfile": "{e3adc4cf-b57f-4355-b235-0667b675d430}",
-    "disabledProfileSources": 
+    "disabledProfileSources":
     [
         "Windows.Terminal.Azure",
         "Windows.Terminal.PowershellCore",
@@ -29,7 +29,7 @@
     "experimental.scrollToZoom": false,
     "initialCols": 128,
     "initialRows": 42,
-    "keybindings": 
+    "keybindings":
     [
         {
             "id": "User.closePane",
@@ -38,34 +38,38 @@
         {
             "id": "User.splitPane.864CD510",
             "keys": "alt+v"
+        },
+        {
+            "id": null,
+            "keys": "ctrl+comma"
         }
     ],
     "language": "en-US",
     "launchMode": "default",
-    "newTabMenu": 
+    "newTabMenu":
     [
         {
             "type": "remainingProfiles"
         }
     ],
-    "profiles": 
+    "profiles":
     {
-        "defaults": 
+        "defaults":
         {
             "adjustIndistinguishableColors": "never",
             "bellStyle": "none",
             "colorScheme": "AtomOneLight-Refined",
-            "font": 
+            "font":
             {
                 "face": "CaskaydiaCove Nerd Font"
             }
         },
-        "list": 
+        "list":
         [
             {
                 "colorScheme": "Catppuccin Latte",
                 "commandline": "%SystemRoot%\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
-                "font": 
+                "font":
                 {
                     "face": "CaskaydiaCove Nerd Font Mono"
                 },
@@ -95,7 +99,7 @@
                 "adjustIndistinguishableColors": "indexed",
                 "colorScheme": "AtomOneLight-Refined",
                 "commandline": "C:\\Users\\Vios\\scoop\\apps\\nu\\current\\nu.exe",
-                "font": 
+                "font":
                 {
                     "face": "FiraCode Nerd Font",
                     "size": 11.5,
@@ -108,7 +112,7 @@
             }
         ]
     },
-    "schemes": 
+    "schemes":
     [
         {
             "background": "#FAFAFA",
