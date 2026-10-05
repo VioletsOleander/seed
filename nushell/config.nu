@@ -136,7 +136,6 @@ alias ll = ls -l
 alias cls = clear
 
 ## Tool
-alias lg = lazygit
 alias re = recnys
 alias vn = vanillian
 alias nv = nvim
