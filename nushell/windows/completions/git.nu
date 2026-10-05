@@ -43,9 +43,8 @@ def add-files [] {
 }
 
 # Files changed
-def diff-files [context: string] {
-    let segments = $context | split row ' '
-    let entries = if ('--cached' in $segments) or ('--staged' in $segments) {
+def diff-files [place: record] {
+    let entries = if ('--cached' in $place.command) or ('--staged' in $place.command) {
         ^git diff --cached --name-status
     } else {
         ^git diff --name-status
