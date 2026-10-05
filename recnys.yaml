@@ -31,6 +31,7 @@
   # Tools: Git
   ".gitconfig": { dest: { Windows: ".gitconfig", Linux: ".gitconfig" } },
   "lazygit/",
+  "gitui/",
   # Tools: Viewer
   ".lesskey": { dest: { Windows: "_lesskey", Linux: ".lesskey" } },
   "bat/",

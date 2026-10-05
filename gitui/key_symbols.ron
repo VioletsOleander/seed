@@ -1,0 +1,12 @@
+(
+    enter: Some("enter"),
+    shift: Some("shift-"),
+    esc: Some("esc"),
+    left: Some("<-"),
+    right: Some("->"),
+    backspace: Some("backspace"),
+    tab: Some("tab"),
+    back_tab: Some("shift-tab"),
+    control: Some("control-"),
+    alt: Some("alt-"),
+)
