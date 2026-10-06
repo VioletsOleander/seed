@@ -34,7 +34,7 @@ local mini_ai = {
 
     local opts = {
       n_lines = 500,
-      search_method = "cover",
+      -- search_method = "cover",
       custom_textobjects = custom_textobjects,
       mappings = {
         around_next = "",
