@@ -6,13 +6,35 @@ local map = vim.keymap.set
 map({ "n", "x", "o" }, "H", "^", { desc = "Jump to line start" })
 map({ "n", "x", "o" }, "L", "$", { desc = "Jump to line end" })
 
--- Jump 4 lines up/down
-map({ "n", "x", "o" }, "<C-k>", "4k", { desc = "Jump 4 lines up" })
-map({ "n", "x", "o" }, "<C-j>", "4j", { desc = "Jump 4 lines down" })
+-- Jump 25% screen up/down
+map({ "n", "x", "o" }, "<C-k>", function()
+  local height = vim.api.nvim_win_get_height(0)
+  local count = math.max(1, math.floor(height * 0.25))
 
--- Scroll 4 lines up/down
-map({ "n", "x", "o" }, "<C-y>", "4<C-y>", { desc = "Jump 4 lines up" })
-map({ "n", "x", "o" }, "<C-e>", "4<C-e>", { desc = "Jump 4 lines down" })
+  vim.api.nvim_feedkeys(count .. "k", "n", false)
+end, { desc = "Jump 25% screen up" })
+map({ "n", "x", "o" }, "<C-j>", function()
+  local height = vim.api.nvim_win_get_height(0)
+  local count = math.max(1, math.floor(height * 0.25))
+
+  vim.api.nvim_feedkeys(count .. "j", "n", false)
+end, { desc = "Jump 25% screen down" })
+
+-- Scroll 25% screen
+map({ "n", "x", "o" }, "<C-y>", function()
+  local height = vim.api.nvim_win_get_height(0)
+  local count = math.max(1, math.floor(height * 0.25))
+  local keycode = vim.keycode("<C-y>")
+
+  vim.api.nvim_feedkeys(count .. keycode, "n", false)
+end, { desc = "Scroll 25% screen up" })
+map({ "n", "x", "o" }, "<C-e>", function()
+  local height = vim.api.nvim_win_get_height(0)
+  local count = math.max(1, math.floor(height * 0.25))
+  local keycode = vim.keycode("<C-e>")
+
+  vim.api.nvim_feedkeys(count .. keycode, "n", false)
+end, { desc = "Scroll 25% screen down" })
 
 -- Copy/paste to system clipboard
 map({ "n", "v" }, "<Leader>y", '"+y', { desc = "Yank to system clipboard" })
