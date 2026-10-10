@@ -1,8 +1,5 @@
 ---@module "lazy"
----@module "neo-tree"
 ---@module "snacks"
-
-local map = vim.keymap.set
 
 ---@type snacks.Config
 local snacks_opts = {
@@ -97,7 +94,9 @@ local snacks_opts = {
   },
 }
 
-local function set_snacks_keymap()
+local function set_snacks_keymaps()
+  local map = vim.keymap.set
+
   map("n", "<Leader>:", function()
     Snacks.picker.command_history()
   end, { desc = "Show command history" })
@@ -225,11 +224,9 @@ local snacks = {
   priority = 1000,
   config = function()
     vim.g.snacks_animate = false
-    set_snacks_keymap()
+    set_snacks_keymaps()
     Snacks.setup(snacks_opts)
   end,
 }
-
----@type neotree.Config
 
 return { snacks }
