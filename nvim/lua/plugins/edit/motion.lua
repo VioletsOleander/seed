@@ -56,7 +56,7 @@ local function set_flash_keymaps()
   end, { desc = "Select range by searching neighboring treesitter node" })
 
   -- Custom keymaps
-  map("n", "gl", function()
+  map({ "n", "o", "x" }, "gl", function()
     require("flash").jump({
       search = { mode = "search", max_length = 0 },
       pattern = "^",
