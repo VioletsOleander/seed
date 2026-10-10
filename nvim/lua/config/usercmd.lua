@@ -14,11 +14,11 @@ com(
 
 com("ToggleDiagnostic", function()
   vim.diagnostic.enable(not vim.diagnostic.is_enabled())
-end, { desc = "Toggle showing attention attracting diagnostics" })
+end, { desc = "Toggle showing diagnostics" })
 
 vim.keymap.set("n", "<C-a>", function()
   vim.diagnostic.enable(not vim.diagnostic.is_enabled())
-end, { desc = "Toggle showing attention attracting diagnostics" })
+end, { desc = "Toggle showing diagnostics" })
 
 ---@param opts table
 local function set_diagnostic_level(opts)
@@ -82,12 +82,12 @@ com("ToggleColorColumn", function()
   else
     vim.wo.colorcolumn = ""
   end
-end, { desc = "Toggle showing attention attracting colorcolumn" })
+end, { desc = "Toggle showing colorcolumn" })
 
 -- Toggle lsp inlay hint.
 com("ToggleLspInlayHint", function()
   vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
-end, { desc = "Toggle showing attention attracting lsp inlay hint." })
+end, { desc = "Toggle showing lsp inlay hint." })
 
 -- Toggle relative number
 local function toggle_relative_number()
@@ -100,17 +100,13 @@ local function toggle_relative_number()
   end
 end
 
-com(
-  "ToggleRelativeNumber",
-  toggle_relative_number,
-  { desc = "Toggle showing attention attracting relativenumber." }
-)
+com("ToggleRelativeNumber", toggle_relative_number, { desc = "Toggle showing relativenumber." })
 
 vim.keymap.set(
   { "n", "v", "o" },
   "<C-n>",
   toggle_relative_number,
-  { desc = "Toggle showing attention attracting relativenumber." }
+  { desc = "Toggle showing relativenumber." }
 )
 
 -- Toggle spell check

@@ -19,12 +19,12 @@ local snacks_opts = {
     enabled = true,
     actions = {
       ---@diagnostic disable-next-line: assign-type-mismatch
-      list_down_5 = function(picker)
-        picker.list:move(5)
+      list_down_4 = function(picker)
+        picker.list:move(4)
       end,
       ---@diagnostic disable-next-line: assign-type-mismatch
-      list_up_5 = function(picker)
-        picker.list:move(-5)
+      list_up_4 = function(picker)
+        picker.list:move(-4)
       end,
       ---@diagnostic disable-next-line: assign-type-mismatch
       emit_esc = function()
@@ -61,8 +61,8 @@ local snacks_opts = {
           ["/"] = { "emit_slash", mode = "n" },
           ["<Esc>"] = { "close", mode = "n" },
           ["<C-q>"] = { "close", mode = "n" },
-          ["<C-j>"] = { "list_down_5", mode = "n" },
-          ["<C-k>"] = { "list_up_5", mode = "n" },
+          ["<C-j>"] = { "list_down_4", mode = "n" },
+          ["<C-k>"] = { "list_up_4", mode = "n" },
           ["jk"] = { "confirm", mode = "n" },
           ["<C-c>"] = { "clear_hl", mode = "n" },
         },
