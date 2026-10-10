@@ -56,36 +56,35 @@ local function set_flash_keymaps()
   end, { desc = "Select range by searching neighboring treesitter node" })
 
   -- Custom keymaps
-
-  ---@param opts Flash.Format
-  local function get_label_formats(opts)
-    return {
-      { opts.match.label1, "FlashMatch" },
-      { opts.match.label2, "FlashMatch" },
-    }
-  end
-
   map("n", "gl", function()
     require("flash").jump({
       search = { mode = "search", max_length = 0 },
       pattern = "^",
-      label = { after = { 0, 0 }, format = get_label_formats },
-      ---@param match Flash.Match
-      ---@param state Flash.State
+      label = {
+        after = { 0, 0 },
+        format = function(opts)
+          return {
+            { opts.match.label1, "FlashMatch" },
+            { opts.match.label2, "FlashMatch" },
+          }
+        end,
+      },
       action = function(match, state)
         state:hide()
         require("flash").jump({
           search = { max_length = 0 },
-          label = { format = get_label_formats },
+          label = {
+            format = function(opts)
+              return { { opts.match.label2, "FlashMatch" } }
+            end,
+          },
           highlight = { matches = false },
-          ---@param win number
           matcher = function(win)
-            -- Limit matches to the current label
+            -- Limit matches to the current selected label
             return vim.tbl_filter(function(m)
               return m.label1 == match.label1 and m.win == win
             end, state.results)
           end,
-          ---@param matches Flash.Match[]
           labeler = function(matches)
             for _, m in ipairs(matches) do
               m.label = m.label2
@@ -93,13 +92,12 @@ local function set_flash_keymaps()
           end,
         })
       end,
-      ---@param matches Flash.Match[]
-      ---@param state Flash.State
       labeler = function(matches, state)
         local labels = state:labels()
         for i, match in ipairs(matches) do
-          match.label1 = labels[math.floor((i - 1) / #labels) + 1]
-          match.label2 = labels[(i - 1) % #labels + 1]
+          -- Each 10 lines share the same first label
+          match.label1 = labels[math.floor((i - 1) / 10) + 1]
+          match.label2 = labels[(i - 1) % 10 + 1]
           match.label = match.label1
         end
       end,
