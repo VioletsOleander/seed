@@ -89,30 +89,28 @@ map({ "n", "v" }, "<Leader>y", '"+y', { desc = "Copy to system clipboard." })
 map({ "n", "v" }, "<Leader>p", '"+p', { desc = "Paste from system clipboard." })
 
 -- Clear highlight.
-map("n", "<Leader>c", function()
-  vim.cmd("nohlsearch")
-end, { desc = "Clear search highlight" })
+map("n", "<Leader>c", "<Cmd>nohlsearch<CR>", { desc = "Clear search highlight" })
 map("n", "zz", function()
   vim.cmd("normal! zz")
   vim.cmd("nohlsearch")
 end, { desc = "Make cursor line in screen center and clear highlight." })
 
--- Close/Quit.
+-- Close/Quit window.
 map("n", "<C-c>", "<Cmd>close<CR>", { desc = "Close current window." })
 map("n", "<C-q>", "<Cmd>quit<CR>", { desc = "Quit current window." })
-
--- Disable middle mouse paste.
-map({ "n", "i" }, "<MiddleMouse>", "<Nop>", { desc = "Nop." })
 
 -- Always search forward/backward.
 map("n", "n", "/<CR>", { silent = true, desc = "Search forward with last searched pattern." })
 map("n", "N", "?<CR>", { silent = true, desc = "Search backward with last searched pattern." })
 
+-- Disable middle mouse paste.
+map({ "n", "i" }, "<MiddleMouse>", "<Nop>")
+
 -- Insert/Visual/Select mode to normal mode.
 -- In CTRL-X CTRL-L mode this will not work because vim does not allow this, which is kind of annoying sometimes.
 map({ "i", "v", "x", "c" }, "<C-l>", "<Esc>", { desc = "Switch to normal mode." })
 
--- Spell correction.
+-- Correct spell.
 map(
   "i",
   "<C-a>",
