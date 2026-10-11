@@ -1,97 +1,55 @@
 local map = vim.keymap.set
 
--- Keymaps shared by VSCode and Neovim
+--- Motions.
 
--- Jump to line start/end
-map({ "n", "x", "o" }, "H", "^", { desc = "Jump to line start" })
-map({ "n", "x", "o" }, "L", "$", { desc = "Jump to line end" })
+-- Goto line start/end.
+map({ "n", "x", "o" }, "H", "^", { desc = "Goto line start." })
+map({ "n", "x", "o" }, "L", "$", { desc = "Goto line end." })
 
--- Jump 25% screen up/down
-map({ "n", "x", "o" }, "<C-k>", function()
-  local height = vim.api.nvim_win_get_height(0)
-  local count = math.max(1, math.floor(height * 0.25))
-
-  vim.api.nvim_feedkeys(count .. "k", "n", false)
-end, { desc = "Jump 25% screen up" })
-map({ "n", "x", "o" }, "<C-j>", function()
-  local height = vim.api.nvim_win_get_height(0)
-  local count = math.max(1, math.floor(height * 0.25))
-
-  vim.api.nvim_feedkeys(count .. "j", "n", false)
-end, { desc = "Jump 25% screen down" })
-
--- Scroll 25% screen
+-- Scroll 25% screen up/down.
 map({ "n", "x", "o" }, "<C-y>", function()
   local height = vim.api.nvim_win_get_height(0)
   local count = math.max(1, math.floor(height * 0.25))
-  local keycode = vim.keycode("<C-y>")
-
-  vim.api.nvim_feedkeys(count .. keycode, "n", false)
-end, { desc = "Scroll 25% screen up" })
+  vim.api.nvim_feedkeys(count .. vim.keycode("<C-y>"), "n", false)
+end, { desc = "Scroll 25% screen up." })
 map({ "n", "x", "o" }, "<C-e>", function()
   local height = vim.api.nvim_win_get_height(0)
   local count = math.max(1, math.floor(height * 0.25))
-  local keycode = vim.keycode("<C-e>")
+  vim.api.nvim_feedkeys(count .. vim.keycode("<C-e>"), "n", false)
+end, { desc = "Scroll 25% screen down." })
 
-  vim.api.nvim_feedkeys(count .. keycode, "n", false)
-end, { desc = "Scroll 25% screen down" })
+-- Goto surrouding window.
+map("n", "<C-k>", "<C-w>k", { desc = "Goto the window above." })
+map("n", "<C-j>", "<C-w>j", { desc = "Goto the window below." })
+map("n", "<C-h>", "<C-w>h", { desc = "Goto the left window." })
+map("n", "<C-l>", "<C-w>l", { desc = "Goto the right window." })
 
--- Copy/paste to system clipboard
-map({ "n", "v" }, "<Leader>y", '"+y', { desc = "Yank to system clipboard" })
-map({ "n", "v" }, "<Leader>p", '"+p', { desc = "Paste from system clipboard" })
+-- Goto alternate buffer.
+map("n", "<BS>", "<C-^>", { desc = "Goto the alternate buffer." })
 
--- Clear screen
-map("n", "<Leader>c", function()
-  vim.cmd("nohlsearch")
-end, { desc = "Clear Screen (including search highlight)" })
+-- Goto top/middle/bottom line
+map("n", "gk", "H", { desc = "Goto the top line." })
+map("n", "gm", "M", { desc = "Goto the middle line." })
+map("n", "gj", "L", { desc = "Goto the bottom line." })
 
-map("n", "zz", function()
-  vim.cmd("normal! zz")
-  vim.cmd("nohlsearch")
-end, { desc = "Make cursor line in screen center and clear highlight" })
-map("n", "zt", function()
-  vim.cmd("normal! zt")
-  vim.cmd("nohlsearch")
-end, { desc = "Make cursor line in screen top and clear highlight" })
-map("n", "zb", function()
-  vim.cmd("normal! zb")
-  vim.cmd("nohlsearch")
-end, { desc = "Make cursor line in screen bottom and clear highlight" })
+--- Completion.
 
--- Insert/Visual/Select mode to normal mode
--- Notice that in CTRL-X CTRL-L mode this will not work because vim does not allow this, which is kind of annoying
--- sometimes
-map({ "i", "v", "x", "c" }, "<C-l>", "<Esc>", { desc = "Switch to normal mode" })
+-- Accept completion or jump next char.
+local jumpable_chars = {
+  [")"] = true,
+  ["]"] = true,
+  ["}"] = true,
+  ['"'] = true,
+  ["'"] = true,
+  ["`"] = true,
+  [">"] = true,
+  [","] = true,
+  [";"] = true,
+  ["|"] = true,
+  ["$"] = true,
+}
 
--- Move between panes
-map("n", "<C-h>", "<C-w>h", { desc = "Move to the left window" })
-map("n", "<C-l>", "<C-w>l", { desc = "Move to the right window" })
-
--- Switch between buffers
-map("n", "<BS>", "<C-^>", { desc = "Switch to alternate file" })
-
--- Close
-map("n", "<C-c>", "<Cmd>close<CR>", { desc = "Close current window" })
-
--- Quit
-map("n", "<C-q>", "<Cmd>quit<CR>", { desc = "Quit current window" })
-map("n", "<Leader>qq", "<Cmd>qall<CR>", { desc = "Exit Neovim" })
-
--- Correct spell
-map(
-  "i",
-  "<C-a>",
-  "<C-g>u<Esc>[s1z=`]a<C-g>u",
-  { desc = "Correc last spell using the first suggestion" }
-)
-
--- Format current line
--- Notice that using 'Esc + a' makes sure the cursor position will be correctly preserved, while
--- using ':normal' does not.
-map("i", "<C-q>", "<C-g>u<Esc>gwwa<C-g>u", { desc = "Format current paragraph." })
-
---- Return the character after cursor
----
+--- Return the char after cursor.
 ---@return string
 local function get_next_char()
   local line = vim.api.nvim_get_current_line()
@@ -99,126 +57,79 @@ local function get_next_char()
   return line:sub(col + 1, col + 1)
 end
 
---- Return true if the char after cursor is jumpable
---- Jumpable chars including: ] } " ' ` > ) , ; | $
----
----@return boolean
-local function next_is_jumpable()
-  local chars = { ")", "]", "}", '"', "'", "`", ">", ",", ";", "|", "$" }
-  local next_char = get_next_char()
-
-  for _, char in ipairs(chars) do
-    if next_char == char then
-      return true
-    end
-  end
-
-  return false
-end
-
--- Tab for accepting completion or jump out of brackets
 map("i", "<Tab>", function()
   if vim.fn.pumvisible() ~= 0 then
     return "<C-y>"
-  elseif next_is_jumpable() then
+  elseif jumpable_chars[get_next_char()] then
     return "<Right>"
   else
     return "<Tab>"
   end
-end, { expr = true, desc = "Confirm completion or jump out of brackets" })
+end, { expr = true, desc = "Accept completion or jump next char." })
 
--- Tab/S-Tab for iterating completion items
-map("c", "<Tab>", function()
-  return vim.fn.pumvisible() ~= 0 and "<C-n>" or "<Tab>"
-end, { expr = true, desc = "Select next completion item" })
-map("c", "<S-Tab>", function()
-  return vim.fn.pumvisible() ~= 0 and "<C-p>" or "<S-Tab>"
-end, { expr = true, desc = "Select previous completion item" })
-
--- Ctrl-j/k for selecting completion items
+-- Iterate completion items or move up/down.
 map("i", "<C-j>", function()
   return vim.fn.pumvisible() ~= 0 and "<C-n>" or "<Down>"
-end, { expr = true, desc = "Select next completion or move current line down" })
+end, { expr = true, desc = "Select next completion or move down one line." })
 map("i", "<C-k>", function()
   return vim.fn.pumvisible() ~= 0 and "<C-p>" or "<Up>"
-end, { expr = true, desc = "Select previous completion or move current line up" })
+end, { expr = true, desc = "Select previous completion or move up one line." })
 
+-- Iterate completion items.
+map("c", "<Tab>", function()
+  return vim.fn.pumvisible() ~= 0 and "<C-n>" or "<Tab>"
+end, { expr = true, desc = "Select next completion item." })
+map("c", "<S-Tab>", function()
+  return vim.fn.pumvisible() ~= 0 and "<C-p>" or "<S-Tab>"
+end, { expr = true, desc = "Select previous completion item." })
 map("c", "<C-j>", function()
   return vim.fn.pumvisible() ~= 0 and "<C-n>" or "<C-j>"
-end, { expr = true, desc = "Select previous completion" })
+end, { expr = true, desc = "Select previous completion." })
 map("c", "<C-k>", function()
   return vim.fn.pumvisible() ~= 0 and "<C-p>" or "<C-k>"
-end, { expr = true, desc = "Select previous completion" })
+end, { expr = true, desc = "Select previous completion." })
 
--- Ctrl-e to hide completion menu or signature help
-map("i", "<C-e>", function()
-  if vim.fn.pumvisible() ~= 0 then
-    vim.api.nvim_feedkeys(vim.keycode("<C-e>"), "n", false)
-  end
-end, { desc = "Hide completion menu or close lsp float windows" })
+--- Others.
 
--- Exit terminal mode
-map("t", [[<C-\><C-\>]], [[<C-\><C-n>]], { desc = "Exit terminal mode" })
+-- Copy/Paste.
+map({ "n", "v" }, "<Leader>y", '"+y', { desc = "Copy to system clipboard." })
+map({ "n", "v" }, "<Leader>p", '"+p', { desc = "Paste from system clipboard." })
 
---- Jump by user input.
----
----@param input string? User input.
----@param up boolean If true, jump up, otherwise jump down.
-local function jump_by_input(input, up)
-  -- Press Esc two times makes input == nil.
-  if not input then
-    return
-  end
+-- Clear highlight.
+map("n", "<Leader>n", function()
+  vim.cmd("nohlsearch")
+end, { desc = "Clear search highlight" })
+map("n", "zz", function()
+  vim.cmd("normal! zz")
+  vim.cmd("nohlsearch")
+end, { desc = "Make cursor line in screen center and clear highlight." })
 
-  local number = tonumber(input)
+-- Close/Quit.
+map("n", "<C-c>", "<Cmd>close<CR>", { desc = "Close current window." })
+map("n", "<C-q>", "<Cmd>quit<CR>", { desc = "Quit current window." })
 
-  if not number then
-    vim.notify("The input is invalid, please input valid numbers.")
-    return
-  end
+-- Disable middle mouse paste.
+map({ "n", "i" }, "<MiddleMouse>", "<Nop>", { desc = "Nop." })
 
-  local cursor = vim.api.nvim_win_get_cursor(0)
+-- Always search forward/backward.
+map("n", "n", "/<CR>", { silent = true, desc = "Search forward with last searched pattern." })
+map("n", "N", "?<CR>", { silent = true, desc = "Search backward with last searched pattern." })
 
-  if up then
-    vim.api.nvim_win_set_cursor(0, { math.max(cursor[1] - number, 1), cursor[2] })
-  else
-    vim.api.nvim_win_set_cursor(
-      0,
-      { math.min(cursor[1] + number, vim.api.nvim_buf_line_count(0)), cursor[2] }
-    )
-  end
-end
+-- Insert/Visual/Select mode to normal mode.
+-- In CTRL-X CTRL-L mode this will not work because vim does not allow this, which is kind of annoying sometimes.
+map({ "i", "v", "x", "c" }, "<C-l>", "<Esc>", { desc = "Switch to normal mode." })
 
--- Relative jump up/down.
-map("n", "gk", function()
-  vim.wo.relativenumber = true
+-- Spell correction.
+map(
+  "i",
+  "<C-a>",
+  "<C-g>u<Esc>[s1z=`]a<C-g>u",
+  { desc = "Correct last spell with the first suggestion." }
+)
 
-  vim.ui.input({ prompt = "Enter number of lines to jump up: ", scope = "cursor" }, function(input)
-    jump_by_input(input, true)
-    vim.wo.relativenumber = false
-  end)
-end, { desc = "Prompt user for a relative jump up." })
+-- Format line.
+-- Using 'Esc + a' makes sure the cursor position will be correctly preserved, while using ':normal' does not.
+map("i", "<C-q>", "<C-g>u<Esc>gwwa<C-g>u", { desc = "Format current line." })
 
-map("n", "gj", function()
-  vim.wo.relativenumber = true
-
-  vim.ui.input(
-    { prompt = "Enter number of lines to jump down: ", scope = "cursor" },
-    function(input)
-      jump_by_input(input, false)
-      vim.wo.relativenumber = false
-    end
-  )
-end, { desc = "Prompt user for a relative jump down." })
-
--- Jump to top/middle/bottom
-map("n", "MH", "H", { desc = "Jump to the line on top of current window." })
-map("n", "MM", "M", { desc = "Jump to the middle line of current window." })
-map("n", "ML", "L", { desc = "Jump to the line in the bottom of current window." })
-
--- Disable middle mouse paste
-map({ "n", "i" }, "<MiddleMouse>", "<Nop>", { desc = "Do nothing." })
-
--- Always forward/backward
-map("n", "n", "/<CR>", { silent = true, desc = "Use last searched pattern to search forward" })
-map("n", "N", "?<CR>", { silent = true, desc = "Use last searched pattern to search backward" })
+-- Terminal mode to normal mode.
+map("t", [[<C-\><C-\>]], [[<C-\><C-n>]], { desc = "Switch from terminal mode to normal mode." })
