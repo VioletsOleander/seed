@@ -3,6 +3,7 @@
 
 ---@type Flash.Config
 local flash_opts = {
+  labels = "asdfghjkl;qwertyuiopzxcvbnm",
   search = {
     -- The cursor will flick when search multi_window, so disable it
     multi_window = false,
@@ -18,17 +19,21 @@ local flash_opts = {
     backdrop = false,
   },
   label = {
-    uppercase = false,
+    uppercase = true,
   },
   modes = {
     char = {
+      label = { exclude = ";hjkliardc" },
+      jump_labels = true,
       highlight = {
         backdrop = false,
       },
-      char_actions = function()
+      char_actions = function(motion)
         return {
           [";"] = "right",
           [","] = "left",
+          [motion:lower()] = "right",
+          [motion:upper()] = "left",
         }
       end,
     },
@@ -50,7 +55,7 @@ local function set_flash_keymaps()
   end, { desc = "Select visible parent treesitter node" })
   map("o", "r", function()
     require("flash").remote()
-  end, { desc = "Jump to visible word by searching. Jump back after finishing operator" })
+  end, { desc = "Jump to visible place by searching. Jump back after finishing operator" })
   map({ "o", "x" }, "R", function()
     require("flash").treesitter_search()
   end, { desc = "Select range by searching neighboring treesitter node" })
