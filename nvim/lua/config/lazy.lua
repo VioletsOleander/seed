@@ -18,7 +18,7 @@ vim.opt.rtp:prepend(lazypath)
 
 -- Setup lazy.nvim
 require("lazy").setup({
-  spec = { { import = "plugins" } },
+  spec = { { import = "plugin" } },
   install = { colorscheme = { "default" } },
   -- Check plugin update every seven days.
   checker = { enabled = true, frequency = 604800 },
