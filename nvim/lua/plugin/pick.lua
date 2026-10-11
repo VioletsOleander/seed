@@ -3,92 +3,78 @@
 
 ---@type snacks.Config
 local snacks_opts = {
-  -- File load
+  bufdelete = { enabled = true },
   bigfile = { enabled = true },
   quickfile = { enabled = true },
-  -- UI
   indent = { enabled = true },
   notifier = { enabled = true, timeout = 3000 },
-  bufdelete = { enabled = true },
-  -- Picker
   explorer = { enabled = true },
   picker = {
     enabled = true,
-    actions = {
-      ---@diagnostic disable-next-line: assign-type-mismatch
-      list_down_4 = function(picker)
-        picker.list:move(4)
-      end,
-      ---@diagnostic disable-next-line: assign-type-mismatch
-      list_up_4 = function(picker)
-        picker.list:move(-4)
-      end,
-      ---@diagnostic disable-next-line: assign-type-mismatch
-      emit_esc = function()
-        local esc = vim.keycode("<Esc>")
-        vim.api.nvim_feedkeys(esc, "n", false)
-      end,
-      ---@diagnostic disable-next-line: assign-type-mismatch
-      emit_slash = function()
-        vim.api.nvim_feedkeys("/", "n", false)
-      end,
-      ---@diagnostic disable-next-line: assign-type-mismatch
-      clear_hl = function()
-        vim.cmd("nohlsearch")
-      end,
-    },
-    -- This makes sure that picker's jump in terminal window is correct.
-    -- Othewise snacks will search for a file buffer to open the picked one, instead of open the
-    -- picked one in current pane
+    -- Make sure that picker's open the target in current window, instead of finding a window with file buffer.
+    -- Otherwise, if current window is terminal, picker will not open the target in current window.
     main = { current = true },
+    -- Frequency bonus.
+    matcher = { frecency = true },
     win = {
       input = {
         keys = {
-          ["/"] = { "toggle_focus", mode = { "i", "n" } },
           ["<Esc>"] = { "close", mode = { "i", "n" } },
           ["<C-q>"] = { "close", mode = { "i", "n" } },
-          ["<C-j>"] = { "list_down", mode = { "i", "n" } },
-          ["<C-k>"] = { "list_up", mode = { "i", "n" } },
-          ["jk"] = { "confirm", mode = { "i", "n" } },
-          ["<C-c>"] = { "clear_hl", mode = { "i", "n" } },
+          ["/"] = { "toggle_focus", mode = { "i", "n" } },
         },
       },
       list = {
         keys = {
-          ["/"] = { "emit_slash", mode = "n" },
           ["<Esc>"] = { "close", mode = "n" },
           ["<C-q>"] = { "close", mode = "n" },
-          ["<C-j>"] = { "list_down_4", mode = "n" },
-          ["<C-k>"] = { "list_up_4", mode = "n" },
-          ["jk"] = { "confirm", mode = "n" },
-          ["<C-c>"] = { "clear_hl", mode = "n" },
+          -- Set to false to prevent snack's default keymap.
+          ["/"] = false,
+          ["<C-n>"] = false,
         },
       },
     },
     sources = {
       explorer = {
         hidden = true,
-        ignored = true,
         follow_file = false,
+        matcher = { fuzzy = true },
+        -- Show preview in the buffer window.
         layout = { preview = "main", hidden = { "preview" } },
         win = {
-          -- The toggle of explorer is controlled by leader+e, so
-          -- let esc works like esc
           input = {
             keys = {
-              ["<Esc>"] = "emit_esc",
+              -- Do not let Esc close explorer.
+              ["<Esc>"] = false,
+              ["<C-h>"] = { "toggle_hidden", mode = "i" },
+              ["<C-i>"] = { "toggle_ignored", mode = "i" },
             },
           },
           list = {
             keys = {
-              ["<Esc>"] = "emit_esc",
+              ["<Esc>"] = false,
+              ["H"] = { "toggle_hidden", mode = "n" },
+              ["I"] = { "toggle_ignored", mode = "n" },
             },
           },
         },
       },
       files = {
         hidden = true,
-        ignored = true,
+        win = {
+          input = {
+            keys = {
+              ["<C-h>"] = { "toggle_hidden", mode = "i" },
+              ["<C-i>"] = { "toggle_ignored", mode = "i" },
+            },
+          },
+          list = {
+            keys = {
+              ["H"] = { "toggle_hidden", mode = "n" },
+              ["I"] = { "toggle_ignored", mode = "n" },
+            },
+          },
+        },
       },
     },
   },
@@ -98,124 +84,123 @@ local function set_snacks_keymaps()
   local map = vim.keymap.set
 
   map("n", "<Leader>:", function()
-    Snacks.picker.command_history()
-  end, { desc = "Show command history" })
+    require("snacks").picker.command_history()
+  end, { desc = "Show command history." })
 
   map("n", "<Leader>e", function()
-    Snacks.explorer()
-  end, { desc = "Toggle file explorer based on current working directory" })
+    require("snacks").explorer()
+  end, { desc = "Toggle file explorer based on current working directory." })
 
-  -- Buffer (b)
+  -- Buffer (b).
   map("n", "<Leader>l", function()
-    Snacks.picker.buffers()
-  end, { desc = "Find buffers" })
+    require("snacks").picker.buffers()
+  end, { desc = "Find buffers." })
 
-  -- File (f)
-  map("n", "<Leader><Space>", function()
-    Snacks.picker.smart()
-  end, { desc = "Smart find files" })
+  -- File (f).
+  -- require("snacks").picker.smart will aggregate result from these three pickers.
+  -- We aims to be precise, therefore do not map require("snacks").picker.smart, but use the specific one.
   map("n", "<Leader>j", function()
-    Snacks.picker.files()
-  end, { desc = "Find files" })
+    require("snacks").picker.files()
+  end, { desc = "Find files." })
   map("n", "<Leader>k", function()
-    Snacks.picker.recent()
-  end, { desc = "Find recent files" })
+    require("snacks").picker.recent()
+  end, { desc = "Find recent files." })
   map("n", "<Leader>fc", function()
-    Snacks.picker.files({ cwd = vim.fn.stdpath("config") })
-  end, { desc = "Find config files" })
+    require("snacks").picker.files({ cwd = vim.fn.stdpath("config") })
+  end, { desc = "Find config files." })
 
-  -- Grep (g)
+  -- Grep (g).
   map("n", "<Leader>/", function()
-    Snacks.picker.grep()
-  end, { desc = "Grep search" })
+    require("snacks").picker.grep()
+  end, { desc = "Grep search." })
   map("n", "<Leader>gb", function()
-    Snacks.picker.grep_buffers()
-  end, { desc = "Grep search opened buffers" })
+    require("snacks").picker.grep_buffers()
+  end, { desc = "Grep search opened buffers." })
   map({ "n", "x" }, "<Leader>gw", function()
-    Snacks.picker.grep_word()
-  end, { desc = "Grep search visual selection or word" })
+    require("snacks").picker.grep_word()
+  end, { desc = "Grep search visual selection or word." })
   map("n", "<Leader>gh", function()
     local help_dirs = vim.api.nvim_get_runtime_file("doc/*.txt", true)
-    Snacks.picker.grep({ dirs = help_dirs, live = true })
-  end, { desc = "Grep search help" })
+    require("snacks").picker.grep({ dirs = help_dirs, live = true })
+  end, { desc = "Grep search help." })
 
-  -- Git (g)
+  -- Git (g).
   map("n", "<Leader>gl", function()
-    Snacks.picker.git_log()
-  end, { desc = "Show git log" })
+    require("snacks").picker.git_log()
+  end, { desc = "Show git log." })
   map("n", "<Leader>gs", function()
-    Snacks.picker.git_status()
-  end, { desc = "Show git status" })
+    require("snacks").picker.git_status()
+  end, { desc = "Show git status." })
   map("n", "<Leader>gd", function()
-    Snacks.picker.git_diff()
-  end, { desc = "Show git diff" })
+    require("snacks").picker.git_diff()
+  end, { desc = "Show git diff." })
 
-  -- Search/Show (s)
+  -- Search/Show (s).
   map("n", "<Leader>sl", function()
-    Snacks.picker.spelling()
-  end, { desc = "Show spelling suggestions" })
+    require("snacks").picker.spelling()
+  end, { desc = "Show spelling suggestions." })
   map("n", "<Leader>sn", function()
-    Snacks.picker.notifications()
-  end, { desc = "Show notification history" })
+    require("snacks").picker.notifications()
+  end, { desc = "Show notification history." })
   map("n", '<Leader>s"', function()
-    Snacks.picker.registers()
-  end, { desc = "Search registers" })
+    require("snacks").picker.registers()
+  end, { desc = "Search registers." })
   map("n", "<Leader>s/", function()
-    Snacks.picker.search_history()
-  end, { desc = "Search 'search' history" })
+    require("snacks").picker.search_history()
+  end, { desc = "Search 'search' history." })
   map("n", "<Leader>sa", function()
-    Snacks.picker.autocmds()
-  end, { desc = "Search autocmds" })
+    require("snacks").picker.autocmds()
+  end, { desc = "Search autocmds." })
   map("n", "<Leader>sb", function()
-    Snacks.picker.lines()
-  end, { desc = "Search buffer lines" })
+    require("snacks").picker.lines()
+  end, { desc = "Search buffer lines." })
   map("n", "<Leader>sc", function()
-    Snacks.picker.commands()
-  end, { desc = "Search commands" })
+    require("snacks").picker.commands()
+  end, { desc = "Search commands." })
   map("n", "<Leader>sD", function()
-    Snacks.picker.diagnostics()
-  end, { desc = "Search diagnostics" })
+    require("snacks").picker.diagnostics()
+  end, { desc = "Search diagnostics." })
   map("n", "<Leader>sd", function()
-    Snacks.picker.diagnostics_buffer()
-  end, { desc = "Search buffer diagnostics" })
+    require("snacks").picker.diagnostics_buffer()
+  end, { desc = "Search buffer diagnostics." })
   map("n", "<Leader>sh", function()
-    Snacks.picker.help()
-  end, { desc = "Search help pages" })
+    require("snacks").picker.help()
+  end, { desc = "Search help pages." })
   map("n", "<Leader>sH", function()
-    Snacks.picker.highlights()
-  end, { desc = "Search highlights" })
+    require("snacks").picker.highlights()
+  end, { desc = "Search highlights." })
   map("n", "<Leader>sj", function()
-    Snacks.picker.jumps()
-  end, { desc = "Search jumps" })
+    require("snacks").picker.jumps()
+  end, { desc = "Search jumps." })
   map("n", "<Leader>sk", function()
-    Snacks.picker.keymaps()
-  end, { desc = "Search keymaps" })
+    require("snacks").picker.keymaps()
+  end, { desc = "Search keymaps." })
   map("n", "<Leader>sm", function()
-    Snacks.picker.marks()
-  end, { desc = "Search marks" })
+    require("snacks").picker.marks()
+  end, { desc = "Search marks." })
   map("n", "<Leader>sM", function()
-    Snacks.picker.man()
-  end, { desc = "Search man pages" })
+    require("snacks").picker.man()
+  end, { desc = "Search man pages." })
   map("n", "<Leader>sp", function()
-    Snacks.picker.projects()
-  end, { desc = "Search projects" })
+    require("snacks").picker.projects()
+  end, { desc = "Search projects." })
   map("n", "<Leader>sq", function()
-    Snacks.picker.qflist()
-  end, { desc = "Search quickfix list" })
+    require("snacks").picker.qflist()
+  end, { desc = "Search quickfix list." })
   map("n", "<Leader>sr", function()
-    Snacks.picker.resume()
-  end, { desc = "Resume last search" })
+    require("snacks").picker.resume()
+  end, { desc = "Resume last search." })
   map("n", "<Leader>su", function()
-    Snacks.picker.undo()
-  end, { desc = "Search undo history" })
+    require("snacks").picker.undo()
+  end, { desc = "Search undo history." })
 
-  -- LSP (s)
+  -- LSP (s).
   map("n", "<Leader>ss", function()
-    Snacks.picker.lsp_symbols()
-  end, { desc = "Search lsp symbols" })
+    require("snacks").picker.lsp_symbols()
+  end, { desc = "Search lsp symbols." })
   map("n", "<Leader>sS", function()
-    Snacks.picker.lsp_workspace_symbols()
-  end, { desc = "Search lsp workspace symbols" })
+    require("snacks").picker.lsp_workspace_symbols()
+  end, { desc = "Search lsp workspace symbols." })
 end
 
 ---@type LazyPluginSpec
@@ -225,7 +210,7 @@ local snacks = {
   config = function()
     vim.g.snacks_animate = false
     set_snacks_keymaps()
-    Snacks.setup(snacks_opts)
+    require("snacks").setup(snacks_opts)
   end,
 }
 
