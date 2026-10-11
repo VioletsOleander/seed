@@ -49,21 +49,14 @@ local jumpable_chars = {
   ["$"] = true,
 }
 
---- Return the char after cursor.
----@return string
-local function get_next_char()
-  local line = vim.api.nvim_get_current_line()
-  local col = vim.api.nvim_win_get_cursor(0)[2]
-  return line:sub(col + 1, col + 1)
-end
-
 map("i", "<Tab>", function()
   if vim.fn.pumvisible() ~= 0 then
     return "<C-y>"
-  elseif jumpable_chars[get_next_char()] then
-    return "<Right>"
   else
-    return "<Tab>"
+    local cursor_line = vim.api.nvim_get_current_line()
+    local cursor_col = vim.api.nvim_win_get_cursor(0)[2]
+    local next_char = cursor_line:sub(cursor_col + 1, cursor_col + 1)
+    return jumpable_chars[next_char] and "<Right>" or "<Tab>"
   end
 end, { expr = true, desc = "Accept completion or jump next char." })
 
