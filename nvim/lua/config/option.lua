@@ -1,48 +1,48 @@
-local opt = vim.opt
+local o = vim.o
 
 -- Case-insensitive searching unless \C or one or more capital letters in the search term
-opt.smartcase = true
-opt.ignorecase = true
+o.smartcase = true
+o.ignorecase = true
 
 -- Tab and Shift(>>, <<) use 4 spaces
-opt.expandtab = true
-opt.tabstop = 4
-opt.shiftwidth = 0
+o.expandtab = true
+o.tabstop = 4
+o.shiftwidth = 0
 
 -- Insert indent after a line ending with { and before a line starting with }
-opt.smartindent = true
+o.smartindent = true
 
 -- Preview substitutions as we typing
 -- if necessary, show previews in a split preview window
-opt.inccommand = "split"
+o.inccommand = "split"
 
 -- Wait time of mapped sequence
-opt.timeoutlen = 500
+o.timeoutlen = 500
 
 -- Vertically split to right
-opt.splitright = true
+o.splitright = true
 
 -- Do not automatically wrap, in order to avoid weird look of colorcolumn in splitview
-opt.wrap = false
+o.wrap = false
 
 -- If performing an operation that would fail due to unsaved changes in the buffer (like `:q`), raise a dialog asking if we wish to save the current file(s)
-opt.confirm = true
+o.confirm = true
 
 -- Insert manualcomplete
-opt.autocomplete = false
-opt.completeopt = "menuone,popup,noinsert"
+o.autocomplete = false
+o.completeopt = "menuone,popup,noinsert"
 
 -- Cmdline completion (Cmdline completion of blink.cmp is weird, so use default method)
-opt.wildmenu = true
-opt.wildmode = "noselect:lastused,full"
-opt.wildoptions = "pum,fuzzy,tagfile"
+o.wildmenu = true
+o.wildmode = "noselect:lastused,full"
+o.wildoptions = "pum,fuzzy,tagfile"
 
 -- Popup meun height
-opt.pumheight = 12
+o.pumheight = 12
 
 -- Gui color
-opt.termguicolors = true
-opt.background = "light"
+o.termguicolors = true
+o.background = "light"
 
 -- Gui cursor
 local cursor_config = {
@@ -52,38 +52,38 @@ local cursor_config = {
   "o:hor20",
   "a:blinkon0-Cursor",
 }
-opt.guicursor = table.concat(cursor_config, ",")
+o.guicursor = table.concat(cursor_config, ",")
 
 -- Gui font: FiraCode Retina
-opt.guifont = "FiraCode Nerd Font Mono:h11:w57"
+o.guifont = "FiraCode Nerd Font Mono:h11:w57"
 
 -- Float window border and popup menu border
-opt.winborder = "rounded"
-opt.pumborder = "rounded"
+o.winborder = "rounded"
+o.pumborder = "rounded"
 
 -- Not display tabline
-opt.showtabline = 0
+o.showtabline = 0
 
 -- Shell
 -- Reference: https://github.com/nushell/integrations/blob/main/nvim/init.lua
-opt.shell = "nu"
+o.shell = "nu"
 
-opt.shellredir = "out+err> %s"
-opt.shellcmdflag = "--stdin --no-newline -c"
+o.shellredir = "out+err> %s"
+o.shellcmdflag = "--stdin --no-newline -c"
 
-opt.shellxescape = ""
-opt.shellxquote = ""
-opt.shellquote = ""
+o.shellxescape = ""
+o.shellxquote = ""
+o.shellquote = ""
 
-opt.shellpipe =
+o.shellpipe =
   "| complete | update stderr { ansi strip } | tee { get stderr | save --force --raw %s } | into record"
 
 -- Spell
-opt.spelllang = "en,cjk"
-opt.spellfile = vim.fs.joinpath(vim.fn.stdpath("config"), "spell", "en.utf-8.add")
+o.spelllang = "en,cjk"
+o.spellfile = vim.fs.joinpath(vim.fn.stdpath("config"), "spell", "en.utf-8.add")
 
 -- Always use LF
-opt.fileformat = "unix"
+o.fileformat = "unix"
 
 -- No swapfile
-opt.swapfile = false
+o.swapfile = false

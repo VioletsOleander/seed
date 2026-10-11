@@ -2,6 +2,7 @@
 -- then define the action here. If an action is intended to be only triggered
 -- by keymap (using command will be cumbersome), then define the action in `keymap.lua`.
 local com = vim.api.nvim_create_user_command
+local map = vim.keymap.set
 
 -- Display help vertically.
 com(
@@ -16,7 +17,7 @@ com("ToggleDiagnostic", function()
   vim.diagnostic.enable(not vim.diagnostic.is_enabled())
 end, { desc = "Toggle showing diagnostics" })
 
-vim.keymap.set("n", "<C-a>", function()
+map("n", "<C-a>", function()
   vim.diagnostic.enable(not vim.diagnostic.is_enabled())
 end, { desc = "Toggle showing diagnostics" })
 
@@ -101,27 +102,21 @@ local function toggle_relative_number()
 end
 
 com("ToggleRelativeNumber", toggle_relative_number, { desc = "Toggle showing relativenumber." })
-
-vim.keymap.set(
-  { "n", "v", "o" },
-  "<C-n>",
-  toggle_relative_number,
-  { desc = "Toggle showing relativenumber." }
-)
+map({ "n", "v", "o" }, "<C-n>", toggle_relative_number, { desc = "Toggle showing relativenumber." })
 
 -- Toggle spell check
 local function toggle_spell()
-  if vim.wo.spell then
-    vim.wo.spell = false
-    vim.notify("Spell check for current window is off")
+  if vim.o.spell then
+    vim.o.spell = false
+    vim.notify("Spell check is off")
   else
-    vim.wo.spell = true
-    vim.notify("Spell check for current window is on")
+    vim.o.spell = true
+    vim.notify("Spell check is on")
   end
 end
 
 com("ToggleSpell", toggle_spell, { desc = "Toggle spell check." })
-vim.keymap.set("n", "<C-s>", toggle_spell, { desc = "Toggle spell check" })
+map("n", "<C-s>", toggle_spell, { desc = "Toggle spell check" })
 
 -- Format current buffer.
 local function format_and_save()
@@ -148,5 +143,5 @@ com(
   { desc = "Format current buffer with preconfigured formatter and save it." }
 )
 
-vim.keymap.set("n", "<Leader>w", format_and_save, { desc = "Format and save file" })
-vim.keymap.set("n", "<Leader><CR>", format_and_save, { desc = "Format and save file" })
+map("n", "<Leader>w", format_and_save, { desc = "Format and save file" })
+map("n", "<Leader><CR>", format_and_save, { desc = "Format and save file" })

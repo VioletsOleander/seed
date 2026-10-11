@@ -89,7 +89,7 @@ map({ "n", "v" }, "<Leader>y", '"+y', { desc = "Copy to system clipboard." })
 map({ "n", "v" }, "<Leader>p", '"+p', { desc = "Paste from system clipboard." })
 
 -- Clear highlight.
-map("n", "<Leader>n", function()
+map("n", "<Leader>c", function()
   vim.cmd("nohlsearch")
 end, { desc = "Clear search highlight" })
 map("n", "zz", function()

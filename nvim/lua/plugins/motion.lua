@@ -15,19 +15,13 @@ local flash_opts = {
       end,
     },
   },
-  highlight = {
-    backdrop = false,
-  },
-  label = {
-    uppercase = true,
-  },
+  highlight = { backdrop = false },
+  label = { uppercase = true },
   modes = {
     char = {
       label = { exclude = ";hjkliardc" },
       jump_labels = true,
-      highlight = {
-        backdrop = false,
-      },
+      highlight = { backdrop = false },
       char_actions = function(motion)
         return {
           [";"] = "right",
@@ -37,9 +31,7 @@ local flash_opts = {
         }
       end,
     },
-    treesitter = {
-      jump = { autojump = false },
-    },
+    treesitter = { jump = { autojump = false } },
   },
 }
 
