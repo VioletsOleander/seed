@@ -36,6 +36,7 @@ local snacks_opts = {
     sources = {
       explorer = {
         hidden = true,
+        ignored = true,
         follow_file = false,
         matcher = { fuzzy = true },
         -- Make sure explorer directly jump to the file after confirm,
