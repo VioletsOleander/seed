@@ -35,8 +35,8 @@ local snacks_opts = {
     },
     sources = {
       explorer = {
-        hidden = true,
-        ignored = true,
+        -- hidden = true,
+        -- ignored = true,
         follow_file = false,
         matcher = { fuzzy = true },
         -- Make sure explorer directly jump to the file after confirm,
@@ -109,7 +109,6 @@ local snacks_opts = {
         },
       },
       files = {
-        hidden = true,
         win = {
           input = {
             keys = {
