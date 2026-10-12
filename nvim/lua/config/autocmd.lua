@@ -20,8 +20,12 @@ au("BufRead", {
 au({ "BufLeave", "FocusLost" }, {
   group = buf_group,
   callback = function()
-    -- Invalid buffer.
-    if not vim.api.nvim_buf_is_valid(0) or vim.bo.buftype ~= "" then
+    -- Invalid buffer, non-normal buffer, or unnamed buffer.
+    if
+      not vim.api.nvim_buf_is_valid(0)
+      or vim.bo.buftype ~= ""
+      or vim.api.nvim_buf_get_name() == ""
+    then
       return
     end
 
