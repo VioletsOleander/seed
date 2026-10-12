@@ -24,7 +24,7 @@ au({ "BufLeave", "FocusLost" }, {
     if
       not vim.api.nvim_buf_is_valid(0)
       or vim.bo.buftype ~= ""
-      or vim.api.nvim_buf_get_name() == ""
+      or vim.api.nvim_buf_get_name(0) == ""
     then
       return
     end
