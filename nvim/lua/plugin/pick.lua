@@ -38,30 +38,53 @@ local snacks_opts = {
         hidden = true,
         follow_file = false,
         matcher = { fuzzy = true },
+        -- Make sure explorer directly jump to the file after confirm,
+        -- instead of remaining in the explorer window waiting for next confirm to actually jump.
+        -- Other pickers does not require to set this to correctly work, maybe because they has
+        -- floating window but explorer has an actual window.
+        main = { current = false },
         -- Show preview in the buffer window.
         layout = { preview = "main", hidden = { "preview" } },
         actions = {
           -- Simplify the twice confirm process.
-          -- ["confirm_in_input"] = function(picker, item, action)
-          --   if not item then
-          --     return
-          --   end
-          --
-          --   if item.dir then
-          --     if picker.input.filter.meta.searching then
-          --       require("snacks.explorer.actions").update(picker, { target = item.file })
-          --     end
-          --
-          --     require("snacks.explorer.tree"):show(item.file)
-          --   else
-          --     if picker.input.filter.meta.searching then
-          --       require("snacks.explorer.actions").update(picker, { target = item.file })
-          --     end
-          --
-          --     Snacks.debug.inspect(picker.main)
-          --     Snacks.debug.inspect(Snacks.picker.util.path(item))
-          --     Snacks.picker.actions.jump(picker, item, action)
-          --   end
+          -- Otherwise we have to press twice <CR> to actually jump to the file.
+          ["confirm_in_input"] = function(picker, item, action)
+            if not item then
+              return
+            end
+
+            if item.dir then
+              if picker.input.filter.meta.searching then
+                require("snacks.explorer.actions").update(picker, { target = item.file })
+              end
+
+              require("snacks.explorer.tree"):show(item.file)
+            else
+              if picker.input.filter.meta.searching then
+                require("snacks.explorer.actions").update(picker, { target = item.file })
+              end
+
+              -- Let picker:selected directly return current item.
+              -- Otherwise picker:selected will return empty, making jump has no effect.
+              local original_method = picker.selected
+              picker.selected = function()
+                return { item }
+              end
+
+              Snacks.picker.actions.jump(picker, item, action)
+
+              -- picker.actions.jump will schedule the actual jump, if we do not schedule
+              -- this recover too, the mock will be recovered before the execution of the actual
+              -- jump.
+              vim.schedule(function()
+                picker.selected = original_method
+              end)
+            end
+          end,
+          -- ["confirm_debug"] = function(picker, item, action)
+          --   Snacks.debug.inspect(item.pos)
+          --   Snacks.debug.inspect(picker.main)
+          --   require("snacks.explorer.actions").actions.confirm(picker, item, action)
           -- end,
         },
         win = {
@@ -71,7 +94,7 @@ local snacks_opts = {
               ["<Esc>"] = false,
               ["<C-h>"] = { "toggle_hidden", mode = "i" },
               ["<C-i>"] = { "toggle_ignored", mode = "i" },
-              -- ["<CR>"] = { "confirm_in_input", mode = { "i", "n" } },
+              ["<CR>"] = { "confirm_in_input", mode = { "i", "n" } },
             },
           },
           list = {
@@ -79,6 +102,7 @@ local snacks_opts = {
               ["<Esc>"] = false,
               ["H"] = { "toggle_hidden", mode = "n" },
               ["I"] = { "toggle_ignored", mode = "n" },
+              -- ["<CR>"] = { "confirm_debug", mode = "n" },
             },
           },
         },
