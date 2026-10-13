@@ -14,8 +14,6 @@ local snacks_opts = {
     -- Make sure that picker's open the target in current window, instead of finding a window with file buffer.
     -- Otherwise, if current window is terminal, picker will not open the target in current window.
     main = { current = true },
-    -- Frequency bonus.
-    matcher = { frecency = true },
     win = {
       input = {
         keys = {
@@ -134,6 +132,11 @@ local snacks_opts = {
 local function set_snacks_keymaps()
   local map = vim.keymap.set
 
+  -- Snacks.picker.smart will aggregate result from files, recent, buffers.
+  map("n", "<Leader><Space>", function()
+    Snacks.picker.smart()
+  end, { desc = "Find files and buffers." })
+
   map("n", "<Leader>:", function()
     Snacks.picker.command_history()
   end, { desc = "Show command history." })
@@ -148,8 +151,6 @@ local function set_snacks_keymaps()
   end, { desc = "Find buffers." })
 
   -- File (f).
-  -- Snacks.picker.smart will aggregate result from these three pickers.
-  -- We aims to be precise, therefore do not map Snacks.picker.smart, but use the specific one.
   map("n", "<Leader>j", function()
     Snacks.picker.files()
   end, { desc = "Find files." })
