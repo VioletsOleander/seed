@@ -59,7 +59,7 @@ local snacks_opts = {
                 require("snacks.explorer.actions").update(picker, { target = item.file })
               end
 
-              require("snacks.explorer.tree"):show(item.file)
+              require("snacks.explorer.tree"):open(item.file)
             else
               if picker.input.filter.meta.searching then
                 require("snacks.explorer.actions").update(picker, { target = item.file })
@@ -101,6 +101,9 @@ local snacks_opts = {
           list = {
             keys = {
               ["<Esc>"] = false,
+              ["<C-j>"] = false,
+              ["<C-k>"] = false,
+              ["<C-c>"] = false,
               ["H"] = { "toggle_hidden", mode = "n" },
               ["I"] = { "toggle_ignored", mode = "n" },
               -- ["<CR>"] = { "confirm_debug", mode = "n" },
