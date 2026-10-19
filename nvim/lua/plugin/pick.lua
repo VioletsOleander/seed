@@ -47,7 +47,7 @@ local snacks_opts = {
         actions = {
           -- Simplify the twice confirm process.
           -- Otherwise we have to press twice <CR> to actually jump to the file.
-          ["confirm_in_input"] = function(picker, item, action)
+          ["better_confirm"] = function(picker, item, action)
             if not item then
               return
             end
@@ -93,7 +93,7 @@ local snacks_opts = {
               ["<Esc>"] = false,
               ["<C-h>"] = { "toggle_hidden", mode = "i" },
               ["<C-i>"] = { "toggle_ignored", mode = "i" },
-              ["<CR>"] = { "confirm_in_input", mode = { "i", "n" } },
+              ["<CR>"] = { "better_confirm", mode = { "i", "n" } },
             },
           },
           list = {
@@ -104,7 +104,8 @@ local snacks_opts = {
               ["<C-c>"] = false,
               ["H"] = { "toggle_hidden", mode = "n" },
               ["I"] = { "toggle_ignored", mode = "n" },
-              -- ["<CR>"] = { "confirm_debug", mode = "n" },
+              ["l"] = { "better_confirm", mode = "n" },
+              ["<CR>"] = { "better_confirm", mode = "n" },
             },
           },
         },
