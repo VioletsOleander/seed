@@ -6,7 +6,6 @@ local buf_group = aug("user.buf", { clear = true })
 local lsp_group = aug("user.lsp", { clear = true })
 local other_group = aug("user.other", { clear = true })
 
--- Readonly files
 au("BufRead", {
   group = buf_group,
   pattern = { "*/.rustup/*", "*/.cargo/*", "*/.venv/*", "*/node_modules/*", "*/.lua_modules/*" },
@@ -14,9 +13,10 @@ au("BufRead", {
     vim.bo.readonly = true
     vim.bo.modifiable = false
   end,
+  desc = "Mark readonly buffer",
 })
 
--- Autosave, more versatile than opt.autowrite
+-- This is more versatile than opt.autowrite.
 au({ "BufLeave", "FocusLost" }, {
   group = buf_group,
   callback = function()
@@ -36,9 +36,9 @@ au({ "BufLeave", "FocusLost" }, {
 
     vim.cmd("silent update")
   end,
+  desc = "Autosave buffer",
 })
 
--- Lsp keymaps
 au("LspAttach", {
   group = lsp_group,
   pattern = "*",
@@ -67,6 +67,7 @@ au("LspAttach", {
     map("n", "<Leader>r", vim.lsp.buf.rename, { buf = ev.buf, desc = "Rename symbol" })
     map("n", "<Leader>a", vim.lsp.buf.code_action, { buf = ev.buf, desc = "Code action" })
   end,
+  desc = "Define lsp keymaps",
 })
 
 -- Cmdline autocompletion (blink's cmdline completion does not support :s/old/new)
@@ -84,5 +85,5 @@ au("CmdlineChanged", {
 
     vim.fn.wildtrigger()
   end,
-  desc = "Automatically show popup menu when typing in cmd line",
+  desc = "Show popup menu for completion",
 })
