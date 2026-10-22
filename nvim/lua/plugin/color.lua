@@ -86,11 +86,12 @@ local dayfox = {
         all = {
           ["@markup.raw"] = { style = "NONE" },
         },
-        -- dayfox = {
-        --   -- Lighter than the default
-        --   -- The constract between Normal:bg and ColorColumn:bg is now 1.08 (originally 1.33)
-        --   -- ColorColumn = { bg = "#f0e8e5" },
-        -- },
+        dayfox = {
+          -- Lighter than the default
+          -- The constract between Normal:bg and ColorColumn:bg is now 1.08 (originally 1.33)
+          -- ColorColumn = { bg = "#f0e8e5" },
+          MatchParen = { bg = "#E7D2BE" },
+        },
       },
     })
     vim.cmd("colorscheme dayfox")

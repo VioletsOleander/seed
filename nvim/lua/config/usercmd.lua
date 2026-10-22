@@ -116,7 +116,7 @@ local function toggle_spell()
 end
 
 com("ToggleSpell", toggle_spell, { desc = "Toggle spell check." })
-map("n", "<C-s>", toggle_spell, { desc = "Toggle spell check" })
+map("n", "<C-p>", toggle_spell, { desc = "Toggle spell check" })
 
 -- Format current buffer.
 local function format_and_save()
