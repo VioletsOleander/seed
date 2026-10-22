@@ -28,6 +28,7 @@ async
 backend
 backends
 cakestry
+cli
 composability
 composable
 config
