@@ -122,5 +122,9 @@ map(
 -- Using 'Esc + a' makes sure the cursor position will be correctly preserved, while using ':normal' does not.
 map("i", "<C-q>", "<C-g>u<Esc>gwwa<C-g>u", { desc = "Format current line." })
 
+-- Indent line.
+-- Change it to C-I if the terminal emulator supports CSI u.
+map("i", "<C-d>", "<C-f>", { desc = "Indent current line." })
+
 -- Terminal mode to normal mode.
 map("t", [[<C-\><C-\>]], [[<C-\><C-n>]], { desc = "Switch from terminal mode to normal mode." })
