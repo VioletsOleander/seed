@@ -1,4 +1,32 @@
----@module "lazy"
+local map = vim.keymap.set
+
+---@type LazyPluginSpec
+local mini_icons = {
+  "nvim-mini/mini.icons",
+  event = "VeryLazy",
+  opts = {},
+}
+
+---@type LazyPluginSpec
+local markview = {
+  "OXY2DEV/markview.nvim",
+  cmd = "Markview",
+  opts = {
+    latex = {
+      enable = false,
+    },
+    typst = {
+      enable = false,
+    },
+  },
+}
+
+---@type LazyPluginSpec
+local lualine = {
+  "nvim-lualine/lualine.nvim",
+  lazy = true,
+  dependencies = { "nvim-tree/nvim-web-devicons" },
+}
 
 ---@alias colortheme
 ---| '"gruvbox"'
@@ -152,4 +180,8 @@ return {
   rosepine,
   catppuccin_latte,
   kanagawa_lotus,
+  mini_icons,
+  gitsigns,
+  markview,
+  lualine,
 }

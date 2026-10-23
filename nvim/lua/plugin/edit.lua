@@ -75,24 +75,72 @@ local blink_cmp = {
 }
 
 ---@type LazyPluginSpec
-local luasnip = {
-  "L3MON4D3/LuaSnip",
-  lazy = true,
-  submodules = false,
-  config = function()
-    require("luasnip.config").setup({ enable_autosnippets = true })
-  end,
-}
-
----@type LazyPluginSpec
-local luasnip_latex_snippets = {
-  "iurimateus/luasnip-latex-snippets.nvim",
-  lazy = true,
-  requires = { "L3MON4D3/LuaSnip" },
+local nvim_surround = {
+  "kylechui/nvim-surround",
+  event = "VeryLazy",
   opts = {
-    use_treesitter = true,
-    allow_on_markdown = true,
+    move_cursor = "sticky",
   },
 }
 
-return { blink_cmp, luasnip, luasnip_latex_snippets }
+---@type LazyPluginSpec
+local nvim_autopair = {
+  "windwp/nvim-autopairs",
+  event = "InsertEnter",
+  opts = {
+    check_ts = true,
+  },
+}
+
+---@type LazyPluginSpec
+local grug_far_nvim = {
+  "MagicDuck/grug-far.nvim",
+  cmd = { "GrugFar", "GrugFarWithin" },
+}
+
+---@type LazyPluginSpec
+local gitsigns = {
+  "lewis6991/gitsigns.nvim",
+  cmd = "Gitsigns",
+  opts = {
+    on_attach = function()
+      local gitsigns = require("gitsigns")
+
+      map("n", "]h", function()
+        gitsigns.nav_hunk("next")
+      end, { desc = "Got to next hunk." })
+      map("n", "[h", function()
+        gitsigns.nav_hunk("prev")
+      end, { desc = "Got to prev hunk." })
+
+      map("n", "<Leader>hr", gitsigns.reset_hunk, { desc = "Reset hunk." })
+
+      map(
+        "n",
+        "<Leader>hp",
+        gitsigns.preview_hunk,
+        { desc = "Preview current hunk at a floating window." }
+      )
+      map(
+        "n",
+        "<Leader>hi",
+        gitsigns.preview_hunk_inline,
+        { desc = "Preview current hunk inline." }
+      )
+
+      map(
+        "n",
+        "<Leader>hd",
+        gitsigns.diffthis,
+        { desc = "Perform vimdiff on current buffer against the index." }
+      )
+      map("n", "<Leader>hD", function()
+        gitsigns.diffthis("~1")
+      end, { desc = "Perform vimdiff on current buffer against the last commit." })
+
+      map({ "o", "x" }, "ih", gitsigns.select_hunk, { desc = "Select current hunk." })
+    end,
+  },
+}
+
+return { blink_cmp, nvim_surround, nvim_autopair, grug_far_nvim, gitsigns }
