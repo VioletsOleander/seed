@@ -19,3 +19,6 @@ if vim.fn.has("wsl") then
     cache_enabled = true,
   }
 end
+
+-- Undotree
+vim.cmd("packadd nvim.undotree")
