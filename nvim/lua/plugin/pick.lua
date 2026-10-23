@@ -19,6 +19,7 @@ local snacks_opts = {
         keys = {
           ["<Esc>"] = { "close", mode = { "i", "n" } },
           ["<C-q>"] = { "close", mode = { "i", "n" } },
+          ["<M-q>"] = { "qflist", mode = { "i", "n" } },
           ["/"] = { "toggle_focus", mode = { "i", "n" } },
         },
       },
@@ -26,6 +27,7 @@ local snacks_opts = {
         keys = {
           ["<Esc>"] = { "close", mode = "n" },
           ["<C-q>"] = { "close", mode = "n" },
+          ["<M-q>"] = { "qflist", mode = { "i", "n" } },
           -- Set to false to prevent snack's default keymap.
           ["<C-n>"] = false,
         },
