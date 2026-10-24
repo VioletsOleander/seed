@@ -19,6 +19,9 @@ local flash_opts = {
   label = { uppercase = true },
   modes = {
     char = {
+      config = function(opts)
+        -- opts.label.after = true
+      end,
       label = { exclude = ";hjkliardc" },
       jump_labels = true,
       highlight = { backdrop = false },
@@ -30,6 +33,9 @@ local flash_opts = {
           [motion:upper()] = "left",
         }
       end,
+      jump = {
+        autojump = true,
+      },
     },
     treesitter = { jump = { autojump = false } },
   },
@@ -105,11 +111,55 @@ local function set_flash_keymaps()
   end, { desc = "Jump to a visible line." })
 end
 
+-- Customize char mode to show label for the first "f/F" match.
+
+---@type table<Flash.Char.Motion, Flash.State.Config>
+local flash_char_motions = {
+  f = { label = { after = true, before = false } },
+  t = {},
+  F = {
+    jump = { inclusive = false },
+    search = { forward = false },
+    label = { after = true, before = false },
+  },
+  T = {
+    jump = { inclusive = false },
+    search = { forward = false },
+    label = { before = true, after = false },
+  },
+}
+
+local function flash_char_new()
+  local module = require("flash.plugins.char")
+
+  local opts = require("flash.config").get({
+    mode = "char",
+    labeler = module.labeler,
+    search = {
+      multi_window = false,
+      mode = module.mode(module.motion),
+      max_length = 1,
+    },
+    prompt = {
+      enabled = false,
+    },
+  }, module.motions[module.motion])
+
+  -- Exclude the motion labels so we can use them for next/prev.
+  opts.labels = opts.labels:gsub(module.motion:lower(), "")
+  opts.labels = opts.labels:gsub(module.motion:upper(), "")
+
+  return require("flash.state").new(opts)
+end
+
 ---@type LazyPluginSpec
 local flash_nvim = {
   "folke/flash.nvim",
   event = "VeryLazy",
   config = function()
+    require("flash.plugins.char").motions = flash_char_motions
+    require("flash.plugins.char").new = flash_char_new
+
     set_flash_keymaps()
     require("flash").setup(flash_opts)
   end,
