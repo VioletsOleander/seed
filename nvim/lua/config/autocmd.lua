@@ -65,7 +65,7 @@ au("LspAttach", {
 
     -- LSP actions
     map("n", "<Leader>r", vim.lsp.buf.rename, { buf = ev.buf, desc = "Rename symbol" })
-    map("n", "<Leader>a", vim.lsp.buf.code_action, { buf = ev.buf, desc = "Code action" })
+    map({ "n", "v" }, "<Leader>a", vim.lsp.buf.code_action, { buf = ev.buf, desc = "Code action" })
   end,
   desc = "Define lsp keymaps",
 })
