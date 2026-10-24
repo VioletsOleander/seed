@@ -26,8 +26,6 @@ local conform = {
   },
 }
 
----@module "lazy"
-
 ---@type LazyPluginSpec
 local lsp_config = {
   "neovim/nvim-lspconfig",

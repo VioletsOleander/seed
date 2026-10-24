@@ -105,6 +105,7 @@ local gitsigns = {
   opts = {
     on_attach = function()
       local gitsigns = require("gitsigns")
+      local map = vim.keymap.set
 
       map("n", "]h", function()
         gitsigns.nav_hunk("next")
