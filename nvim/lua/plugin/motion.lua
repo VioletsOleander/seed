@@ -15,13 +15,14 @@ local flash_opts = {
       end,
     },
   },
-  highlight = { backdrop = false },
+  highlight = {
+    backdrop = false,
+    groups = { current = "FlashMatch" },
+  },
   label = { uppercase = true },
   modes = {
     char = {
-      config = function(opts)
-        -- opts.label.after = true
-      end,
+      config = false,
       label = { exclude = ";hjkliardc" },
       jump_labels = true,
       highlight = { backdrop = false },
@@ -116,38 +117,35 @@ end
 ---@type table<Flash.Char.Motion, Flash.State.Config>
 local flash_char_motions = {
   f = { label = { after = true, before = false } },
-  t = {},
+  t = { label = { after = true, before = false } },
   F = {
+    label = { after = false, before = true },
     jump = { inclusive = false },
     search = { forward = false },
-    label = { after = true, before = false },
   },
   T = {
+    label = { after = false, before = true },
     jump = { inclusive = false },
     search = { forward = false },
-    label = { before = true, after = false },
   },
 }
 
 local function flash_char_new()
-  local module = require("flash.plugins.char")
-
+  local char = require("flash.plugins.char")
   local opts = require("flash.config").get({
     mode = "char",
-    labeler = module.labeler,
+    labeler = char.labeler,
     search = {
       multi_window = false,
-      mode = module.mode(module.motion),
+      mode = char.mode(char.motion),
       max_length = 1,
     },
-    prompt = {
-      enabled = false,
-    },
-  }, module.motions[module.motion])
+    prompt = { enabled = false },
+  }, char.motions[char.motion])
 
   -- Exclude the motion labels so we can use them for next/prev.
-  opts.labels = opts.labels:gsub(module.motion:lower(), "")
-  opts.labels = opts.labels:gsub(module.motion:upper(), "")
+  opts.labels = opts.labels:gsub(char.motion:lower(), "")
+  opts.labels = opts.labels:gsub(char.motion:upper(), "")
 
   return require("flash.state").new(opts)
 end
