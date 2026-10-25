@@ -42,31 +42,30 @@ end
 --- Enable language servers.
 
 vim.lsp.enable({
-  -- Lua
+  -- lua
   "lua_ls",
-  "stylua",
-  -- Python
+  -- python
   "ty",
   "ruff",
-  -- Json
+  -- json
   "jsonls",
-  -- Yaml
+  -- yaml
   "yamlls",
-  -- Toml
+  -- toml
   "taplo",
-  -- Rust
+  -- rust
   "rust_analyzer",
-  -- Typescript, HTML, CSS, Svelte
+  -- typescript, html, css, svelte
   "vtsls",
   "html",
   "cssls",
   "svelte",
   "eslint",
-  -- Nushell
+  -- nushell
   "nushell",
-  -- Latex
+  -- latex
   "texlab",
-  -- Typst
+  -- typst
   "tinymist",
 })
 
@@ -81,7 +80,6 @@ require("config.keymap")
 require("config.autocmd")
 require("config.usercmd")
 
--- Undotree
 vim.cmd("packadd nvim.undotree")
 
 -- Experimental features
