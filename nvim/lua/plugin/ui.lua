@@ -21,13 +21,6 @@ local markview = {
   },
 }
 
----@type LazyPluginSpec
-local lualine = {
-  "nvim-lualine/lualine.nvim",
-  lazy = true,
-  dependencies = { "nvim-tree/nvim-web-devicons" },
-}
-
 ---@alias colortheme
 ---| '"gruvbox"'
 ---| '"gruvbox-material"'
@@ -181,7 +174,5 @@ return {
   catppuccin_latte,
   kanagawa_lotus,
   mini_icons,
-  gitsigns,
   markview,
-  lualine,
 }
