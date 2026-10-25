@@ -2,11 +2,11 @@
 
 local g = vim.g
 
--- Leader key
+-- Leader key.
 g.mapleader = " "
 g.maplocalleader = [[\]]
 
--- Avoid loading some builtin plugins
+-- Avoid loading some builtin plugins.
 g.loaded_netrw = 1
 g.loaded_netrwPlugin = 1
 g.loaded_gzip = 1
@@ -19,29 +19,13 @@ g.loaded_ruby_provider = 0
 g.loaded_perl_provider = 0
 g.loaded_node_provider = 0
 
--- Others
+-- Auto format.
 g.disable_autoformat = false
 
---- Load other modules.
-
-vim.loader.enable(true)
-
-require("config.option")
-require("config.lazy")
-
-require("config.keymap")
-require("config.autocmd")
-require("config.usercmd")
-
--- Experimental features
--- UI2 (flicker in wildtrigger, disable now)
--- require("vim._core.ui2").enable({ enable = true })
--- vim.opt.cmdheight = 0
-
--- WSL
--- Refers to: https://vi.stackexchange.com/questions/42305/neovim-following-the-instructions-in-h-clipboard-wsl-not-work-it-shows-no
+-- WSL clipboard.
+-- Reference: https://vi.stackexchange.com/questions/42305/neovim-following-the-instructions-in-h-clipboard-wsl-not-work-it-shows-no.
 if vim.fn.has("wsl") then
-  vim.g.clipboard = {
+  g.clipboard = {
     name = "win32yank-wsl",
     copy = {
       ["+"] = "win32yank.exe -i --crlf",
@@ -55,5 +39,52 @@ if vim.fn.has("wsl") then
   }
 end
 
+--- Enable language servers.
+
+vim.lsp.enable({
+  -- Lua
+  "lua_ls",
+  "stylua",
+  -- Python
+  "ty",
+  "ruff",
+  -- Json
+  "jsonls",
+  -- Yaml
+  "yamlls",
+  -- Toml
+  "taplo",
+  -- Rust
+  "rust_analyzer",
+  -- Typescript, HTML, CSS, Svelte
+  "vtsls",
+  "html",
+  "cssls",
+  "svelte",
+  "eslint",
+  -- Nushell
+  "nushell",
+  -- Latex
+  "texlab",
+  -- Typst
+  "tinymist",
+})
+
+--- Load modules.
+
+vim.loader.enable(true)
+
+require("config.option")
+require("config.lazy")
+
+require("config.keymap")
+require("config.autocmd")
+require("config.usercmd")
+
 -- Undotree
 vim.cmd("packadd nvim.undotree")
+
+-- Experimental features
+-- UI2 (flicker in wildtrigger, disable now)
+-- require("vim._core.ui2").enable({ enable = true })
+-- vim.opt.cmdheight = 0

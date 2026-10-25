@@ -119,6 +119,23 @@ com("ToggleSpell", toggle_spell, { desc = "Toggle spell check." })
 map("n", "<C-p>", toggle_spell, { desc = "Toggle spell check" })
 
 -- Format current buffer.
+local formatters_by_ft = {
+  lua = { "stylua" },
+  rust = { "rustfmt" },
+  python = { "ruff_format", "ruff_organize_imports" },
+  toml = { "dprint" },
+  markdown = { "dprint" },
+  typescript = { "dprint" },
+  javascript = { "dprint" },
+  yaml = { "dprint" },
+  json = { "dprint" },
+  jsonc = { "dprint" },
+  svelte = { "dprint" },
+  nu = { "nufmt" },
+  tex = { "tex-fmt" },
+  typst = { "typstyle" },
+}
+
 local function format_and_save()
   -- Invalid buffer.
   if not vim.api.nvim_buf_is_valid(0) or not vim.bo.buftype == "" then
@@ -131,7 +148,13 @@ local function format_and_save()
   end
 
   if not vim.g.disable_autoformat then
-    require("conform").format({ lsp_format = "fallback", timeout_ms = 3000 })
+    local formatters = formatters_by_ft[vim.bo.filetype]
+
+    require("conform").format({
+      formatters = formatters,
+      lsp_format = "fallback",
+      timeout_ms = 3000,
+    })
   end
 
   vim.cmd("update")

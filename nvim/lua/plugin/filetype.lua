@@ -1,66 +1,7 @@
 ---@module "lazy"
----@module "conform"
 
----@type LazyPluginSpec
-local conform = {
-  "stevearc/conform.nvim",
-  cmd = { "ConformInfo" },
-  ---@type conform.setupOpts
-  opts = {
-    formatters_by_ft = {
-      lua = { "stylua" },
-      rust = { "rustfmt" },
-      python = { "ruff_format", "ruff_organize_imports" },
-      toml = { "dprint" },
-      markdown = { "dprint" },
-      typescript = { "dprint" },
-      javascript = { "dprint" },
-      yaml = { "dprint" },
-      json = { "dprint" },
-      jsonc = { "dprint" },
-      svelte = { "dprint" },
-      nu = { "nufmt" },
-      tex = { "tex-fmt" },
-      typst = { "typstyle" },
-    },
-  },
-}
-
----@type LazyPluginSpec
-local lsp_config = {
-  "neovim/nvim-lspconfig",
-  event = { "BufReadPre", "BufNewFile" },
-  config = function()
-    vim.lsp.enable({
-      -- Lua
-      "lua_ls",
-      "stylua",
-      -- Python
-      "ty",
-      "ruff",
-      -- Json
-      "jsonls",
-      -- Yaml
-      "yamlls",
-      -- Toml
-      "taplo",
-      -- Rust
-      "rust_analyzer",
-      -- Typescript, HTML, CSS, Svelte
-      "vtsls",
-      "html",
-      "cssls",
-      "svelte",
-      "eslint",
-      -- Nushell
-      "nushell",
-      -- Latex
-      "texlab",
-      -- Typst
-      "tinymist",
-    })
-  end,
-}
+local conform = { "stevearc/conform.nvim" }
+local lspconfig = { "neovim/nvim-lspconfig" }
 
 ---@type LazyPluginSpec
 local typst_preview = {
@@ -68,4 +9,4 @@ local typst_preview = {
   cmd = "TypstPreview",
 }
 
-return { lsp_config, conform, typst_preview }
+return { lspconfig, conform, typst_preview }
