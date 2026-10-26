@@ -32,6 +32,10 @@
     "keybindings":
     [
         {
+            "id": "Terminal.ScrollUpPage",
+            "keys": "ctrl+shift+u"
+        },
+        {
             "id": "User.closePane",
             "keys": "alt+c"
         },
@@ -42,6 +46,10 @@
         {
             "id": null,
             "keys": "ctrl+comma"
+        },
+        {
+            "id": "Terminal.ScrollDownPage",
+            "keys": "ctrl+shift+d"
         }
     ],
     "language": "en-US",
