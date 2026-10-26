@@ -86,6 +86,8 @@ export def --env y [...args] {
     rm -fp $tmp
 }
 
+export alias dk = y
+
 # Equivalent to cd then ls.
 export def --env cl [p: path = "~"] {
     cd $p
