@@ -1,5 +1,6 @@
----@module "lazy"
 ---@module "flash"
+
+vim.pack.add({ "https://github.com/folke/flash.nvim" })
 
 ---@type Flash.Config
 local flash_opts = {
@@ -154,17 +155,14 @@ local function flash_char_new()
   return require("flash.state").new(opts)
 end
 
----@type LazyPluginSpec
-local flash_nvim = {
-  "folke/flash.nvim",
-  event = "VeryLazy",
-  config = function()
+local au = vim.api.nvim_create_autocmd
+
+au("VimEnter", {
+  callback = function()
     require("flash.plugins.char").motions = flash_char_motions
     require("flash.plugins.char").new = flash_char_new
 
     set_flash_keymaps()
     require("flash").setup(flash_opts)
   end,
-}
-
-return { flash_nvim }
+})

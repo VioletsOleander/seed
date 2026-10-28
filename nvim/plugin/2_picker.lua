@@ -1,5 +1,6 @@
----@module "lazy"
 ---@module "snacks"
+
+vim.pack.add({ "https://github.com/folke/snacks.nvim" })
 
 ---@type snacks.Config
 local snacks_opts = {
@@ -257,15 +258,6 @@ local function set_snacks_keymaps()
   end, { desc = "Search lsp workspace symbols." })
 end
 
----@type LazyPluginSpec
-local snacks = {
-  "folke/snacks.nvim",
-  priority = 1000,
-  config = function()
-    vim.g.snacks_animate = false
-    set_snacks_keymaps()
-    Snacks.setup(snacks_opts)
-  end,
-}
-
-return { snacks }
+vim.g.snacks_animate = false
+set_snacks_keymaps()
+Snacks.setup(snacks_opts)

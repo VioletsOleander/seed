@@ -73,12 +73,10 @@ vim.lsp.enable({
 
 vim.loader.enable(true)
 
-require("config.option")
-require("config.lazy")
-
-require("config.keymap")
-require("config.autocmd")
-require("config.usercmd")
+require("option")
+require("keymap")
+require("autocmd")
+require("usercmd")
 
 vim.cmd("packadd nvim.undotree")
 
