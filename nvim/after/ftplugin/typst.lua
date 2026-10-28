@@ -1,3 +1,2 @@
-vim.treesitter.start()
-
-vim.opt_local.textwidth = 100
+vim.pack.add({ "https://github.com/chomosuke/typst-preview.nvim" })
+require("typst-preview").setup()

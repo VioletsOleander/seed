@@ -1,8 +1,3 @@
-vim.treesitter.start()
-
-vim.opt_local.tabstop = 2
-vim.opt_local.textwidth = 100
-
 -- Modify the code in `vim.lsp.buf` module to filter some redundent message
 
 local api = vim.api

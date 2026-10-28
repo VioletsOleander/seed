@@ -2,17 +2,10 @@
 if vim.bo.buftype == "nofile" then
   -- Wrapping will not consider concealed markdown links, causing werid look if there exists
   -- concealed markdown links.
-  vim.opt_local.wrap = false
+  vim.wo.wrap = false
   return
 end
 
-vim.treesitter.start()
-
-vim.opt_local.textwidth = 100
--- Do not autowrap, auto insert comment leader
-vim.opt_local.formatoptions:remove({ "t", "c", "r", "o" })
-
-vim.opt_local.spell = true
-vim.opt_local.completeopt = "menu,popup"
-
+vim.bo.completeopt = "menu,popup"
+vim.wo.spell = true
 vim.b.completion = false

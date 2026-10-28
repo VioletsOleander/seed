@@ -1,10 +1,3 @@
-vim.treesitter.start()
-
-vim.opt_local.textwidth = 100
-
--- Do not autowrap, auto insert comment leader
-vim.opt_local.formatoptions:remove({ "t", "c", "r", "o" })
-
 -- Modify the code in `vim.lsp.buf` module to filter &nbsp; \_ from ty
 
 -- There is just no better way, the vim.lsp.handler['textDocument/hover'] is

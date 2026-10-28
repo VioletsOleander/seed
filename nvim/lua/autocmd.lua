@@ -38,6 +38,23 @@ au({ "BufLeave", "FocusLost" }, {
   desc = "Autosave buffer",
 })
 
+au("FileType", {
+  group = buf_group,
+  pattern = {
+    "javascript",
+    "json",
+    "jsonc",
+    "lua",
+    "svelte",
+    "typescript",
+    "yaml",
+  },
+  callback = function()
+    vim.bo.tabstop = 2
+  end,
+  desc = "Set two tabstop buffer",
+})
+
 -- Cmdline autocompletion (blink's cmdline completion does not support :s/old/new)
 -- (but the builin completion feels more laggy compared to blink when complete :!, :checkhealth)
 au("CmdlineChanged", {

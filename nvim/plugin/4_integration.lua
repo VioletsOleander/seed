@@ -136,6 +136,38 @@ end
 
 local au = vim.api.nvim_create_autocmd
 
+local treesitter_langauges = {
+  "bash",
+  "css",
+  "gitcommit",
+  "gitignore",
+  "html",
+  "javascript",
+  "json",
+  "json5",
+  "lua",
+  "markdown",
+  "nu",
+  "python",
+  "rust",
+  "svelte",
+  "latex",
+  "toml",
+  "typescript",
+  "typst",
+  "vim",
+  "yaml",
+}
+
+require("nvim-treesitter").install(treesitter_langauges)
+
+au("FileType", {
+  pattern = treesitter_langauges,
+  callback = function(ev)
+    vim.treesitter.start(ev.buf)
+  end,
+})
+
 au("PackChanged", {
   callback = function(ev)
     local name, kind = ev.data.spec.name, ev.data.kind
