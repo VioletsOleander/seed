@@ -1,48 +1,5 @@
 ---@module "flash"
 
-vim.pack.add({ "https://github.com/folke/flash.nvim" })
-
----@type Flash.Config
-local flash_opts = {
-  labels = "asdfghjkl;qwertyuiopzxcvbnm",
-  search = {
-    -- The cursor will flick when search multi_window, so disable it
-    multi_window = false,
-    exclude = {
-      "snacks_picker_input",
-      "flash_prompt",
-      function(win)
-        return not vim.api.nvim_win_get_config(win).focusable
-      end,
-    },
-  },
-  highlight = {
-    backdrop = false,
-    groups = { current = "FlashMatch" },
-  },
-  label = { uppercase = true },
-  modes = {
-    char = {
-      config = false,
-      label = { exclude = ";hjkliardc" },
-      jump_labels = true,
-      highlight = { backdrop = false },
-      char_actions = function(motion)
-        return {
-          [";"] = "right",
-          [","] = "left",
-          [motion:lower()] = "right",
-          [motion:upper()] = "left",
-        }
-      end,
-      jump = {
-        autojump = true,
-      },
-    },
-    treesitter = { jump = { autojump = false } },
-  },
-}
-
 local function set_flash_keymaps()
   local map = vim.keymap.set
 
@@ -155,14 +112,61 @@ local function flash_char_new()
   return require("flash.state").new(opts)
 end
 
+local function setup_flash_nvim()
+  require("flash.plugins.char").motions = flash_char_motions
+  require("flash.plugins.char").new = flash_char_new
+
+  set_flash_keymaps()
+
+  ---@type Flash.Config
+  local opts = {
+    labels = "asdfghjkl;qwertyuiopzxcvbnm",
+    search = {
+      -- The cursor will flick when search multi_window, so disable it
+      multi_window = false,
+      exclude = {
+        "snacks_picker_input",
+        "flash_prompt",
+        function(win)
+          return not vim.api.nvim_win_get_config(win).focusable
+        end,
+      },
+    },
+    highlight = {
+      backdrop = false,
+      groups = { current = "FlashMatch" },
+    },
+    label = { uppercase = true },
+    modes = {
+      char = {
+        config = false,
+        label = { exclude = ";hjkliardc" },
+        jump_labels = true,
+        highlight = { backdrop = false },
+        char_actions = function(motion)
+          return {
+            [";"] = "right",
+            [","] = "left",
+            [motion:lower()] = "right",
+            [motion:upper()] = "left",
+          }
+        end,
+        jump = {
+          autojump = true,
+        },
+      },
+      treesitter = { jump = { autojump = false } },
+    },
+  }
+
+  require("flash").setup(opts)
+end
+
 local au = vim.api.nvim_create_autocmd
 
 au("VimEnter", {
   callback = function()
-    require("flash.plugins.char").motions = flash_char_motions
-    require("flash.plugins.char").new = flash_char_new
-
-    set_flash_keymaps()
-    require("flash").setup(flash_opts)
+    vim.pack.add({ "https://github.com/folke/flash.nvim" })
+    setup_flash_nvim()
   end,
 })

@@ -1,7 +1,5 @@
 ---@module "blink.cmp"
 
-vim.pack.add({ "https://github.com/windwp/nvim-autopairs" })
-
 local function setup_nvim_autopairs()
   require("nvim-autopairs").setup({ check_ts = true })
 end
@@ -84,6 +82,7 @@ au("InsertEnter", {
   once = true,
   callback = function()
     vim.pack.add({
+      "https://github.com/windwp/nvim-autopairs",
       "https://github.com/rafamadriz/friendly-snippets",
       "https://github.com/saghen/blink.lib",
       "https://github.com/saghen/blink.cmp",
@@ -112,7 +111,7 @@ au("PackChanged", {
         vim.cmd.packadd("blink.cmp")
       end
 
-      require("bink.cmp").build():pwait()
+      require("blink.cmp").build():pwait()
     end
   end,
 })
