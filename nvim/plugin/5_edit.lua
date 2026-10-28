@@ -1,13 +1,5 @@
 ---@module "blink.cmp"
 
-local function setup_nvim_autopairs()
-  require("nvim-autopairs").setup({ check_ts = true })
-end
-
-local function setup_nvim_surround()
-  require("nvim-surround").setup({ move_cursor = "sticky" })
-end
-
 local function setup_blink_cmp()
   ---@type blink.cmp.Config
   local opts = {
@@ -21,7 +13,10 @@ local function setup_blink_cmp()
       ["<C-u>"] = { "scroll_documentation_up", "fallback" },
       ["<C-d>"] = { "scroll_documentation_down", "fallback" },
     },
-    signature = { enabled = false, window = { show_documentation = true } },
+    signature = {
+      enabled = false,
+      window = { show_documentation = true },
+    },
     completion = {
       list = {
         selection = {
@@ -88,7 +83,7 @@ au("InsertEnter", {
       "https://github.com/saghen/blink.cmp",
     })
 
-    setup_nvim_autopairs()
+    require("nvim-autopairs").setup({ check_ts = true })
     setup_blink_cmp()
   end,
 })
@@ -96,8 +91,13 @@ au("InsertEnter", {
 au("VimEnter", {
   callback = function()
     vim.schedule(function()
-      vim.pack.add({ "https://github.com/kylechui/nvim-surround" })
-      setup_nvim_surround()
+      vim.pack.add({
+        "https://github.com/nvim-mini/mini.move",
+        "https://github.com/kylechui/nvim-surround",
+      })
+
+      require("mini.move").setup()
+      require("nvim-surround").setup({ move_cursor = "sticky" })
     end)
   end,
 })

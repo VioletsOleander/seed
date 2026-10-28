@@ -160,12 +160,9 @@ local function format_and_save()
   vim.cmd("update")
 end
 
-com(
-  "FormatBuffer",
-  format_and_save,
-  { desc = "Format current buffer with preconfigured formatter and save it." }
-)
+com("FormatBuffer", format_and_save, { desc = "Format current buffer and save it." })
 
 map("n", "<Leader>w", format_and_save, { desc = "Format and save file" })
 map("n", "<Leader><CR>", format_and_save, { desc = "Format and save file" })
 map("i", "<C-g>w", format_and_save, { desc = "Format and save file" })
+map("i", "<C-g><C-w>", format_and_save, { desc = "Format and save file" })
