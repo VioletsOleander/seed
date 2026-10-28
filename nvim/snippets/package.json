@@ -1,0 +1,14 @@
+{
+  "contributes": {
+    "snippets": [
+      {
+        "language": "tex",
+        "path": "./math.json"
+      },
+      {
+        "language": "markdown",
+        "path": "./math.json"
+      }
+    ]
+  }
+}

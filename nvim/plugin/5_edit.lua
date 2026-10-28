@@ -44,6 +44,7 @@ local function setup_blink_cmp()
         },
       },
     },
+    -- Use require("blink.cmp").reload("snippets") to reload snippets.
     sources = { default = { "lsp", "snippets", "buffer" } },
     fuzzy = { implementation = "rust" },
     cmdline = {
