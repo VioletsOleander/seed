@@ -160,15 +160,8 @@ au("VimEnter", {
 })
 
 local com = vim.api.nvim_create_user_command
-local loaded_gitsigns = false
 
 com("LoadGitSigns", function()
-  if loaded_gitsigns then
-    return
-  end
-
-  loaded_gitsigns = true
-
   vim.pack.add({ "https://github.com/lewis6991/gitsigns.nvim" })
 
   local opts = {
