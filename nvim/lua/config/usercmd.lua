@@ -168,3 +168,4 @@ com(
 
 map("n", "<Leader>w", format_and_save, { desc = "Format and save file" })
 map("n", "<Leader><CR>", format_and_save, { desc = "Format and save file" })
+map("i", "<C-g>w", format_and_save, { desc = "Format and save file" })

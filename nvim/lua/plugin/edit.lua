@@ -93,10 +93,7 @@ local nvim_autopair = {
 }
 
 ---@type LazyPluginSpec
-local grug_far_nvim = {
-  "MagicDuck/grug-far.nvim",
-  cmd = { "GrugFar", "GrugFarWithin" },
-}
+local grug_far_nvim = { "MagicDuck/grug-far.nvim" }
 
 ---@type LazyPluginSpec
 local gitsigns = {

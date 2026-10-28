@@ -143,6 +143,10 @@ local function flash_char_new()
     prompt = { enabled = false },
   }, char.motions[char.motion])
 
+  if not vim.fn.mode(true):find("no") then
+    opts.highlight.groups.current = "Normal"
+  end
+
   -- Exclude the motion labels so we can use them for next/prev.
   opts.labels = opts.labels:gsub(char.motion:lower(), "")
   opts.labels = opts.labels:gsub(char.motion:upper(), "")
