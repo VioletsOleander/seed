@@ -3,7 +3,6 @@ local aug = vim.api.nvim_create_augroup
 
 -- Hold autocmds related with buffer/lsp/other(unclassified)
 local buf_group = aug("user.buf", { clear = true })
-local lsp_group = aug("user.lsp", { clear = true })
 local other_group = aug("user.other", { clear = true })
 
 au("BufRead", {
@@ -37,37 +36,6 @@ au({ "BufLeave", "FocusLost" }, {
     vim.cmd("silent update")
   end,
   desc = "Autosave buffer",
-})
-
-au("LspAttach", {
-  group = lsp_group,
-  pattern = "*",
-  callback = function(ev)
-    local map = vim.keymap.set
-
-    -- Lsp gotos
-    map("n", "gd", vim.lsp.buf.definition, { buf = ev.buf, desc = "Goto definition" })
-    map("n", "gD", vim.lsp.buf.declaration, { buf = ev.buf, desc = "Goto declaration" })
-    map("n", "gy", vim.lsp.buf.type_definition, { buf = ev.buf, desc = "Goto type definition" })
-    map("n", "gI", vim.lsp.buf.implementation, { buf = ev.buf, desc = "Goto implementation" })
-
-    -- LSP shows
-    map(
-      "n",
-      "gr",
-      vim.lsp.buf.references,
-      { buf = ev.buf, nowait = true, desc = "Show references" }
-    )
-    map("n", "ga", vim.diagnostic.open_float, { buf = ev.buf, desc = "Show diagnostics" })
-    map("n", "gA", function()
-      vim.diagnostic.open_float({ close_events = { "BufHidden" } })
-    end, { buf = ev.buf, desc = "Show persist diagnostic (requires manual close)" })
-
-    -- LSP actions
-    map("n", "<Leader>r", vim.lsp.buf.rename, { buf = ev.buf, desc = "Rename symbol" })
-    map({ "n", "v" }, "<Leader>a", vim.lsp.buf.code_action, { buf = ev.buf, desc = "Code action" })
-  end,
-  desc = "Define lsp keymaps",
 })
 
 -- Cmdline autocompletion (blink's cmdline completion does not support :s/old/new)
