@@ -48,8 +48,16 @@
             "keys": "ctrl+comma"
         },
         {
+            "id": "Terminal.ScrollUp",
+            "keys": "ctrl+shift+k"
+        },
+        {
             "id": "Terminal.ScrollDownPage",
             "keys": "ctrl+shift+d"
+        },
+        {
+            "id": "Terminal.ScrollDown",
+            "keys": "ctrl+shift+j"
         }
     ],
     "language": "en-US",
