@@ -9,7 +9,7 @@ local snacks_opts = {
   quickfile = { enabled = true },
   indent = { enabled = true },
   notifier = { enabled = true, timeout = 3000 },
-  explorer = { enabled = true },
+  explorer = { enabled = false },
   picker = {
     enabled = true,
     -- Make sure that picker's open the target in current window, instead of finding a window with file buffer.

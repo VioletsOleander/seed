@@ -21,9 +21,9 @@ map("n", "<C-a>", function()
   vim.diagnostic.enable(not vim.diagnostic.is_enabled())
 end, { desc = "Toggle showing diagnostics" })
 
----@param opts table
-local function set_diagnostic_level(opts)
-  local level = tonumber(opts.args)
+---@param args table
+local function set_diagnostic_level(args)
+  local level = tonumber(args.args)
 
   if level == 1 then
     vim.diagnostic.config({
@@ -166,3 +166,17 @@ map("n", "<Leader>w", format_and_save, { desc = "Format and save file" })
 map("n", "<Leader><CR>", format_and_save, { desc = "Format and save file" })
 map("i", "<C-g>w", format_and_save, { desc = "Format and save file" })
 map("i", "<C-g><C-w>", format_and_save, { desc = "Format and save file" })
+
+---@param args table
+local function tcd(args)
+  local dir = args.args
+  vim.cmd("tabnew +tcd " .. dir)
+end
+
+com("TCD", tcd, {
+  nargs = 1,
+  complete = function()
+    return { "~/codespace/seed" }
+  end,
+  desc = "Open a new tab and cd to predefined directory",
+})
