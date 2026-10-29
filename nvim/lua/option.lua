@@ -63,6 +63,43 @@ o.pumborder = "rounded"
 
 -- Only show tabline if there are multiple tabs
 o.showtabline = 1
+o.tabline = "%!v:lua.tabline()"
+
+function _G.tabline()
+  local line = ""
+  local current = vim.api.nvim_get_current_tabpage()
+  local tabpages = vim.api.nvim_list_tabpages()
+
+  for _, tabpage in ipairs(tabpages) do
+    if tabpage == current then
+      line = line .. "%#TabLineSel#"
+    else
+      line = line .. "%#TabLine#"
+    end
+
+    line = line .. "%" .. tabpage .. "T"
+
+    local win = vim.api.nvim_tabpage_get_win(tabpage)
+    local buf = vim.api.nvim_win_get_buf(win)
+    local bufname = vim.api.nvim_buf_get_name(buf)
+
+    if bufname ~= "" then
+      bufname = vim.fs.basename(bufname)
+    else
+      bufname = "[No Name]"
+    end
+
+    line = line .. " " .. bufname .. " "
+  end
+
+  line = line .. "%#TabLineFill#%T"
+
+  if #tabpages > 1 then
+    line = line .. "%=%#TabLine#%999XX"
+  end
+
+  return line
+end
 
 -- Shell
 -- Reference: https://github.com/nushell/integrations/blob/main/nvim/init.lua
