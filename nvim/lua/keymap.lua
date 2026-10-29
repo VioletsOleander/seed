@@ -109,8 +109,8 @@ end, { expr = true, desc = "Select previous completion." })
 --- Others.
 
 -- Copy/Paste.
-map({ "n", "v" }, "<Leader>y", '"+y', { desc = "Copy to system clipboard." })
-map({ "n", "v" }, "<Leader>p", '"+p', { desc = "Paste from system clipboard." })
+map({ "n", "v" }, "gy", '"+y', { desc = "Copy to system clipboard." })
+map({ "n", "v" }, "gp", '"+p', { desc = "Paste from system clipboard." })
 
 -- Clear highlight.
 map("n", "<Leader>c", "<Cmd>nohlsearch<CR>", { desc = "Clear search highlight" })
