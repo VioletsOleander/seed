@@ -15,7 +15,16 @@ local snacks_opts = {
     -- Make sure that picker's open the target in current window, instead of finding a window with file buffer.
     -- Otherwise, if current window is terminal, picker will not open the target in current window.
     main = { current = true },
+    actions = {
+      ["list_scroll_down_quarter"] = function(picker)
+        picker.list:scroll(math.ceil(picker.list.state.scroll / 2))
+      end,
+      ["list_scroll_up_quarter"] = function(picker)
+        picker.list:scroll(-math.ceil(picker.list.state.scroll / 2))
+      end,
+    },
     win = {
+      -- Hint: set to false to prevent snack's default keymap.
       input = {
         keys = {
           ["<Esc>"] = { "close", mode = { "i", "n" } },
@@ -30,7 +39,8 @@ local snacks_opts = {
           ["<C-q>"] = { "close", mode = "n" },
           ["<M-q>"] = { "qflist", mode = "n" },
           ["<C-f>"] = { "focus_input", mode = "n" },
-          -- Set to false to prevent snack's default keymap.
+          ["<C-e>"] = { "list_scroll_down_quarter", mode = "n" },
+          ["<C-y>"] = { "list_scroll_up_quarter", mode = "n" },
           ["<C-n>"] = false,
           ["/"] = false,
         },
@@ -48,7 +58,10 @@ local snacks_opts = {
         -- floating window but explorer has an actual window.
         main = { current = false },
         -- Show preview in the buffer window.
-        layout = { preview = "main", hidden = { "preview" } },
+        layout = {
+          preview = "main",
+          hidden = { "preview" },
+        },
         actions = {
           -- Simplify the twice confirm process.
           -- Otherwise we have to press twice <CR> to actually jump to the file.
@@ -94,7 +107,6 @@ local snacks_opts = {
         win = {
           input = {
             keys = {
-              -- Do not let Esc close explorer.
               ["<Esc>"] = false,
               ["<C-h>"] = { "toggle_hidden", mode = "i" },
               ["<C-i>"] = { "toggle_ignored", mode = "i" },
@@ -146,9 +158,9 @@ local function set_snacks_keymaps()
     Snacks.picker.command_history()
   end, { desc = "Show command history." })
 
-  map("n", "<Leader>e", function()
-    Snacks.explorer()
-  end, { desc = "Toggle file explorer based on current working directory." })
+  -- map("n", "<Leader>e", function()
+  --   Snacks.explorer()
+  -- end, { desc = "Toggle file explorer based on current working directory." })
 
   -- Buffer (b).
   map("n", "<Leader>l", function()
@@ -263,3 +275,19 @@ end
 vim.g.snacks_animate = false
 set_snacks_keymaps()
 Snacks.setup(snacks_opts)
+
+local au = vim.api.nvim_create_autocmd
+
+au("VimEnter", {
+  callback = function()
+    vim.schedule(function()
+      vim.pack.add({ "https://github.com/nvim-mini/mini.files" })
+
+      require("mini.files").setup({ windows = { preview = true, width_preview = 100 } })
+
+      vim.keymap.set("n", "<Leader>e", function()
+        require("mini.files").open()
+      end, { desc = "Toggle mini files." })
+    end)
+  end,
+})
