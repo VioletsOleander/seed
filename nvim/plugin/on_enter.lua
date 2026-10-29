@@ -12,7 +12,63 @@ local function on_enter()
   safely(function()
     require("mini.files").setup({ windows = { preview = true, width_preview = 50 } })
 
-    vim.keymap.set("n", "<Leader>e", require("mini.files").open, { desc = "Toggle mini files." })
+    vim.keymap.set("n", "<Leader>e", function()
+      if require("mini.files").close() == nil then
+        require("mini.files").open()
+      end
+    end, { desc = "Toggle mini files." })
+
+    local function split(direction)
+      local cur = require("mini.files").get_explorer_state().target_window
+      local new = vim.api.nvim_win_call(cur, function()
+        vim.cmd(direction .. " split")
+        return vim.api.nvim_get_current_win()
+      end)
+
+      require("mini.files").set_target_window(new)
+      require("mini.files").go_in({ close_on_file = true })
+    end
+
+    vim.api.nvim_create_autocmd("User", {
+      group = vim.api.nvim_create_augroup("user", { clear = false }),
+      pattern = "MiniFilesBufferCreate",
+      callback = function(args)
+        local buf = args.data.buf_id
+
+        vim.keymap.set("n", "<C-s>", function()
+          split("belowright horizontal")
+        end, { buf = buf, desc = "Split belowright horizontal." })
+        vim.keymap.set("n", "<C-v>", function()
+          split("belowright vertical")
+        end, { buf = buf, desc = "Split belowright vertical." })
+        vim.keymap.set("n", "<C-t>", function()
+          split("tab")
+        end, { buf = buf, desc = "Split tab." })
+      end,
+    })
+
+    local show_hidden = true
+
+    local filter_show = function(fs_entry)
+      return true
+    end
+
+    local filter_hide = function(fs_entry)
+      return not vim.startswith(fs_entry.name, ".")
+    end
+
+    vim.api.nvim_create_autocmd("User", {
+      group = vim.api.nvim_create_augroup("user", { clear = false }),
+      pattern = "MiniFilesBufferCreate",
+      callback = function(args)
+        vim.keymap.set("n", "g.", function()
+          show_hidden = not show_hidden
+
+          local filter = show_hidden and filter_show or filter_hide
+          require("mini.files").refresh({ content = { filter = filter } })
+        end, { buf = args.data.buf_id, desc = "Toggle showing hidden." })
+      end,
+    })
   end)
 
   --- Mini.move.
