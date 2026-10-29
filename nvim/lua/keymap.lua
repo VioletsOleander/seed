@@ -32,6 +32,10 @@ map("n", "gk", "H", { desc = "Goto the top line." })
 map("n", "gm", "M", { desc = "Goto the middle line." })
 map("n", "gj", "L", { desc = "Goto the bottom line." })
 
+-- Goto tabpage.
+map("n", "]t", "gt", { desc = "Goto next tabpage." })
+map("n", "[t", "gT", { desc = "Goto previous tabpage." })
+
 --- LSP.
 
 -- Lsp gotos.
@@ -126,8 +130,10 @@ map("n", "N", "?<CR>", { silent = true, desc = "Search backward with last search
 -- Disable middle mouse paste.
 map({ "n", "i" }, "<MiddleMouse>", "<Nop>")
 
--- Tab/Window management.
+-- Tab management.
 map("n", "<C-w>t", "<Cmd>tab split<CR>", { desc = "Open current buffer in new tab." })
+
+-- Window management.
 map("n", "<C-w>gt", "<Cmd>vsplit +terminal<CR>", { desc = "Open terminal in vertical split." })
 
 -- Insert/Visual/Select mode to normal mode.
