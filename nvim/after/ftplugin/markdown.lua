@@ -7,6 +7,4 @@ if vim.bo.buftype == "nofile" then
 end
 
 vim.bo.completeopt = "menu,popup"
--- No autowarp text and comment.
-vim.opt.formatoptions:remove({ "t", "c" })
 vim.b.completion = false

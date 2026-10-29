@@ -259,6 +259,7 @@ safely(function()
   require("nvim-treesitter").install(treesitter_langauges)
 
   vim.api.nvim_create_autocmd("FileType", {
+    group = vim.api.nvim_create_augroup("user", { clear = false }),
     pattern = treesitter_langauges,
     callback = function(ev)
       vim.treesitter.start(ev.buf)
@@ -266,6 +267,7 @@ safely(function()
   })
 
   vim.api.nvim_create_autocmd("PackChanged", {
+    group = vim.api.nvim_create_augroup("user", { clear = false }),
     callback = function(ev)
       local name, kind = ev.data.spec.name, ev.data.kind
 

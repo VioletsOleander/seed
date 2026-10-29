@@ -1,12 +1,8 @@
 local au = vim.api.nvim_create_autocmd
-local aug = vim.api.nvim_create_augroup
-
--- Hold autocmds related with buffer/lsp/other(unclassified)
-local buf_group = aug("user.buf", { clear = true })
-local other_group = aug("user.other", { clear = true })
+local group = vim.api.nvim_create_augroup("user", { clear = true })
 
 au("BufRead", {
-  group = buf_group,
+  group = group,
   pattern = { "*/.rustup/*", "*/.cargo/*", "*/.venv/*", "*/node_modules/*", "*/.lua_modules/*" },
   callback = function()
     vim.bo.readonly = true
@@ -17,7 +13,7 @@ au("BufRead", {
 
 -- This is more versatile than opt.autowrite.
 au({ "BufLeave", "FocusLost" }, {
-  group = buf_group,
+  group = group,
   callback = function()
     -- Invalid buffer, non-normal buffer, or unnamed buffer.
     if
@@ -39,7 +35,7 @@ au({ "BufLeave", "FocusLost" }, {
 })
 
 au("FileType", {
-  group = buf_group,
+  group = group,
   pattern = {
     "javascript",
     "json",
@@ -55,10 +51,21 @@ au("FileType", {
   desc = "Set two tabstop buffer",
 })
 
+au("FileType", {
+  group = group,
+  pattern = "*",
+  callback = function()
+    -- No autowarp text and comment.
+    -- No autoinsert comment leader after hitting enter and o.
+    vim.opt.formatoptions:remove({ "t", "c", "r", "o" })
+  end,
+  desc = "Set buffer formatoptions",
+})
+
 -- Cmdline autocompletion (blink's cmdline completion does not support :s/old/new)
 -- (but the builin completion feels more laggy compared to blink when complete :!, :checkhealth)
 au("CmdlineChanged", {
-  group = other_group,
+  group = group,
   pattern = { ":", "/", "?" },
   callback = function()
     local cmd = vim.fn.getcmdline()

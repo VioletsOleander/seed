@@ -88,8 +88,13 @@ local function on_insert()
   end)
 end
 
-vim.api.nvim_create_autocmd("InsertEnter", { once = true, callback = on_insert })
+vim.api.nvim_create_autocmd("InsertEnter", {
+  once = true,
+  group = vim.api.nvim_create_augroup("user", { clear = false }),
+  callback = on_insert,
+})
 vim.api.nvim_create_autocmd("PackChanged", {
+  group = vim.api.nvim_create_augroup("user", { clear = false }),
   callback = function(ev)
     local name, kind = ev.data.spec.name, ev.data.kind
 

@@ -10,7 +10,7 @@ local function on_enter()
   --- Mini.files.
 
   safely(function()
-    require("mini.files").setup({ windows = { preview = true, width_preview = 100 } })
+    require("mini.files").setup({ windows = { preview = true, width_preview = 50 } })
 
     vim.keymap.set("n", "<Leader>e", require("mini.files").open, { desc = "Toggle mini files." })
   end)
@@ -318,6 +318,7 @@ end
 
 vim.api.nvim_create_autocmd("VimEnter", {
   once = true,
+  group = vim.api.nvim_create_augroup("user", { clear = false }),
   callback = function()
     vim.schedule(on_enter)
   end,
