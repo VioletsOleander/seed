@@ -635,26 +635,6 @@
     "prefix": "matrix",
     "body": ["\\begin{matrix}", "\t$1", "\\end{matrix}$0"]
   },
-  "pmatrix": {
-    "prefix": "pmatrix",
-    "body": ["\\begin{pmatrix}", "\t$1", "\\end{pmatrix}$0"]
-  },
-  "bmatrix": {
-    "prefix": "bmatrix",
-    "body": ["\\begin{bmatrix}", "\t$1", "\\end{bmatrix}$0"]
-  },
-  "Bmatrix": {
-    "prefix": "Bmatrix",
-    "body": ["\\begin{Bmatrix}", "\t$1", "\\end{Bmatrix}$0"]
-  },
-  "vmatrix": {
-    "prefix": "vmatrix",
-    "body": ["\\begin{vmatrix}", "\t$1", "\\end{vmatrix}$0"]
-  },
-  "Vmatrix": {
-    "prefix": "Vmatrix",
-    "body": ["\\begin{Vmatrix}", "\t$1", "\\end{Vmatrix}$0"]
-  },
   "cases": {
     "prefix": "cases",
     "body": ["\\begin{cases}", "\t$1", "\\end{cases}$0"]

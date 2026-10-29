@@ -170,8 +170,7 @@ map("i", "<C-g><C-w>", format_and_save, { desc = "Format and save file" })
 ---@param args table
 local function tcd(args)
   local dir = args.args
-  vim.cmd.tabnew()
-  vim.cmd("tcd " .. dir)
+  vim.cmd("tabnew | tcd " .. dir)
 end
 
 com("TCD", tcd, {

@@ -126,10 +126,9 @@ map("n", "N", "?<CR>", { silent = true, desc = "Search backward with last search
 -- Disable middle mouse paste.
 map({ "n", "i" }, "<MiddleMouse>", "<Nop>")
 
--- Open terminal.
-map("n", "<C-w>gt", function()
-  vim.cmd("vsplit +terminal")
-end, { desc = "Open terminal in vertical split." })
+-- Tab/Window management.
+map("n", "<C-w>t", "<Cmd>tab split<CR>", { desc = "Open current buffer in new tab." })
+map("n", "<C-w>gt", "<Cmd>vsplit +terminal<CR>", { desc = "Open terminal in vertical split." })
 
 -- Insert/Visual/Select mode to normal mode.
 -- In CTRL-X CTRL-L mode this will not work because vim does not allow this, which is kind of annoying sometimes.

@@ -61,8 +61,8 @@ o.guifont = "FiraCode Nerd Font Mono:h11:w57"
 o.winborder = "rounded"
 o.pumborder = "rounded"
 
--- Not display tabline
-o.showtabline = 0
+-- Only show tabline if there are multiple tabs
+o.showtabline = 1
 
 -- Shell
 -- Reference: https://github.com/nushell/integrations/blob/main/nvim/init.lua
