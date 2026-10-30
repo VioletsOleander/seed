@@ -37,9 +37,6 @@ o.wildmenu = true
 o.wildmode = "noselect:lastused,full"
 o.wildoptions = "pum,fuzzy,tagfile"
 
--- Undofile
-o.undofile = true
-
 -- Popup meun height
 o.pumheight = 12
 
