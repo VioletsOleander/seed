@@ -8,6 +8,7 @@ if status is-interactive
     abbr --add gs git status
     abbr --add gd git diff
     abbr --add ga git add
+    abbr --add gp git push
     abbr --add gc git commit
     abbr --add gf git fetch
     abbr --add gb git branch
