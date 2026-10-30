@@ -32,22 +32,16 @@ local function on_insert()
         enabled = false,
         window = { show_documentation = true },
       },
+      -- Use require("blink.cmp").reload("snippets") to reload snippets.
+      sources = { default = { "lsp", "snippets", "buffer" } },
+      fuzzy = { implementation = "rust" },
       completion = {
-        list = {
-          selection = {
-            auto_insert = false,
-          },
-        },
-        accept = {
-          dot_repeat = false,
-          auto_brackets = {
-            enabled = false,
-          },
-        },
+        list = { selection = { auto_insert = false } },
+        accept = { auto_brackets = { enabled = false } },
         documentation = { auto_show = false },
         menu = {
           draw = {
-            columns = { { "kind_icon" }, { "label", "label_description", gap = 1 }, { "kind" } },
+            columns = { { "kind_icon" }, { "label" }, { "kind" } },
             components = {
               kind_icon = {
                 text = function(ctx)
@@ -59,11 +53,7 @@ local function on_insert()
           },
         },
       },
-      -- Use require("blink.cmp").reload("snippets") to reload snippets.
-      sources = { default = { "lsp", "snippets", "buffer" } },
-      fuzzy = { implementation = "rust" },
       cmdline = {
-        enabled = false,
         keymap = {
           preset = "none",
           ["<Tab>"] = { "select_next", "fallback" },
@@ -73,7 +63,10 @@ local function on_insert()
           ["<C-k>"] = { "select_prev", "fallback" },
         },
         completion = {
-          menu = { auto_show = true },
+          menu = {
+            draw = { columns = { { "label", "label_description", gap = 1 }, { "kind" } } },
+            auto_show = true,
+          },
           list = {
             selection = {
               preselect = false,
@@ -88,11 +81,12 @@ local function on_insert()
   end)
 end
 
-vim.api.nvim_create_autocmd("InsertEnter", {
+vim.api.nvim_create_autocmd({ "InsertEnter", "CmdlineEnter" }, {
   once = true,
   group = vim.api.nvim_create_augroup("user", { clear = false }),
   callback = on_insert,
 })
+
 vim.api.nvim_create_autocmd("PackChanged", {
   group = vim.api.nvim_create_augroup("user", { clear = false }),
   callback = function(ev)

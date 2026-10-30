@@ -61,21 +61,3 @@ au("FileType", {
   end,
   desc = "Set buffer formatoptions",
 })
-
--- Cmdline autocompletion (blink's cmdline completion does not support :s/old/new)
--- (but the builin completion feels more laggy compared to blink when complete :!, :checkhealth)
-au("CmdlineChanged", {
-  group = group,
-  pattern = { ":", "/", "?" },
-  callback = function()
-    local cmd = vim.fn.getcmdline()
-
-    -- Avoid stuck on completing binary executables
-    if vim.startswith(cmd, "!") then
-      return
-    end
-
-    vim.fn.wildtrigger()
-  end,
-  desc = "Show popup menu for completion",
-})
