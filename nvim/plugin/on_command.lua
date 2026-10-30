@@ -131,3 +131,7 @@ vim.api.nvim_create_user_command("LoadGitSigns", function()
 
   require("gitsigns").setup(opts)
 end, { desc = "Load GitSigns" })
+
+vim.api.nvim_create_user_command("LoadMiniGit", function()
+  require("mini.git").setup()
+end, { desc = "Load MiniGit" })
