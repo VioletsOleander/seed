@@ -12,21 +12,15 @@ local function on_enter()
   safely(function()
     require("mini.files").setup({ windows = { preview = true, width_preview = 50 } })
 
-    vim.keymap.set("n", "<Leader>e", function()
-      if require("mini.files").close() == nil then
-        require("mini.files").open()
-      end
-    end, { desc = "Toggle mini files." })
-
-    local show_hidden = true
-
-    local filter_show = function(fs_entry)
-      return true
-    end
-
-    local filter_hide = function(fs_entry)
-      return not vim.startswith(fs_entry.name, ".")
-    end
+    local show_hidden = false
+    local fliters = {
+      [true] = function(fs_entry)
+        return true
+      end,
+      [false] = function(fs_entry)
+        return not vim.startswith(fs_entry.name, ".")
+      end,
+    }
 
     local function split(direction)
       local cur = require("mini.files").get_explorer_state().target_window
@@ -38,6 +32,12 @@ local function on_enter()
       require("mini.files").set_target_window(new)
       require("mini.files").go_in({ close_on_file = true })
     end
+
+    vim.keymap.set("n", "<Leader>e", function()
+      if require("mini.files").close() == nil then
+        require("mini.files").open(nil, true, { content = { filter = fliters[show_hidden] } })
+      end
+    end, { desc = "Toggle mini files." })
 
     vim.api.nvim_create_autocmd("User", {
       group = vim.api.nvim_create_augroup("user", { clear = false }),
@@ -57,21 +57,19 @@ local function on_enter()
 
         vim.keymap.set("n", "g.", function()
           show_hidden = not show_hidden
-
-          local filter = show_hidden and filter_show or filter_hide
-          require("mini.files").refresh({ content = { filter = filter } })
+          require("mini.files").refresh({ content = { filter = fliters[show_hidden] } })
         end, { buf = buf, desc = "Toggle showing hidden." })
 
-        vim.keymap.set("n", "<C-y>", function()
-          local height = vim.api.nvim_win_get_height(0)
-          local count = math.max(1, math.floor(height * 0.25))
-          vim.api.nvim_feedkeys(count .. "k", "n", false)
-        end, { buf = buf, desc = "Scroll 25% screen lines up." })
-        vim.keymap.set("n", "<C-e>", function()
-          local height = vim.api.nvim_win_get_height(0)
-          local count = math.max(1, math.floor(height * 0.25))
-          vim.api.nvim_feedkeys(count .. "j", "n", false)
-        end, { buf = buf, desc = "Scroll 25% screen lines down." })
+        -- vim.keymap.set("n", "<C-y>", function()
+        --   local height = vim.api.nvim_win_get_height(0)
+        --   local count = math.max(1, math.floor(height * 0.25))
+        --   vim.api.nvim_feedkeys(count .. "k", "n", false)
+        -- end, { buf = buf, desc = "Scroll 25% screen lines up." })
+        -- vim.keymap.set("n", "<C-e>", function()
+        --   local height = vim.api.nvim_win_get_height(0)
+        --   local count = math.max(1, math.floor(height * 0.25))
+        --   vim.api.nvim_feedkeys(count .. "j", "n", false)
+        -- end, { buf = buf, desc = "Scroll 25% screen lines down." })
       end,
     })
   end)
