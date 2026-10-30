@@ -24,7 +24,7 @@ g.disable_autoformat = false
 
 -- WSL clipboard.
 -- Reference: https://vi.stackexchange.com/questions/42305/neovim-following-the-instructions-in-h-clipboard-wsl-not-work-it-shows-no.
-if vim.fn.has("wsl") then
+if vim.fn.has("wsl") == 1 then
   g.clipboard = {
     name = "win32yank-wsl",
     copy = {
@@ -42,31 +42,22 @@ end
 --- Enable language servers.
 
 vim.lsp.enable({
-  -- lua
-  "lua_ls",
-  -- python
-  "ty",
-  "ruff",
-  -- json
-  "jsonls",
-  -- yaml
-  "yamlls",
-  -- toml
-  "taplo",
-  -- rust
-  "rust_analyzer",
-  -- typescript, html, css, svelte
-  "vtsls",
-  "html",
   "cssls",
-  "svelte",
   "eslint",
-  -- nushell
+  "fish_lsp",
+  "html",
+  "jsonls",
+  "lua_ls",
   "nushell",
-  -- latex
+  "ruff",
+  "rust_analyzer",
+  "svelte",
+  "taplo",
   "texlab",
-  -- typst
   "tinymist",
+  "ty",
+  "vtsls",
+  "yamlls",
 })
 
 --- Load modules.

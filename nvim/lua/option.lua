@@ -50,6 +50,7 @@ local cursor_config = {
   "i-c-ci-ve:ver25",
   "r-cr:block",
   "o:hor20",
+  "t:ver25",
   "a:blinkon0-Cursor",
 }
 o.guicursor = table.concat(cursor_config, ",")
@@ -102,18 +103,22 @@ function _G.tabline()
 end
 
 -- Shell
--- Reference: https://github.com/nushell/integrations/blob/main/nvim/init.lua
-o.shell = "nu"
+if vim.fn.has("win32") == 1 then
+  -- Reference: https://github.com/nushell/integrations/blob/main/nvim/init.lua
+  o.shell = "nu"
 
-o.shellredir = "out+err> %s"
-o.shellcmdflag = "--stdin --no-newline -c"
+  o.shellredir = "out+err> %s"
+  o.shellcmdflag = "--stdin --no-newline -c"
 
-o.shellxescape = ""
-o.shellxquote = ""
-o.shellquote = ""
+  o.shellxescape = ""
+  o.shellxquote = ""
+  o.shellquote = ""
 
-o.shellpipe =
-  "| complete | update stderr { ansi strip } | tee { get stderr | save --force --raw %s } | into record"
+  o.shellpipe =
+    "| complete | update stderr { ansi strip } | tee { get stderr | save --force --raw %s } | into record"
+else
+  o.shell = "fish"
+end
 
 -- Spell
 o.spelllang = "en,cjk"
@@ -131,3 +136,6 @@ vim.opt.formatoptions:remove({ "t", "c", "r", "o" })
 
 -- Textwidth
 o.textwidth = 100
+
+-- Open command-line window
+o.cedit = "<C-g>"

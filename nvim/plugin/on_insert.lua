@@ -61,6 +61,7 @@ local function on_insert()
           ["<C-e>"] = { "hide", "fallback" },
           ["<C-j>"] = { "select_next", "fallback" },
           ["<C-k>"] = { "select_prev", "fallback" },
+          ["<C-f>"] = { "show", "show_documentation", "hide_documentation", "fallback" },
         },
         completion = {
           menu = {

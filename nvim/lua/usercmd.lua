@@ -1,6 +1,3 @@
--- If an action is intended to be either triggered by command and keymap,
--- then define the action here. If an action is intended to be only triggered
--- by keymap (using command will be cumbersome), then define the action in `keymap.lua`.
 local com = vim.api.nvim_create_user_command
 local map = vim.keymap.set
 
@@ -120,20 +117,21 @@ map("n", "<C-p>", toggle_spell, { desc = "Toggle spell check" })
 
 -- Format current buffer.
 local formatters_by_ft = {
-  lua = { "stylua" },
-  rust = { "rustfmt" },
-  python = { "ruff_format", "ruff_organize_imports" },
-  toml = { "dprint" },
-  markdown = { "dprint" },
-  typescript = { "dprint" },
+  fish = { "fish_indent" },
   javascript = { "dprint" },
-  yaml = { "dprint" },
   json = { "dprint" },
   jsonc = { "dprint" },
-  svelte = { "dprint" },
+  lua = { "stylua" },
+  markdown = { "dprint" },
   nu = { "nufmt" },
+  python = { "ruff_format", "ruff_organize_imports" },
+  rust = { "rustfmt" },
+  svelte = { "dprint" },
   tex = { "tex-fmt" },
+  toml = { "dprint" },
+  typescript = { "dprint" },
   typst = { "typstyle" },
+  yaml = { "dprint" },
 }
 
 local function format_and_save()

@@ -45,6 +45,12 @@ local function on_enter()
       callback = function(args)
         local buf = args.data.buf_id
 
+        vim.keymap.set(
+          "n",
+          "gs",
+          require("mini.files").synchronize,
+          { buf = buf, desc = "Synchronize." }
+        )
         vim.keymap.set("n", "<C-s>", function()
           split("belowright horizontal")
         end, { buf = buf, desc = "Split belowright horizontal." })
