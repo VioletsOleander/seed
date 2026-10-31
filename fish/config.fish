@@ -3,21 +3,21 @@ if status is-interactive
 
     abbr --add conf $EDITOR ~/.config/fish/config.fish
 
-    abbr --add cls clear
     abbr --add ba bat
-    abbr --add nv nvim
+    abbr --add cls clear
     abbr --add co cargo
+    abbr --add nv nvim
 
-    abbr --add gi git
-    abbr --add gs git status
-    abbr --add gd git diff
     abbr --add ga git add
-    abbr --add gp git push
-    abbr --add gc git commit
-    abbr --add gf git fetch
     abbr --add gb git branch
-    abbr --add gsw git switch
-    abbr --add gbd git branch -D
+    abbr --add gc git commit
+    abbr --add gd git diff
+    abbr --add gf git fetch
+    abbr --add gi git
+    abbr --add gl git log
+    abbr --add gp git push
+    abbr --add gs git status
+    abbr --add gw git switch
 
     # Vars.
 
