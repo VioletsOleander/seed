@@ -31,12 +31,12 @@ map("n", "<BS>", "<C-^>", { desc = "Goto the alternate buffer." })
 map("n", "]t", "gt", { desc = "Goto next tabpage." })
 map("n", "[t", "gT", { desc = "Goto previous tabpage." })
 
--- Close/Quit window.
+-- Close window.
 map("n", "<C-c>", "<Cmd>close<CR>", { desc = "Close current window." })
-map("n", "<C-q>", "<Cmd>quit<CR>", { desc = "Quit current window." })
 
 -- Open new terminal.
 map("n", "<C-w>t", "<Cmd>vsplit +terminal<CR>", { desc = "Open terminal in vertical split." })
+map("n", "<C-w><C-t>", "<Cmd>vsplit +terminal<CR>", { desc = "Open terminal in vertical split." })
 
 -- Open new tab.
 map("n", "<C-t>", "<Cmd>tab split<CR>", { desc = "Open current buffer in new tab." })
@@ -153,4 +153,5 @@ map({ "n", "i" }, "<MiddleMouse>", "<Nop>")
 map({ "i", "v", "x", "c" }, "<C-l>", "<Esc>", { desc = "Switch to normal mode." })
 
 -- Terminal mode to normal mode.
-map("t", [[<C-\>]], [[<C-\><C-n>]], { desc = "Switch from terminal mode to normal mode." })
+map("n", "<C-q>", "<Nop>", { desc = "Nop." })
+map("t", "<C-q>", [[<C-\><C-n>]], { desc = "Switch from terminal mode to normal mode." })
