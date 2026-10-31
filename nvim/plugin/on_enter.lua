@@ -44,34 +44,33 @@ local function on_enter()
       pattern = "MiniFilesBufferCreate",
       callback = function(args)
         local buf = args.data.buf_id
+        local map = vim.keymap.set
 
-        vim.keymap.set(
-          "n",
-          "gs",
-          require("mini.files").synchronize,
-          { buf = buf, desc = "Synchronize." }
-        )
-        vim.keymap.set("n", "<C-s>", function()
+        map("n", "gs", require("mini.files").synchronize, { buf = buf, desc = "Synchronize." })
+        map("n", "<C-s>", function()
           split("belowright horizontal")
         end, { buf = buf, desc = "Split belowright horizontal." })
-        vim.keymap.set("n", "<C-v>", function()
+        map("n", "<C-v>", function()
           split("belowright vertical")
         end, { buf = buf, desc = "Split belowright vertical." })
-        vim.keymap.set("n", "<C-t>", function()
+        map("n", "<C-t>", function()
           split("tab")
         end, { buf = buf, desc = "Split tab." })
+        map("n", "<C-l>", function()
+          require("mini.files").go_in({ close_on_file = true })
+        end, { buf = buf, desc = "Go in plus" })
 
-        vim.keymap.set("n", "g.", function()
+        map("n", "g.", function()
           show_hidden = not show_hidden
           require("mini.files").refresh({ content = { filter = fliters[show_hidden] } })
         end, { buf = buf, desc = "Toggle showing hidden." })
 
-        -- vim.keymap.set("n", "<C-y>", function()
+        -- map("n", "<C-y>", function()
         --   local height = vim.api.nvim_win_get_height(0)
         --   local count = math.max(1, math.floor(height * 0.25))
         --   vim.api.nvim_feedkeys(count .. "k", "n", false)
         -- end, { buf = buf, desc = "Scroll 25% screen lines up." })
-        -- vim.keymap.set("n", "<C-e>", function()
+        -- map("n", "<C-e>", function()
         --   local height = vim.api.nvim_win_get_height(0)
         --   local count = math.max(1, math.floor(height * 0.25))
         --   vim.api.nvim_feedkeys(count .. "j", "n", false)
