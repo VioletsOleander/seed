@@ -153,4 +153,4 @@ map({ "n", "i" }, "<MiddleMouse>", "<Nop>")
 map({ "i", "v", "x", "c" }, "<C-l>", "<Esc>", { desc = "Switch to normal mode." })
 
 -- Terminal mode to normal mode.
-map("t", [[<C-\><C-\>]], [[<C-\><C-n>]], { desc = "Switch from terminal mode to normal mode." })
+map("t", [[<C-\>]], [[<C-\><C-n>]], { desc = "Switch from terminal mode to normal mode." })
