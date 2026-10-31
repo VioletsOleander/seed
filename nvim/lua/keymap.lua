@@ -34,16 +34,43 @@ map("n", "[t", "gT", { desc = "Goto previous tabpage." })
 -- Close window.
 map("n", "<C-c>", "<Cmd>close<CR>", { desc = "Close current window." })
 
--- Open new terminal.
-map("n", "<C-w>t", "<Cmd>vsplit +terminal<CR>", { desc = "Open terminal in vertical split." })
-map("n", "<C-w><C-t>", "<Cmd>vsplit +terminal<CR>", { desc = "Open terminal in vertical split." })
+-- Search forward/backward.
+map("n", "n", "/<CR>", { silent = true, desc = "Search forward with last searched pattern." })
+map("n", "N", "?<CR>", { silent = true, desc = "Search backward with last searched pattern." })
 
 -- Open new tab.
 map("n", "<C-t>", "<Cmd>tab split<CR>", { desc = "Open current buffer in new tab." })
 
--- Search forward/backward.
-map("n", "n", "/<CR>", { silent = true, desc = "Search forward with last searched pattern." })
-map("n", "N", "?<CR>", { silent = true, desc = "Search backward with last searched pattern." })
+-- Open new terminal.
+
+local function open_terminal()
+  local api = vim.api
+
+  for _, buf in ipairs(api.nvim_list_bufs()) do
+    -- If terminal exist, find it.
+    if api.nvim_buf_is_valid(buf) and vim.bo[buf].buftype == "terminal" then
+      -- If terminal is opened in a window, focus to that window.
+      for _, win in ipairs(api.nvim_list_wins()) do
+        if api.nvim_win_get_buf(win) == buf then
+          api.nvim_set_current_win(win)
+          return
+        end
+      end
+
+      -- If terminal is not opened in a window, make a split and focus.
+      vim.cmd("vsplit")
+      api.nvim_win_set_buf(0, buf)
+
+      return
+    end
+  end
+
+  -- If terminal not exist, make a split and open it.
+  vim.cmd("vsplit +terminal")
+end
+
+map("n", "<C-w>t", open_terminal, { desc = "Open terminal." })
+map("n", "<C-w><C-t>", open_terminal, { desc = "Open terminal." })
 
 --- LSP.
 
