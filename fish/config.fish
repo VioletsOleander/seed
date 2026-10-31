@@ -1,4 +1,6 @@
 if status is-interactive
+    # Abbrs.
+
     abbr --add cls clear
     abbr --add ba bat
     abbr --add nv nvim
@@ -15,14 +17,15 @@ if status is-interactive
     abbr --add gsw git switch
     abbr --add gbd git branch -D
 
-    set --global fish_greeting
-    set --global fish_mode_prompt
+    # Vars.
 
     set --export EDITOR nvim
     set --export LANG C.UTF-8
+    fish_add_path --path ~/.cargo/bin ~/.local/bin
+
+    # Keybinds.
 
     fish_hybrid_key_bindings
-    fish_add_path --path ~/.cargo/bin ~/.local/bin
 
     # =============================================================================
     #
