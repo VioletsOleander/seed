@@ -1,6 +1,8 @@
 if status is-interactive
     # Abbrs.
 
+    abbr --add conf $EDITOR ~/.config/fish/config.fish
+
     abbr --add cls clear
     abbr --add ba bat
     abbr --add nv nvim
@@ -26,6 +28,7 @@ if status is-interactive
     # Keybinds.
 
     fish_hybrid_key_bindings
+    bind --user -M insert ctrl-n down-or-search
 
     # =============================================================================
     #
