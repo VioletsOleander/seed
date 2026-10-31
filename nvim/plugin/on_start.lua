@@ -134,7 +134,6 @@ safely(function()
     bigfile = { enabled = true },
     quickfile = { enabled = true },
     indent = { enabled = true },
-    notifier = { enabled = true, timeout = 3000 },
     picker = {
       enabled = true,
       -- Make sure that picker's open the target in current window, instead of finding a window with file buffer.

@@ -27,14 +27,23 @@ map("n", "<C-l>", "<C-w>l", { desc = "Goto the right window." })
 -- Goto alternate buffer.
 map("n", "<BS>", "<C-^>", { desc = "Goto the alternate buffer." })
 
--- Goto top/middle/bottom line
-map("n", "gk", "H", { desc = "Goto the top line." })
-map("n", "gm", "M", { desc = "Goto the middle line." })
-map("n", "gj", "L", { desc = "Goto the bottom line." })
-
 -- Goto tabpage.
 map("n", "]t", "gt", { desc = "Goto next tabpage." })
 map("n", "[t", "gT", { desc = "Goto previous tabpage." })
+
+-- Close/Quit window.
+map("n", "<C-c>", "<Cmd>close<CR>", { desc = "Close current window." })
+map("n", "<C-q>", "<Cmd>quit<CR>", { desc = "Quit current window." })
+
+-- Open new terminal.
+map("n", "<C-w>t", "<Cmd>vsplit +terminal<CR>", { desc = "Open terminal in vertical split." })
+
+-- Open new tab.
+map("n", "<C-t>", "<Cmd>tab split<CR>", { desc = "Open current buffer in new tab." })
+
+-- Search forward/backward.
+map("n", "n", "/<CR>", { silent = true, desc = "Search forward with last searched pattern." })
+map("n", "N", "?<CR>", { silent = true, desc = "Search backward with last searched pattern." })
 
 --- LSP.
 
@@ -56,9 +65,10 @@ map("n", "ga", vim.diagnostic.open_float, { desc = "Show diagnostics" })
 map("n", "<Leader>r", vim.lsp.buf.rename, { desc = "Rename symbol" })
 map({ "n", "v" }, "<Leader>a", vim.lsp.buf.code_action, { desc = "Code action" })
 
---- Completion.
+--- Edit.
 
 -- Accept completion or jump next char.
+
 local jumpable_chars = {
   [")"] = true,
   ["]"] = true,
@@ -106,39 +116,9 @@ map("c", "<C-k>", function()
   return vim.fn.pumvisible() ~= 0 and "<C-p>" or "<C-k>"
 end, { expr = true, desc = "Select previous completion." })
 
---- Others.
-
 -- Copy/Paste.
 map({ "n", "v" }, "gy", '"+y', { desc = "Copy to system clipboard." })
 map({ "n", "v" }, "gp", '"+p', { desc = "Paste from system clipboard." })
-
--- Clear highlight.
-map("n", "<Leader>c", "<Cmd>nohlsearch<CR>", { desc = "Clear search highlight" })
-map("n", "zz", function()
-  vim.cmd("normal! zz")
-  vim.cmd("nohlsearch")
-end, { desc = "Make cursor line in screen center and clear highlight." })
-
--- Close/Quit window.
-map("n", "<C-c>", "<Cmd>close<CR>", { desc = "Close current window." })
-map("n", "<C-q>", "<Cmd>quit<CR>", { desc = "Quit current window." })
-
--- Always search forward/backward.
-map("n", "n", "/<CR>", { silent = true, desc = "Search forward with last searched pattern." })
-map("n", "N", "?<CR>", { silent = true, desc = "Search backward with last searched pattern." })
-
--- Disable middle mouse paste.
-map({ "n", "i" }, "<MiddleMouse>", "<Nop>")
-
--- Tab management.
-map("n", "<C-w>t", "<Cmd>tab split<CR>", { desc = "Open current buffer in new tab." })
-
--- Window management.
-map("n", "<C-w>gt", "<Cmd>vsplit +terminal<CR>", { desc = "Open terminal in vertical split." })
-
--- Insert/Visual/Select mode to normal mode.
--- In CTRL-X CTRL-L mode this will not work because vim does not allow this, which is kind of annoying sometimes.
-map({ "i", "v", "x", "c" }, "<C-l>", "<Esc>", { desc = "Switch to normal mode." })
 
 -- Correct spell.
 map(
@@ -155,6 +135,22 @@ map("i", "<C-q>", "<C-g>u<Esc>gwwa<C-g>u", { desc = "Format current line." })
 -- Indent line.
 -- Change it to C-I if the terminal emulator supports CSI u.
 map("i", "<C-d>", "<C-f>", { desc = "Indent current line." })
+
+--- Others
+
+-- Clear highlight.
+map("n", "<Leader>c", "<Cmd>nohlsearch<CR>", { desc = "Clear search highlight" })
+map("n", "zz", function()
+  vim.cmd("normal! zz")
+  vim.cmd("nohlsearch")
+end, { desc = "Make cursor line in screen center and clear highlight." })
+
+-- Disable middle mouse paste.
+map({ "n", "i" }, "<MiddleMouse>", "<Nop>")
+
+-- Insert/Visual/Select mode to normal mode.
+-- In CTRL-X CTRL-L mode this will not work because vim does not allow this, which is kind of annoying sometimes.
+map({ "i", "v", "x", "c" }, "<C-l>", "<Esc>", { desc = "Switch to normal mode." })
 
 -- Terminal mode to normal mode.
 map("t", [[<C-\><C-\>]], [[<C-\><C-n>]], { desc = "Switch from terminal mode to normal mode." })
