@@ -92,6 +92,13 @@ $env.config.keybindings ++= [
             ]
         }
     }
+    {
+        name: cancel_completion
+        modifier: Control
+        keycode: Char_g
+        mode: [Vi_Insert]
+        event: {send: Esc}
+    }
 ]
 
 $env.config.cursor_shape.vi_insert = 'line'
