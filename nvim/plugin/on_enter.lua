@@ -14,7 +14,7 @@ local function on_enter()
 
     local show_hidden = false
     local fliters = {
-      [true] = function(fs_entry)
+      [true] = function(_)
         return true
       end,
       [false] = function(fs_entry)
@@ -64,17 +64,6 @@ local function on_enter()
           show_hidden = not show_hidden
           require("mini.files").refresh({ content = { filter = fliters[show_hidden] } })
         end, { buf = buf, desc = "Toggle showing hidden." })
-
-        -- map("n", "<C-y>", function()
-        --   local height = vim.api.nvim_win_get_height(0)
-        --   local count = math.max(1, math.floor(height * 0.25))
-        --   vim.api.nvim_feedkeys(count .. "k", "n", false)
-        -- end, { buf = buf, desc = "Scroll 25% screen lines up." })
-        -- map("n", "<C-e>", function()
-        --   local height = vim.api.nvim_win_get_height(0)
-        --   local count = math.max(1, math.floor(height * 0.25))
-        --   vim.api.nvim_feedkeys(count .. "j", "n", false)
-        -- end, { buf = buf, desc = "Scroll 25% screen lines down." })
       end,
     })
   end)
@@ -90,37 +79,23 @@ local function on_enter()
   safely(function()
     local spec_treesitter = require("mini.ai").gen_spec.treesitter
 
-    local custom_textobjects = {
-      -- conditional (if)
-      i = spec_treesitter({ a = "@conditional.outer", i = "@conditional.inner" }),
-      -- scope
-      o = spec_treesitter({ a = "@scope.outer", i = "@scope.inner" }),
-      -- loop
-      l = spec_treesitter({ a = "@loop.outer", i = "@loop.inner" }),
-      -- block
-      k = spec_treesitter({ a = "@block.outer", i = "@block.inner" }),
-      -- function
-      f = spec_treesitter({ a = "@function.outer", i = "@function.inner" }),
-      -- class
-      c = spec_treesitter({ a = "@class.outer", i = "@class.inner" }),
-      -- parameter/argument
-      a = spec_treesitter({ a = "@parameter.outer", i = "@parameter.inner" }),
-      -- call/invocation
-      v = spec_treesitter({ a = "@call.outer", i = "@call.inner" }),
-      -- assignment
-      m = spec_treesitter({ a = "@assignment.outer", i = "@assignment.inner" }),
-      -- tag
-      t = { "<([%p%w]-)%f[^<%w][^<>]->.-</%1>", "^<.->().*()</[^/]->$" },
-    }
-
     local opts = {
       n_lines = 500,
-      -- search_method = "cover",
-      custom_textobjects = custom_textobjects,
-      mappings = {
-        around_next = "",
-        inside_next = "",
+      custom_textobjects = {
+        -- function
+        f = spec_treesitter({ a = "@function.outer", i = "@function.inner" }),
+        -- class
+        c = spec_treesitter({ a = "@class.outer", i = "@class.inner" }),
+        -- parameter/argument
+        a = spec_treesitter({ a = "@parameter.outer", i = "@parameter.inner" }),
+        -- call/invocation
+        v = spec_treesitter({ a = "@call.outer", i = "@call.inner" }),
+        -- loop
+        o = spec_treesitter({ a = "@loop.outer", i = "@loop.inner" }),
+        -- assignment
+        m = spec_treesitter({ a = "@assignment.outer", i = "@assignment.inner" }),
       },
+      mappings = { around_next = "", inside_next = "" },
     }
 
     require("mini.ai").setup(opts)
@@ -129,90 +104,62 @@ local function on_enter()
   --- Nvim-treesitter-textobjects.
 
   safely(function()
-    -- Disable built-in ftplugin mappings to avoid conflicts.
-    vim.g.no_python_maps = true
     vim.g.no_rust_maps = true
+    vim.g.no_python_maps = true
 
     local map = vim.keymap.set
 
-    -- Move
-    local move = require("nvim-treesitter-textobjects.move")
-
-    --- Helper functions to set motion keymaps
-    ---
-    ---@param args {query: string, name: string, lower: string, upper: string}
-    local function map_motion(args)
-      -- ]lower to next start
-      map({ "n", "x", "o" }, "]" .. args.lower, function()
-        move.goto_next_start(args.query, "textobjects")
-      end, { desc = "Go to next " .. args.name .. " start" })
-
-      -- [lower to previous start
-      map({ "n", "x", "o" }, "[" .. args.lower, function()
-        move.goto_previous_start(args.query, "textobjects")
-      end, { desc = "Go to previous " .. args.name .. " start" })
-
-      -- ]upper to next end
-      map({ "n", "x", "o" }, "]" .. args.upper, function()
-        move.goto_next_end(args.query, "textobjects")
-      end, { desc = "Go to next " .. args.name .. " end" })
-
-      -- [upper to previous end
-      map({ "n", "x", "o" }, "[" .. args.upper, function()
-        move.goto_previous_end(args.query, "textobjects")
-      end, { desc = "Go to previous " .. args.name .. " end" })
-    end
-
-    -- f for function
-    map_motion({ query = "@function.outer", name = "function", lower = "f", upper = "F" })
-    -- c for class
-    map_motion({ query = "@class.outer", name = "class", lower = "c", upper = "C" })
-    -- a for argument/parameter
-    map_motion({ query = "@parameter.outer", name = "parameter", lower = "a", upper = "A" })
-    -- v for call/invocation
-    map_motion({ query = "@call.outer", name = "call", lower = "v", upper = "V" })
-    -- k for block
-    map_motion({ query = "@block.outer", name = "block", lower = "k", upper = "K" })
-    -- l for loop
-    map_motion({ query = "@loop.outer", name = "loop", lower = "l", upper = "L" })
-    -- i for conditional
-    map_motion({ query = "@conditional.outer", name = "conditional", lower = "i", upper = "I" })
-    -- m for assignment
-    map_motion({ query = "@assignment.outer", name = "assignment", lower = "m", upper = "M" })
-
-    -- Swap
-    local swap = require("nvim-treesitter-textobjects.swap")
-
-    -- l for left
-    map({ "n" }, "<Leader>ml", function()
-      swap.swap_next("@parameter.inner")
-    end, { desc = "Swap next parameter" })
-    -- r for right
-    map({ "n" }, "<Leader>mh", function()
-      swap.swap_previous("@parameter.inner")
-    end, { desc = "Swap previous parameter" })
-
-    local ts_repeat_move = require("nvim-treesitter-textobjects.repeatable_move")
-
-    -- Repeat movement with g; and g,
-    map({ "n", "x", "o" }, "g;", ts_repeat_move.repeat_last_move_next)
-    map({ "n", "x", "o" }, "g,", ts_repeat_move.repeat_last_move_previous)
-
-    local opts = {
-      -- select is done using Flash.treesitter
-      -- select = {
-      --   lookahead = false,
-      --   selection_modes = {
-      --     ["@parameter.outer"] = "v", -- charwise
-      --     ["@function.outer"] = "V", -- linewise
-      --     -- ["@class.outer"] = "<c-v>", -- blockwise
-      --   },
-      --   include_surrounding_whitespace = true,
-      -- },
-      move = { set_jumps = true },
+    local motions = {
+      { query = "@function.outer", name = "function", lower = "f", upper = "F" },
+      { query = "@class.outer", name = "class", lower = "c", upper = "C" },
+      { query = "@class.outer", name = "class", lower = "]", upper = "[" },
+      { query = "@parameter.outer", name = "parameter", lower = "a", upper = "A" }, -- a for argument
+      { query = "@call.outer", name = "call", lower = "v", upper = "V" }, -- i for invocation
     }
 
-    require("nvim-treesitter-textobjects").setup(opts)
+    for _, motion in ipairs(motions) do
+      -- ]lower to next start
+      map({ "n", "x", "o" }, "]" .. motion.lower, function()
+        require("nvim-treesitter-textobjects.move").goto_next_start(motion.query, "textobjects")
+      end, { desc = "Go to next " .. motion.name .. " start" })
+
+      -- [lower to previous start
+      map({ "n", "x", "o" }, "[" .. motion.lower, function()
+        require("nvim-treesitter-textobjects.move").goto_previous_start(motion.query, "textobjects")
+      end, { desc = "Go to previous " .. motion.name .. " start" })
+
+      -- ]upper to next end
+      map({ "n", "x", "o" }, "]" .. motion.upper, function()
+        require("nvim-treesitter-textobjects.move").goto_next_end(motion.query, "textobjects")
+      end, { desc = "Go to next " .. motion.name .. " end" })
+
+      -- [upper to previous end
+      map({ "n", "x", "o" }, "[" .. motion.upper, function()
+        require("nvim-treesitter-textobjects.move").goto_previous_end(motion.query, "textobjects")
+      end, { desc = "Go to previous " .. motion.name .. " end" })
+    end
+
+    map(
+      { "n", "x", "o" },
+      "g;",
+      require("nvim-treesitter-textobjects.repeatable_move").repeat_last_move_next,
+      { desc = "Repeat last treesitter move to next." }
+    )
+    map(
+      { "n", "x", "o" },
+      "g,",
+      require("nvim-treesitter-textobjects.repeatable_move").repeat_last_move_previous,
+      { desc = "Repeat last treesitter move to previous." }
+    )
+
+    map({ "n" }, "<Leader>ml", function()
+      require("nvim-treesitter-textobjects.swap").swap_next("@parameter.inner")
+    end, { desc = "Swap next parameter" })
+    map({ "n" }, "<Leader>mh", function()
+      require("nvim-treesitter-textobjects.swap").swap_previous("@parameter.inner")
+    end, { desc = "Swap previous parameter" })
+
+    require("nvim-treesitter-textobjects").setup({ move = { set_jumps = true } })
   end)
 
   --- Nvim-surround.

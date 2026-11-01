@@ -107,6 +107,8 @@ local function setup_minigit()
 end
 
 local setups = {
+  ["mini.git"] = setup_minigit,
+  ["gitsigns"] = setup_gitsigns,
   ["catppuccin"] = setup_cappccin,
   ["edge"] = setup_edge,
   ["gruvbox"] = setup_gruvbox,
@@ -114,8 +116,6 @@ local setups = {
   ["kanagawa-lotus"] = setup_kangawa,
   ["rose-pine"] = setup_rose_pine,
   ["tokyonight-day"] = setup_tokyonight,
-  ["gitsigns"] = setup_gitsigns,
-  ["mini.git"] = setup_minigit,
 }
 
 vim.api.nvim_create_user_command("Load", function(args)
