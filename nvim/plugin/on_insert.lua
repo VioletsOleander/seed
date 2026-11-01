@@ -53,6 +53,11 @@ local function on_insert()
           },
         },
       },
+      -- Buffer source completion does not work in ex command, like :s, unless disable inccommand.
+      -- See: https://github.com/saghen/blink.cmp/blob/main/lua/blink/cmp/sources/buffer/init.lua#L105
+      -- Compared to builtin-completion, blink does not require us implementing fliter logic for our
+      -- complete-function, as it does fuzzy flitering for us.
+      -- Therefore still use blink's cmdline completion.
       cmdline = {
         keymap = {
           preset = "none",

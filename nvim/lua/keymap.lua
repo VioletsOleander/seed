@@ -166,7 +166,7 @@ map("i", "<C-d>", "<C-f>", { desc = "Indent current line." })
 --- Others
 
 -- Clear highlight.
-map("n", "<Leader>c", "<Cmd>nohlsearch<CR>", { desc = "Clear search highlight" })
+map("n", "<Leader>d", "<Cmd>nohlsearch<CR>", { desc = "Clear search highlight" })
 map("n", "zz", function()
   vim.cmd("normal! zz")
   vim.cmd("nohlsearch")
