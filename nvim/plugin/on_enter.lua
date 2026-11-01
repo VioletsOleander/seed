@@ -2,9 +2,10 @@ local function on_enter()
   local safely = require("util").safely
 
   vim.pack.add({
-    "https://github.com/folke/flash.nvim",
-    "https://github.com/kylechui/nvim-surround",
     "https://github.com/nvim-treesitter/nvim-treesitter-textobjects",
+    "https://github.com/andymass/vim-matchup",
+    "https://github.com/kylechui/nvim-surround",
+    "https://github.com/folke/flash.nvim",
   })
 
   --- Mini.files.
@@ -186,7 +187,7 @@ local function on_enter()
     map("o", "r", function()
       require("flash").remote()
     end, { desc = "Jump to visible place by searching. Jump back after finishing operator" })
-    map({ "o", "x" }, "R", function()
+    map({ "o", "x" }, "gr", function()
       require("flash").treesitter_search()
     end, { desc = "Select range by searching neighboring treesitter node" })
 

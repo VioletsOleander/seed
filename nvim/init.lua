@@ -13,6 +13,8 @@ g.loaded_gzip = 1
 g.loaded_tarPlugin = 1
 g.loaded_zipPlugin = 1
 g.loaded_tutor_mode_plugin = 1
+g.loaded_matchparen = 1
+g.loaded_matchit = 1
 
 g.loaded_python3_provider = 0
 g.loaded_ruby_provider = 0
