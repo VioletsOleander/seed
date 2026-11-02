@@ -29,6 +29,10 @@ if status is-interactive
 
     fish_hybrid_key_bindings
     bind --user -M insert ctrl-n down-or-search
+    bind --user -M insert ctrl-j down-or-search
+    bind --user -M insert ctrl-k up-or-search
+    bind --user L end-of-line
+    bind --user H beginning-of-line
 
     # =============================================================================
     #
