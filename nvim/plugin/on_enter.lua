@@ -140,19 +140,6 @@ local function on_enter()
       end, { desc = "Go to previous " .. motion.name .. " end" })
     end
 
-    map(
-      { "n", "x", "o" },
-      "g;",
-      require("nvim-treesitter-textobjects.repeatable_move").repeat_last_move_next,
-      { desc = "Repeat last treesitter move to next." }
-    )
-    map(
-      { "n", "x", "o" },
-      "g,",
-      require("nvim-treesitter-textobjects.repeatable_move").repeat_last_move_previous,
-      { desc = "Repeat last treesitter move to previous." }
-    )
-
     map({ "n" }, "<Leader>ml", function()
       require("nvim-treesitter-textobjects.swap").swap_next("@parameter.inner")
     end, { desc = "Swap next parameter" })
