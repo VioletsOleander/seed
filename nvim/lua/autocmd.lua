@@ -58,6 +58,9 @@ au("FileType", {
     -- No autowarp text and comment.
     -- No autoinsert comment leader after hitting enter and o.
     vim.opt.formatoptions:remove({ "t", "c", "r", "o" })
+
+    -- Textwidth 100
+    vim.bo.textwidth = 100
   end,
-  desc = "Set buffer formatoptions",
+  desc = "Set buffer formatoptions and textwidth",
 })

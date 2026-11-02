@@ -33,6 +33,8 @@ composability
 composable
 config
 contravariant
+contravariantly
+covariantly
 covector
 covector's
 covectors
@@ -43,6 +45,7 @@ detokenize
 discretization
 frontend
 json
+kronecker
 learnable
 linux
 logits
