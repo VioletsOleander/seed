@@ -14,13 +14,13 @@ $env.config.keybindings ++= [
         mode: [Vi_Insert]
         event: {send: ViChangeMode, mode: normal}
     }
-    {
-        name: 'ctrl-l escape'
-        modifier: Control
-        keycode: Char_l
-        mode: [Vi_Insert]
-        event: {send: ViChangeMode, mode: normal}
-    }
+    # {
+    #     name: 'ctrl-l escape'
+    #     modifier: Control
+    #     keycode: Char_l
+    #     mode: [Vi_Insert]
+    #     event: {send: ViChangeMode, mode: normal}
+    # }
     {
         name: 'ctrl-l no-op'
         modifier: Control
@@ -118,7 +118,7 @@ $env.config.rm.always_trash = true
 $env.config.show_banner = false
 $env.LANG = 'C.UTF-8' # Disable localization
 $env.PROMPT_COMMAND_RIGHT = {||
-    let time = date now | format date '%m/%d/%Y %a %I:%M:%S %p'
+    let time = date now | format date '%m/%d/%Y %a %H:%M:%S'
     $'(ansi purple)($time)(ansi reset)'
 }
 
