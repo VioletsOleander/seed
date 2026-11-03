@@ -75,17 +75,17 @@ map("n", "<C-w><C-t>", open_terminal, { desc = "Open terminal." })
 --- LSP.
 
 -- Lsp gotos.
-map("n", "gd", vim.lsp.buf.definition, { desc = "Goto definition" })
-map("n", "gD", vim.lsp.buf.declaration, { desc = "Goto declaration" })
-map("n", "gy", vim.lsp.buf.type_definition, { desc = "Goto type definition" })
-map("n", "gI", vim.lsp.buf.implementation, { desc = "Goto implementation" })
+map("n", "gd", vim.lsp.buf.definition, { desc = "Goto definition." })
+map("n", "gD", vim.lsp.buf.declaration, { desc = "Goto declaration." })
+map("n", "gt", vim.lsp.buf.type_definition, { desc = "Goto type definition." })
+map("n", "gI", vim.lsp.buf.implementation, { desc = "Goto implementation." })
+map("n", "gr", vim.lsp.buf.references, { nowait = true, desc = "Goto references." })
 map("n", "<C-w>gd", function()
   vim.cmd.vsplit()
   vim.lsp.buf.definition()
 end, { desc = "Goto definition in vsplit" })
 
 -- LSP shows.
-map("n", "gr", vim.lsp.buf.references, { nowait = true, desc = "Show references" })
 map("n", "ga", vim.diagnostic.open_float, { desc = "Show diagnostics" })
 
 -- LSP actions.

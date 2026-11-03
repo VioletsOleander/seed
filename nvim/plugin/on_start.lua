@@ -4,6 +4,8 @@ vim.pack.add({
   "https://github.com/nvim-treesitter/nvim-treesitter",
   "https://github.com/stevearc/conform.nvim",
   "https://github.com/folke/snacks.nvim",
+  -- Delay loading vim-matchup will cause it break after :restart.
+  "https://github.com/andymass/vim-matchup",
   -- Themes.
   "https://github.com/EdenEast/nightfox.nvim",
   "https://github.com/ellisonleao/gruvbox.nvim",

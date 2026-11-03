@@ -37,7 +37,11 @@ local function on_insert()
       fuzzy = { implementation = "rust" },
       completion = {
         list = { selection = { auto_insert = false } },
-        accept = { auto_brackets = { enabled = false } },
+        accept = {
+          -- Dot repeat will filcker when accepting completion.
+          dot_repeat = false,
+          auto_brackets = { enabled = false },
+        },
         documentation = { auto_show = false },
         menu = {
           draw = {

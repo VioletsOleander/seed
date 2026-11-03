@@ -3,7 +3,6 @@ local function on_enter()
 
   vim.pack.add({
     "https://github.com/nvim-treesitter/nvim-treesitter-textobjects",
-    "https://github.com/andymass/vim-matchup",
     "https://github.com/kylechui/nvim-surround",
     "https://github.com/folke/flash.nvim",
   })
@@ -36,9 +35,13 @@ local function on_enter()
 
     vim.keymap.set("n", "<Leader>e", function()
       if require("mini.files").close() == nil then
-        require("mini.files").open(nil, true, { content = { filter = fliters[show_hidden] } })
+        require("mini.files").open(
+          require("mini.files").get_latest_path(),
+          true,
+          { content = { filter = fliters[show_hidden] } }
+        )
       end
-    end, { desc = "Toggle mini files." })
+    end, { desc = "Toggle mini files anchored on latest used anchor." })
 
     vim.api.nvim_create_autocmd("User", {
       group = vim.api.nvim_create_augroup("user", { clear = false }),
