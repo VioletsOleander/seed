@@ -42,7 +42,7 @@ local function on_insert()
           dot_repeat = false,
           auto_brackets = { enabled = false },
         },
-        documentation = { auto_show = false },
+        documentation = { auto_show = true },
         menu = {
           draw = {
             columns = { { "kind_icon" }, { "label" }, { "kind" } },
