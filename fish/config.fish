@@ -8,6 +8,8 @@ if status is-interactive
     abbr --add co cargo
     abbr --add nv nvim
 
+    abbr --add zs z seed
+
     abbr --add ga git add
     abbr --add gb git branch
     abbr --add gc git commit
@@ -18,6 +20,9 @@ if status is-interactive
     abbr --add gp git push
     abbr --add gs git status
     abbr --add gw git switch
+
+    abbr --add gll git log --all --oneline --graph -20
+    abbr --add gbd git branch -D
 
     # Vars.
 
