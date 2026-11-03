@@ -72,6 +72,12 @@ end
 map("n", "<C-w>t", open_terminal, { desc = "Open terminal." })
 map("n", "<C-w><C-t>", open_terminal, { desc = "Open terminal." })
 
+-- Go left/right.
+map("i", "<C-g>h", "<Left>", { desc = "Move cursor left." })
+map("i", "<C-g><C-h>", "<Left>", { desc = "Move cursor left." })
+map("i", "<C-g>l", "<Right>", { desc = "Move cursor right." })
+map("i", "<C-g><C-l>", "<Right>", { desc = "Move cursor right." })
+
 --- LSP.
 
 -- Lsp gotos.
