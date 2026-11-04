@@ -1,13 +1,15 @@
 function proxy --description "Manipulate proxy environment variables"
     switch $argv[1]
         case toggle
+            set --local file ~/.config/proxy.txt
+
             if not set --query proxy_on
-                if not test -e ~/.local/share/user/proxy.txt
-                    echo error: file ~/.local/share/user/proxy.txt not found
+                if not test -e $file
+                    echo error: $file found
                     return 1
                 end
 
-                set --local url (cat ~/.local/share/user/proxy.txt)
+                set --local url (cat $file)
 
                 set --global --export http_proxy $url
                 set --global --export https_proxy $url
@@ -17,7 +19,7 @@ function proxy --description "Manipulate proxy environment variables"
 
                 echo successfully enabled proxy as $url
             else
-                set --local url (cat ~/.local/share/user/proxy.txt)
+                set --local url (cat $file)
 
                 set --global --unexport http_proxy
                 set --global --unexport https_proxy
