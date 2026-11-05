@@ -23,11 +23,6 @@ export def "proxy status" [] {
     | select --optional 'http_proxy' 'https_proxy' 'no_proxy'
 }
 
-# Alias
-export alias zs = __zoxide_z seed
-export alias zv = __zoxide_z vault-vanilla
-export alias zc = __zoxide_z codespace
-
 # Open yazi.
 export def --env y [...args] {
     let tmp = (mktemp -t "yazi-cwd.XXXXXX")
@@ -123,3 +118,9 @@ export alias zi = __zoxide_zi
 #   source ~/.zoxide.nu
 #
 # Note: zoxide only supports Nushell v0.89.0+.
+
+# Alias
+export alias zs = __zoxide_z seed
+export alias zv = __zoxide_z vault-vanilla
+export alias zc = __zoxide_z codespace
+
