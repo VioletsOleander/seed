@@ -3,6 +3,7 @@
 /recnys.log
 /nvim/spell/*.spl
 /windows-terminal/state.json
+/nushell/history.txt
 
 # Dirs
 /yazi/config/plugins/
