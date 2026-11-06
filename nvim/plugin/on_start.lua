@@ -247,3 +247,9 @@ safely(function()
     end,
   })
 end)
+
+--- Vim-Matchup
+
+safely(function()
+  vim.g.matchup_matchparen_offscreen = { method = "popup", border = "none" }
+end)
