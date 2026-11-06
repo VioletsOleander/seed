@@ -20,6 +20,7 @@ if status is-interactive
     abbr --add gp git push
     abbr --add gs git status
     abbr --add gw git switch
+    abbr --add gr git restore
 
     abbr --add gll git log --all --oneline --graph -20
     abbr --add gbd git branch -D
