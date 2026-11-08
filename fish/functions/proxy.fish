@@ -17,7 +17,7 @@ function proxy --description "Manipulate proxy environment variables"
 
                 set --global proxy_on
 
-                echo successfully enabled proxy as $url
+                echo Successfully enabled proxy as $url
             else
                 set --local url (cat $file)
 
@@ -27,14 +27,14 @@ function proxy --description "Manipulate proxy environment variables"
 
                 set --erase --global proxy_on
 
-                echo successfully disabled proxy
+                echo Successfully disabled proxy
             end
         case status
             echo http_proxy: $http_proxy
             echo https_proxy: $https_proxy
             echo no_proxy: $no_proxy
         case '*'
-            echo error: the subcommand should be toggle or status
+            echo Error: the subcommand should be toggle or status
             return 1
     end
 end
