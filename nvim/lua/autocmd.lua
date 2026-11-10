@@ -55,6 +55,20 @@ au("FileType", {
   group = group,
   pattern = "*",
   callback = function()
+    -- Invalid buffer, non-normal buffer, or unnamed buffer.
+    if
+      not vim.api.nvim_buf_is_valid(0)
+      or vim.bo.buftype ~= ""
+      or vim.api.nvim_buf_get_name(0) == ""
+    then
+      return
+    end
+
+    -- Not editable buffer.
+    if not vim.bo.modifiable or vim.bo.readonly then
+      return
+    end
+
     -- No autowarp text and comment.
     -- No autoinsert comment leader after hitting enter and o.
     vim.opt.formatoptions:remove({ "t", "c", "r", "o" })
@@ -63,4 +77,52 @@ au("FileType", {
     vim.bo.textwidth = 100
   end,
   desc = "Set buffer formatoptions and textwidth",
+})
+
+au("FileType", {
+  group = group,
+  pattern = require("util").treesitter_languages,
+  callback = function(ev)
+    local buf = ev.buf
+
+    vim.treesitter.start(buf)
+
+    local motions = {
+      { query = "@function.outer", name = "function", lower = "f", upper = "F" },
+      { query = "@class.outer", name = "class", lower = "c", upper = "C" },
+      { query = "@class.outer", name = "class", lower = "]", upper = "[" },
+      { query = "@parameter.outer", name = "parameter", lower = "a", upper = "A" }, -- a for argument
+      { query = "@call.outer", name = "call", lower = "v", upper = "V" }, -- i for invocation
+    }
+    local map = vim.keymap.set
+
+    for _, motion in ipairs(motions) do
+      -- ]lower to next start
+      map({ "n", "x", "o" }, "]" .. motion.lower, function()
+        require("nvim-treesitter-textobjects.move").goto_next_start(motion.query, "textobjects")
+      end, { buf = buf, desc = "Go to next " .. motion.name .. " start" })
+
+      -- [lower to previous start
+      map({ "n", "x", "o" }, "[" .. motion.lower, function()
+        require("nvim-treesitter-textobjects.move").goto_previous_start(motion.query, "textobjects")
+      end, { buf = buf, desc = "Go to previous " .. motion.name .. " start" })
+
+      -- ]upper to next end
+      map({ "n", "x", "o" }, "]" .. motion.upper, function()
+        require("nvim-treesitter-textobjects.move").goto_next_end(motion.query, "textobjects")
+      end, { buf = buf, desc = "Go to next " .. motion.name .. " end" })
+
+      -- [upper to previous end
+      map({ "n", "x", "o" }, "[" .. motion.upper, function()
+        require("nvim-treesitter-textobjects.move").goto_previous_end(motion.query, "textobjects")
+      end, { buf = buf, desc = "Go to previous " .. motion.name .. " end" })
+    end
+
+    map({ "n" }, "<Leader>ml", function()
+      require("nvim-treesitter-textobjects.swap").swap_next("@parameter.inner")
+    end, { buf = buf, desc = "Swap next parameter" })
+    map({ "n" }, "<Leader>mh", function()
+      require("nvim-treesitter-textobjects.swap").swap_previous("@parameter.inner")
+    end, { buf = buf, desc = "Swap previous parameter" })
+  end,
 })

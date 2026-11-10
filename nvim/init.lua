@@ -24,6 +24,10 @@ g.loaded_node_provider = 0
 -- Auto format.
 g.disable_autoformat = false
 
+-- Avoid builtin filetype keymap (custom map with treesitter will take over).
+g.no_rust_maps = true
+g.no_python_maps = true
+
 -- WSL clipboard.
 -- Reference: https://vi.stackexchange.com/questions/42305/neovim-following-the-instructions-in-h-clipboard-wsl-not-work-it-shows-no.
 if vim.fn.has("wsl") == 1 then

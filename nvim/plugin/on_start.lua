@@ -2,6 +2,7 @@ vim.pack.add({
   "https://github.com/neovim/nvim-lspconfig",
   "https://github.com/nvim-mini/mini.nvim",
   "https://github.com/nvim-treesitter/nvim-treesitter",
+  "https://github.com/nvim-treesitter/nvim-treesitter-textobjects",
   "https://github.com/stevearc/conform.nvim",
   "https://github.com/folke/snacks.nvim",
   -- Delay loading vim-matchup will cause it break after :restart.
@@ -198,39 +199,7 @@ end)
 --- Treesitter
 
 safely(function()
-  local treesitter_langauges = {
-    "bash",
-    "css",
-    "fish",
-    "gitcommit",
-    "gitignore",
-    "html",
-    "javascript",
-    "json",
-    "json5",
-    "latex",
-    "lua",
-    "markdown",
-    "nu",
-    "python",
-    "rust",
-    "svelte",
-    "toml",
-    "typescript",
-    "typst",
-    "vim",
-    "yaml",
-  }
-
-  require("nvim-treesitter").install(treesitter_langauges)
-
-  vim.api.nvim_create_autocmd("FileType", {
-    group = vim.api.nvim_create_augroup("user", { clear = false }),
-    pattern = treesitter_langauges,
-    callback = function(ev)
-      vim.treesitter.start(ev.buf)
-    end,
-  })
+  require("nvim-treesitter").install(require("util").treesitter_languages)
 
   vim.api.nvim_create_autocmd("PackChanged", {
     group = vim.api.nvim_create_augroup("user", { clear = false }),

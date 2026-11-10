@@ -16,4 +16,29 @@ Util.safely = function(func)
   return ok
 end
 
+--- Languages with treesitter parsers.
+Util.treesitter_languages = {
+  "bash",
+  "css",
+  "fish",
+  "gitcommit",
+  "gitignore",
+  "html",
+  "javascript",
+  "json",
+  "json5",
+  "latex",
+  "lua",
+  "markdown",
+  "nu",
+  "python",
+  "rust",
+  "svelte",
+  "toml",
+  "typescript",
+  "typst",
+  "vim",
+  "yaml",
+}
+
 return Util

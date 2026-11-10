@@ -2,7 +2,6 @@ local function on_enter()
   local safely = require("util").safely
 
   vim.pack.add({
-    "https://github.com/nvim-treesitter/nvim-treesitter-textobjects",
     "https://github.com/kylechui/nvim-surround",
     "https://github.com/folke/flash.nvim",
   })
@@ -105,51 +104,9 @@ local function on_enter()
     require("mini.ai").setup(opts)
   end)
 
-  --- Nvim-treesitter-textobjects.
+  --- Nvim-treesitter-textobjects
 
   safely(function()
-    vim.g.no_rust_maps = true
-    vim.g.no_python_maps = true
-
-    local map = vim.keymap.set
-
-    local motions = {
-      { query = "@function.outer", name = "function", lower = "f", upper = "F" },
-      { query = "@class.outer", name = "class", lower = "c", upper = "C" },
-      { query = "@class.outer", name = "class", lower = "]", upper = "[" },
-      { query = "@parameter.outer", name = "parameter", lower = "a", upper = "A" }, -- a for argument
-      { query = "@call.outer", name = "call", lower = "v", upper = "V" }, -- i for invocation
-    }
-
-    for _, motion in ipairs(motions) do
-      -- ]lower to next start
-      map({ "n", "x", "o" }, "]" .. motion.lower, function()
-        require("nvim-treesitter-textobjects.move").goto_next_start(motion.query, "textobjects")
-      end, { desc = "Go to next " .. motion.name .. " start" })
-
-      -- [lower to previous start
-      map({ "n", "x", "o" }, "[" .. motion.lower, function()
-        require("nvim-treesitter-textobjects.move").goto_previous_start(motion.query, "textobjects")
-      end, { desc = "Go to previous " .. motion.name .. " start" })
-
-      -- ]upper to next end
-      map({ "n", "x", "o" }, "]" .. motion.upper, function()
-        require("nvim-treesitter-textobjects.move").goto_next_end(motion.query, "textobjects")
-      end, { desc = "Go to next " .. motion.name .. " end" })
-
-      -- [upper to previous end
-      map({ "n", "x", "o" }, "[" .. motion.upper, function()
-        require("nvim-treesitter-textobjects.move").goto_previous_end(motion.query, "textobjects")
-      end, { desc = "Go to previous " .. motion.name .. " end" })
-    end
-
-    map({ "n" }, "<Leader>ml", function()
-      require("nvim-treesitter-textobjects.swap").swap_next("@parameter.inner")
-    end, { desc = "Swap next parameter" })
-    map({ "n" }, "<Leader>mh", function()
-      require("nvim-treesitter-textobjects.swap").swap_previous("@parameter.inner")
-    end, { desc = "Swap previous parameter" })
-
     require("nvim-treesitter-textobjects").setup({ move = { set_jumps = true } })
   end)
 
