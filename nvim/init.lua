@@ -70,10 +70,20 @@ vim.lsp.enable({
 
 vim.loader.enable(true)
 
-require("option")
-require("keymap")
-require("autocmd")
-require("usercmd")
+local safely = require("util").safely
+
+safely(function()
+  require("option")
+end)
+safely(function()
+  require("keymap")
+end)
+safely(function()
+  require("autocmd")
+end)
+safely(function()
+  require("usercmd")
+end)
 
 vim.cmd("packadd nvim.undotree")
 

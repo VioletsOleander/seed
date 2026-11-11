@@ -96,18 +96,3 @@ vim.api.nvim_create_autocmd({ "InsertEnter", "CmdlineEnter" }, {
   group = vim.api.nvim_create_augroup("user", { clear = false }),
   callback = on_insert,
 })
-
-vim.api.nvim_create_autocmd("PackChanged", {
-  group = vim.api.nvim_create_augroup("user", { clear = false }),
-  callback = function(ev)
-    local name, kind = ev.data.spec.name, ev.data.kind
-
-    if name == "blink.cmp" and (kind == "install" or kind == "update") then
-      if not ev.data.active then
-        vim.cmd.packadd("blink.cmp")
-      end
-
-      require("blink.cmp").build():pwait()
-    end
-  end,
-})

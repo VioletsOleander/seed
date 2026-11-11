@@ -126,3 +126,29 @@ au("FileType", {
     end, { buf = buf, desc = "Swap previous parameter" })
   end,
 })
+
+au("PackChanged", {
+  group = vim.api.nvim_create_augroup("user", { clear = false }),
+  callback = function(ev)
+    local name, kind = ev.data.spec.name, ev.data.kind
+
+    if name == "nvim-treesitter" then
+      if kind == "update" then
+        if not ev.data.active then
+          vim.cmd("packadd nvim-treesitter")
+        end
+
+        vim.cmd("TSUpdate")
+      end
+    elseif name == "blink.cmp" then
+      if kind == "install" or kind == "update" then
+        if not ev.data.active then
+          vim.cmd("packadd blink.lib")
+          vim.cmd("packadd blink.cmp")
+        end
+
+        require("blink.cmp").build():pwait()
+      end
+    end
+  end,
+})
