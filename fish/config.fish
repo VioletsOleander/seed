@@ -30,6 +30,7 @@ if status is-interactive
     set --export EDITOR nvim
     set --export LANG C.UTF-8
     fish_add_path --path ~/.cargo/bin ~/.local/bin
+    fish_add_path --path /home/linuxbrew/.linuxbrew/bin/
 
     # Keybinds.
 
