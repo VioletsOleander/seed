@@ -1,6 +1,6 @@
 {
   # Shells
-  ".bashrc.template": { dest: { Windows: "", Linux: "my_bashrc" } },
+  ".bashrc": { dest: { Windows: "", Linux: "my_bashrc" } },
   "nushell/",
   "fish/": { dest: { Windows: "" } },
   # Terminals

@@ -35,13 +35,21 @@ cl() {
     cd "$1" && ll
 }
 
-proxy_url="{{ proxy_url }}"
-
 proxy_on() {
+    local proxy_file = "~/.config/proxy.txt"
+
+    if [[! -f "$proxy_file"]]; then
+        echo Error: failed to find $proxy_file
+        return 1
+    fi
+
+    local proxy_url = "(cat $proxy_file)"
+
     export http_proxy="http://$proxy_url"
     export https_proxy="http://$proxy_url"
     export all_proxy="socks5://$proxy_url"
 	echo "Proxy has been set to $proxy_url"
+
     proxy_status
 }
 
