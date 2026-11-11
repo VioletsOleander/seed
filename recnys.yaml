@@ -10,6 +10,7 @@
       Linux: "",
     },
   },
+  "ghostty/": { desc: { Windows: "" } },
   "alacritty/",
   "wezterm/": { dest: { Windows: ".config/wezterm/" } },
   # Editors
