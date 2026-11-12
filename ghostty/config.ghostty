@@ -53,3 +53,7 @@
 
 command = "/home/linuxbrew/.linuxbrew/bin/fish --interactive --login"
 theme = "Dayfox"
+# font-family = "FiraCode Nerd Font"
+
+keybind = ctrl+shift+u=scroll_page_up
+keybind = ctrl+shift+d=scroll_page_down
