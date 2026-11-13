@@ -14,7 +14,7 @@ com("ToggleDiagnostic", function()
   vim.diagnostic.enable(not vim.diagnostic.is_enabled())
 end, { desc = "Toggle showing diagnostics" })
 
-map("n", "<C-a>", function()
+map("n", "<C-x>", function()
   vim.diagnostic.enable(not vim.diagnostic.is_enabled())
 end, { desc = "Toggle showing diagnostics" })
 
