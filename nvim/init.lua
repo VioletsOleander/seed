@@ -48,6 +48,7 @@ end
 --- Enable language servers.
 
 vim.lsp.enable({
+  "bashls",
   "cssls",
   "eslint",
   "fish_lsp",

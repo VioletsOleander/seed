@@ -117,6 +117,7 @@ map("n", "<C-p>", toggle_spell, { desc = "Toggle spell check" })
 
 -- Format current buffer.
 local formatters_by_ft = {
+  bash = { "shfmt" },
   fish = { "fish_indent" },
   javascript = { "dprint" },
   json = { "dprint" },
