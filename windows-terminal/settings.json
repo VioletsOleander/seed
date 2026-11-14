@@ -10,6 +10,14 @@
                 "split": "right"
             },
             "id": "User.splitPane.864CD510"
+        },
+        {
+            "command":
+            {
+                "action": "sendInput",
+                "input": "\u001b[105;5u"
+            },
+            "id": "User.sendCtrlI"
         }
     ],
     "alwaysShowTabs": true,
@@ -58,6 +66,10 @@
         {
             "id": "Terminal.ScrollDown",
             "keys": "ctrl+shift+j"
+        },
+        {
+            "id": "User.sendCtrlI",
+            "keys": "ctrl+i"
         }
     ],
     "language": "en-US",
