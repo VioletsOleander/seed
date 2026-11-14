@@ -15,9 +15,13 @@ $if mode=vi
   set keymap vi-insert
   "\C-p": previous-history
   "\C-n": next-history
+  "\C-j": menu-complete
+  "\C-k": menu-complete-backward
 
   set keymap vi-move
   "\C-p": previous-history
   "\C-n": next-history
+  "\C-j": menu-complete
+  "\C-k": menu-complete-backward
 $endif
 
