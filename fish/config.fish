@@ -2,6 +2,7 @@
 
 set --export EDITOR nvim
 set --export LANG C.UTF-8
+set --export MANPAGER "nvim -c Man!"
 fish_add_path --path ~/.cargo/bin ~/.local/bin
 fish_add_path --path /home/linuxbrew/.linuxbrew/bin/
 
@@ -42,7 +43,15 @@ if status is-interactive
     bind --user L end-of-line
     bind --user H beginning-of-line
 
-    # Zoxide
+    # Integrations
 
-    zoxide init fish | source
+    # zoxide
+    if command --query zoxide
+        zoxide init fish | source
+    end
+
+    # fzf
+    if command --query fzf
+        fzf --fish | source
+    end
 end
