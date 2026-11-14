@@ -21,6 +21,7 @@ path_prepend "~/.local/bin"
 
 export EDITOR=nvim
 export MANPAGER="nvim -c Man!"
+export PS1="[\w]\$ "
 
 if [[ -d /home/linuxbrew/.linuxbrew ]]; then
     eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv bash)"
