@@ -38,7 +38,7 @@
   "yazi/": { dest: { Windows: "AppData/Roaming/yazi/config" } },
   "glow/config/": { dest: { Windows: "AppData/Local/glow/Config" } },
   # Tools: Mutiplexer
-  ".tmux.conf": { dest: { Windows: "", Linux: ".tmux.conf" } },
+  "tmux/": { dest: { Windows: "" } },
   "zellij/": {
     dest: { Windows: "AppData/Roaming/Zellij/config", Linux: ".config/zellij" },
   },
