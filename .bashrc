@@ -63,33 +63,39 @@ fi
 
 # Functions
 
-function proxy_on() {
-    local proxy_file="~/.config/proxy.txt"
+if declare -F proxy_on >/dev/null 2>&1; then
+    function proxy_on() {
+        local proxy_file="~/.config/proxy.txt"
 
-    if [[! -f "$proxy_file"]]; then
-        echo Error: failed to find $proxy_file
-        return 1
-    fi
+        if [[! -f "$proxy_file"]]; then
+            echo Error: failed to find $proxy_file
+            return 1
+        fi
 
-    local proxy_url="(cat $proxy_file)"
+        local proxy_url="(cat $proxy_file)"
 
-    export http_proxy="http://$proxy_url"
-    export https_proxy="http://$proxy_url"
-    export all_proxy="socks5://$proxy_url"
-    echo "Proxy has been set to $proxy_url"
+        export http_proxy="http://$proxy_url"
+        export https_proxy="http://$proxy_url"
+        export all_proxy="socks5://$proxy_url"
+        echo "Proxy has been set to $proxy_url"
 
-    proxy_status
-}
+        proxy_status
+    }
+fi
 
-function proxy_off() {
-    unset http_proxy
-    unset https_proxy
-    unset all_proxy
-    echo "Proxy has been disabled."
-}
+if declare -F proxy_off >/dev/null 2>&1; then
+    function proxy_off() {
+        unset http_proxy
+        unset https_proxy
+        unset all_proxy
+        echo "Proxy has been disabled."
+    }
+fi
 
-function proxy_status() {
-    echo "http_proxy  = $http_proxy"
-    echo "https_proxy = $https_proxy"
-    echo "all_proxy   = $all_proxy"
-}
+if declare -F proxy_status >/dev/null 2>&1; then
+    function proxy_status() {
+        echo "http_proxy  = $http_proxy"
+        echo "https_proxy = $https_proxy"
+        echo "all_proxy   = $all_proxy"
+    }
+fi
