@@ -63,7 +63,7 @@ fi
 
 # Functions
 
-if declare -F proxy_on >/dev/null 2>&1; then
+if ! declare -F proxy_on >/dev/null 2>&1; then
     function proxy_on() {
         local proxy_file="~/.config/proxy.txt"
 
@@ -83,7 +83,7 @@ if declare -F proxy_on >/dev/null 2>&1; then
     }
 fi
 
-if declare -F proxy_off >/dev/null 2>&1; then
+if ! declare -F proxy_off >/dev/null 2>&1; then
     function proxy_off() {
         unset http_proxy
         unset https_proxy
@@ -92,7 +92,7 @@ if declare -F proxy_off >/dev/null 2>&1; then
     }
 fi
 
-if declare -F proxy_status >/dev/null 2>&1; then
+if ! declare -F proxy_status >/dev/null 2>&1; then
     function proxy_status() {
         echo "http_proxy  = $http_proxy"
         echo "https_proxy = $https_proxy"
