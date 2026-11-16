@@ -67,7 +67,7 @@ if ! declare -F proxy_on >/dev/null 2>&1; then
     function proxy_on() {
         local proxy_file="~/.config/proxy.txt"
 
-        if [[! -f "$proxy_file"]]; then
+        if [[ ! -f "$proxy_file" ]]; then
             echo Error: failed to find $proxy_file
             return 1
         fi
