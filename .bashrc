@@ -61,6 +61,17 @@ if command -v fzf >/dev/null 2>&1; then
     eval "$(fzf --bash)"
 fi
 
+# yazi
+if command -v yazi >/dev/null 2>&1; then
+    function y() {
+        local tmp cwd; tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
+        command yazi "$@" --cwd-file="$tmp"
+        IFS= read -r -d '' cwd < "$tmp"
+        [ "$cwd" != "$PWD" ] && [ -d "$cwd" ] && builtin cd -- "$cwd" || builtin true
+        command rm -f -- "$tmp"
+    }
+fi
+
 # Functions
 
 if ! declare -F proxy_on >/dev/null 2>&1; then
