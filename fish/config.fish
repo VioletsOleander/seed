@@ -54,4 +54,16 @@ if status is-interactive
     if command --query fzf
         fzf --fish | source
     end
+
+    # yazi
+    if command --query yazi
+        function y
+            set tmp (mktemp -t "yazi-cwd.XXXXXX")
+            command yazi $argv --cwd-file="$tmp"
+            if read -z cwd <"$tmp"; and [ "$cwd" != "$PWD" ]; and test -d "$cwd"
+                builtin cd -- "$cwd"
+            end
+            command rm -f -- "$tmp"
+        end
+    end
 end
