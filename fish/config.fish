@@ -16,17 +16,18 @@ if status is-interactive
     abbr --add nv nvim
     abbr --add zs z seed
 
+    abbr --add gi git
     abbr --add ga git add
     abbr --add gb git branch
     abbr --add gc git commit
     abbr --add gd git diff
     abbr --add gf git fetch
-    abbr --add gi git
     abbr --add gl git log
+    abbr --add gm git merge
     abbr --add gp git push
+    abbr --add gr git restore
     abbr --add gs git status
     abbr --add gw git switch
-    abbr --add gr git restore
 
     abbr --add gll git log --all --oneline --graph -20
     abbr --add gbd git branch -D
@@ -40,6 +41,7 @@ if status is-interactive
     bind --user -M insert ctrl-n down-or-search
     bind --user -M insert ctrl-j down-or-search
     bind --user -M insert ctrl-k up-or-search
+    bind --user -M insert ctrl-f nextd-or-forward-word
     bind --user L end-of-line
     bind --user H beginning-of-line
 
