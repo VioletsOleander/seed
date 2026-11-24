@@ -69,6 +69,18 @@ local function on_enter()
         end, { buf = buf, desc = "Toggle showing hidden." })
       end,
     })
+
+    vim.api.nvim_create_autocmd("User", {
+      group = vim.api.nvim_create_augroup("user", { clear = false }),
+      pattern = "MiniFilesActionDelete",
+      callback = function(ev)
+        local buf = vim.fn.bufnr(ev.data.from)
+
+        if buf ~= -1 and vim.api.nvim_buf_is_loaded(buf) then
+          vim.api.nvim_buf_delete(buf, { force = false })
+        end
+      end,
+    })
   end)
 
   --- Mini.move.
